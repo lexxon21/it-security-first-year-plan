@@ -16,7 +16,7 @@ Three dates set the pace: Microsoft's own text and voice sign-in codes stop for 
 
 - **Day 30 (M1):** a listening report, inventories, key performance indicator (KPI) baselines, and draft top risks. Phase 1 changes little beyond emergency access, administrator multifactor authentication, after-hours alerting, and a restore check.
 - **Day 60 (M2):** quick wins before the freeze, a risk register with executive owners, and the SOC 2 period on track.
-- **Day 90 (M3):** on Thursday 2027-01-28 the executive team approves the 12-month plan, budget, policies, risk appetite, and National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF) 2.0 Profiles; no one relies only on text or voice codes.
+- **Day 90 (M3):** on Thursday 2027-01-28 the executive team approves the 12-month plan, budget, policies (with an [artificial intelligence security standard](16-ai-adoption-guardrails.md)), risk appetite, and National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF) 2.0 Profiles; no one relies only on text or voice codes.
 - **Day 120 readout (D120, Friday 2027-02-26):** first results against the baselines ([02](02-first-90-days.md)).
 
 **Progress:** 24 proposed KPIs, baselined at M1 with targets approved at M3, a one-page monthly scorecard from December, the Quarterly Risk Review, and no composite score ([12](12-metrics-and-executive-reporting.md)).
@@ -42,7 +42,7 @@ Three dates set the pace: Microsoft's own text and voice sign-in codes stop for 
 | An isolated backup copy ([ADR-006](adr/ADR-006-microsoft-365-backup.md)) | Sized to the most critical data | The CEO accepts R-03's residual for a set period |
 | A compliance automation platform ([ADR-007](adr/ADR-007-compliance-automation-platform.md)) | Small | A control matrix and evidence calendar |
 
-**M5 and M7:** the acquired product line's route, Microsoft Copilot (formerly Microsoft 365 Copilot) expansion, and wider compliance licensing.
+**M5 and M7:** the acquired product line's route, Microsoft Copilot expansion, and wider compliance licensing.
 
 ## Resourcing and dependencies
 
@@ -73,7 +73,7 @@ Where the milestones, outcomes, and decisions above are delivered. Each ID point
 | Day 30 (M1) | 05.10, 05.11, 12.01 |
 | Phase 1 urgent fixes and the restore check | 06.01, 06.03, 08.01, 08.02, 08.03, 14.01 |
 | Day 60 (M2), with the Phase 2 quick wins and the first monthly scorecard | 06.09 to 06.11, 06.14 to 06.16, 06.18 to 06.20, 14.04, 14.05, 11.03, 10.09, 12.03 |
-| Day 90 (M3), with no one relying only on text or voice codes | 01.02, 10.13, 10.14, 11.06, 12.05, 12.06, 06.21 |
+| Day 90 (M3), with no one relying only on text or voice codes | 01.02, 10.13, 10.14, 16.16, 11.06, 12.05, 12.06, 06.21 |
 | Day 120 readout (D120) | 12.07 |
 | Progress: KPI baselines and targets, the monthly scorecard, and the Quarterly Risk Reviews | 05.10, 12.01, 12.03, 12.04, 12.05, 12.06, 12.10, 12.11, 12.12 |
 | Phishing-resistant sign-in (administrators by December 2026, most employees by M6) and accounts driven by the human resources record from M6 | 06.09, 06.24, 06.32, 07.11 to 07.17 |

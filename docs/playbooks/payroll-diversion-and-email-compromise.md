@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | Status | Untested template. Not exercised; no real incident informed it |
-| Version | 0.1, 2026-10-13 |
+| Version | 0.2, 2026-10-14 (requests by call, voice message, chat, or video call added to the purpose, the triggers, and the verification standard; T1588.007 added to the ATT&CK mapping) |
 | Owner | Director of IT and Security |
 | Business process owners | CFO (vendor payments), VP of People (employee pay) |
 | Risks | R-01 (primary), R-07, R-10 |
@@ -14,14 +14,14 @@
 
 ## Purpose and scope
 
-This playbook tells responders at Fabrikam (fictional) what to do when someone asks by email to change where an employee's pay or a vendor's payment goes, and when a mailbox shows signs of takeover. It covers Fabrikam's own finance and HR (R-01). Bank-detail changes made inside Fabrikam's product by a customer's administrator are a product incident, handled with Engineering under document [08](../08-detection-and-incident-response.md)'s interim escalation card until the R-02 playbook is written in Phase 5, although the communication steps here still apply. Every step is defensive.
+This playbook tells responders at Fabrikam (fictional) what to do when someone asks, by email, phone, voice message, chat, or video call, to change where an employee's pay or a vendor's payment goes, and when a mailbox shows signs of takeover. It covers Fabrikam's own finance and HR (R-01). Bank-detail changes made inside Fabrikam's product by a customer's administrator are a product incident, handled with Engineering under document [08](../08-detection-and-incident-response.md)'s interim escalation card until the R-02 playbook is written in Phase 5, although the communication steps here still apply. Every step is defensive.
 
 ## Triggers
 
 | ID | Trigger | Usual source |
 |---|---|---|
-| TR-1 | An email asks to change direct-deposit details for an employee | People team, payroll team |
-| TR-2 | An email asks to change a vendor's remittance bank details, or to release a payment urgently | Accounts payable, the CFO's office |
+| TR-1 | A request by email, phone, voice message, chat, or video call asks to change direct-deposit details for an employee | People team, payroll team |
+| TR-2 | A request by email, phone, voice message, chat, or video call asks to change a vendor's remittance bank details, or to release a payment urgently | Accounts payable, the CFO's office |
 | TR-3 | A suspicious inbox rule, forwarding setting, or sign-in on a finance, payroll, People, or executive account | Defender XDR or the MDR provider; a user report |
 | TR-4 | An employee says their pay did not arrive, or a vendor says it was not paid | Employee, vendor |
 | TR-5 | A customer or partner reports a bank-change or payment request from a Fabrikam address | Customer-facing teams under the Chief Customer Officer |
@@ -65,7 +65,7 @@ flowchart TD
 
 | Step | Action | Owner |
 |---|---|---|
-| 1 | **Stop the change.** Freeze the requested bank-detail change or payment. Do not reply to the message, and do not use any phone number, link, or contact detail in it. | Payroll or accounts payable lead |
+| 1 | **Stop the change.** Freeze the requested bank-detail change or payment. Do not reply to the message, and do not use any phone number, link, or contact detail in it. A familiar voice or face is not verification. | Payroll or accounts payable lead |
 | 2 | **Verify by calling a known number:** the vendor contact on file before the request arrived, or the employee's number in the HR system of record. Two people confirm any change. | Payroll or accounts payable lead |
 | 3 | **Preserve evidence.** Keep the message (do not delete it), record when it arrived in UTC, capture the full headers or the message trace, and screenshot any payment record. General Counsel decides on a legal hold. | Process owner, on-call |
 | 4 | **Contain a suspected account compromise.** Revoke sign-in sessions and disable the account during the investigation; remove malicious inbox rules (including hidden ones), forwarding settings, and delegates; check registered authentication methods and devices; review app consents and admin roles. | MDR provider or on-call; Systems Engineer (Identity and Endpoint) |
@@ -123,7 +123,7 @@ Where the logs allow, start the review at least 30 days before the first suspici
 
 | Control | Owner | Where |
 |---|---|---|
-| Bank-change verification standard: no change from email alone; call back on a known number; two-person approval for vendor bank changes; a confirmation sent to the previous contact after any change; new vendor bank details not used for a payment within a short hold period without CFO approval (proposal) | CFO and VP of People | This playbook; finance and People procedures |
+| Bank-change verification standard: no change from email, a call, a voice message, a chat message, or a video call alone; call back on a known number; two-person approval for vendor bank changes; a confirmation sent to the previous contact after any change; new vendor bank details not used for a payment within a short hold period without CFO approval (proposal) | CFO and VP of People | This playbook; finance and People procedures |
 | Employees change their own direct deposit only in the HR system of record while signed in themselves; People staff do not key changes from email | VP of People | Documents [09](../09-security-awareness-and-training.md) and [13](../13-it-service-management.md); access model in [07](../07-identity-lifecycle-joiners-movers-leavers.md) |
 | A review of every bank-detail change before each payroll run and payment release | CFO and VP of People | This playbook |
 | Impersonation protection for executives and payment approvers (Defender for Office 365 Plan 1) and DMARC enforcement | Director of IT and Security | Document [06](../06-microsoft-365-security-baseline.md) |
@@ -138,7 +138,7 @@ These match the FBI's payroll diversion advice, which includes "Apply heightened
 | Stage | Techniques |
 |---|---|
 | Reconnaissance | T1591.004 (Gather Victim Org Information: Identify Roles); T1589.003 (Gather Victim Identity Information: Employee Names) |
-| Lure | T1684.001 (Social Engineering: Impersonation); T1684.002 (Social Engineering: Email Spoofing); T1586.002 (Compromise Accounts: Email Accounts); T1566.002 (Phishing: Spearphishing Link) |
+| Lure | T1588.007 (Obtain Capabilities: Artificial Intelligence), for AI-written lures, cloned voices, and live deepfake video; T1684.001 (Social Engineering: Impersonation); T1684.002 (Social Engineering: Email Spoofing); T1586.002 (Compromise Accounts: Email Accounts); T1566.002 (Phishing: Spearphishing Link) |
 | Account takeover | T1557 (Adversary-in-the-Middle); T1539 (Steal Web Session Cookie); T1550.004 (Use Alternate Authentication Material: Web Session Cookie); T1078.004 (Valid Accounts: Cloud Accounts); T1528 (Steal Application Access Token) |
 | Mailbox abuse | T1114.003 (Email Collection: Email Forwarding Rule); T1564.008 (Hide Artifacts: Email Hiding Rules); T1114.002 (Email Collection: Remote Email Collection); T1534 (Internal Spearphishing) |
 | Outcome | T1657 (Financial Theft) |
@@ -191,6 +191,7 @@ By identifier only, consistent with the [crosswalk](../crosswalk/csf2-soc2-cross
 
 - Cybercriminals Utilize Social Engineering Techniques To Obtain Employee Credentials To Conduct Payroll Diversion (Alert I-091818-PSA, September 18, 2018). FBI IC3. https://www.ic3.gov/PSA/2018/PSA180918 . Checked 2026-10-13. Primary.
 - Cyber Criminals Impersonating Employee Self-Service Websites to Steal Victim Information and Funds (Alert I-042425-PSA, April 24, 2025). FBI IC3. https://www.ic3.gov/PSA/2025/PSA250424 . Checked 2026-10-13. Primary.
+- Criminals Use Generative Artificial Intelligence to Facilitate Financial Fraud (Alert I-120324-PSA, December 3, 2024), on AI-generated audio and real-time video impersonation. FBI IC3. https://www.ic3.gov/PSA/2024/PSA241203 . Checked 2026-10-14. Primary.
 - Respond to a compromised email account in Microsoft 365. Microsoft Learn. https://learn.microsoft.com/en-us/defender-office-365/responding-to-a-compromised-email-account . Checked 2026-10-13. Primary.
 - Revoke user access in an emergency in Microsoft Entra ID. Microsoft Learn. https://learn.microsoft.com/en-us/entra/identity/users/users-revoke-access . Checked 2026-10-13. Primary.
 - Use MailItemsAccessed to investigate compromised accounts. Microsoft Learn. https://learn.microsoft.com/en-us/purview/audit-log-investigate-accounts . Checked 2026-10-13. Primary.
@@ -202,3 +203,4 @@ By identifier only, consistent with the [crosswalk](../crosswalk/csf2-soc2-cross
 - Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile (NIST SP 800-61 Rev. 3). NIST. https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf . Checked 2026-10-13. Primary.
 - The NIST Cybersecurity Framework (CSF) 2.0 (CSWP 29). NIST. https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf . Checked 2026-10-13. Primary.
 - MITRE ATT&CK, Enterprise matrix, v20 (technique pages cited, including T1684, T1114.003, T1564.008, T1657, T1550.004, and T1586.002). MITRE. https://attack.mitre.org/resources/versions/ . Checked 2026-10-13. Primary.
+- MITRE ATT&CK, T1588.007 (Obtain Capabilities: Artificial Intelligence; Resource Development; version 1.2, last modified 16 September 2026; ATT&CK content v20.0). MITRE. https://attack.mitre.org/techniques/T1588/007/ . Checked 2026-10-14. Primary.

@@ -107,6 +107,8 @@ flowchart TD
   K --> L["New method registered; old one removed; alert matched to the ticket"]
 ```
 
+A familiar voice or a face on a video call is not verification on its own: the FBI warns that criminals use AI-generated audio and real-time video to impersonate people (IC3 PSA I-120324-PSA, December 3, 2024). So neither path rests on a face or voice alone: the callback goes to the HR number on file, unchanged for 30 days, and the live video check adds the employee's manager, with any doubt stopping the request (the flowchart's "No or unsure" branch and rule 7). Against a convincing real-time deepfake, the video check is the weaker of the two paths.
+
 **The rules:**
 
 1. **No action on the inbound contact.** No reset, pass, or method change on the caller's word, or to contact details the caller supplies. Email and chat never prove identity.
@@ -409,6 +411,7 @@ By identifier only, consistent with the [crosswalk](crosswalk/csf2-soc2-crosswal
 - 2017 Trust Services Criteria (With Revised Points of Focus, 2022), download page. AICPA & CIMA. https://www.aicpa-cima.com/resources/download/2017-trust-services-criteria-with-revised-points-of-focus-2022 . Checked 2026-10-13. Primary.
 - #StopRansomware Guide (version 3.0, October 2023). CISA, MS-ISAC, NSA, FBI. https://www.cisa.gov/resources-tools/resources/stopransomware-guide . Checked 2026-10-13. Primary.
 - Implementing Phishing-Resistant MFA (fact sheet, October 2022). CISA. https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf . Checked 2026-10-13. Primary.
+- Criminals Use Generative Artificial Intelligence to Facilitate Financial Fraud (Alert I-120324-PSA, December 3, 2024). FBI Internet Crime Complaint Center (IC3). https://www.ic3.gov/PSA/2024/PSA241203 . Checked 2026-10-14. Primary.
 - News and announcements (ITIL Version 5 items from February 2026). PeopleCert. https://www.peoplecert.org/news-and-announcements . Checked 2026-10-13. Primary.
 - ITIL Foundation (Version 5), what's new? PeopleCert. https://www.itil.com/Itil-News-and-Announcements/itil-version-5-foundation-whats-new-guide . Checked 2026-10-13. Primary.
 - Acknowledgements (PeopleCert registered trademarks). PeopleCert. https://www.peoplecert.org/acknowledgements . Checked 2026-10-13. Primary.

@@ -104,6 +104,7 @@ gantt
   Year-end training sessions :w9a, 2026-12-02, 2026-12-14
   Simulation setup and baseline :w9b, 2027-02-01, 2027-03-31
   Role tracks :w9c, 2027-03-01, 2027-04-30
+  Product AI launch checklist :w9e, 2027-04-01, 2027-04-30
   Copilot readiness and pilot :w9d, 2027-05-03, 2027-10-29
 ```
 
@@ -127,7 +128,7 @@ The next SOC 2 period and the acquired product line's first Type II period run p
 | WS-6 IT service and employee experience ([13](13-it-service-management.md)) | Packaged apps for self-service; problem reviews; a March pulse survey | A runbook and a second trained person for every critical task by M6; hiring triggers at month 9 | Help on time, new hires ready on day one, and no critical task resting on one person |
 | WS-7 Enterprise systems, SaaS, and acquisition integration ([15](15-enterprise-systems-and-saas.md), [ADR-005](adr/ADR-005-acquired-company-consolidation.md)) | Single sign-on cutovers, finance first; consolidation waves from late February; duplicates and the virtual private network retired | The remaining waves, one identity per person before M6; leftovers decommissioned; the long tail behind single sign-on | One identity per person, duplicates retired, and sensitive applications behind single sign-on |
 | WS-8 Resilience ([14](14-business-continuity-and-backup.md), [ADR-006](adr/ADR-006-microsoft-365-backup.md)) | Class C protected and KPI-19 reported; the quarterly class A test; the customer payroll contingency recommendation; the continuity drill | The isolated copy, if funded; Engineering's product recovery test by July; a mass restore exercise | Critical data restores within hours, and a tested product payroll path |
-| WS-9 Security culture and AI adoption ([09](09-security-awareness-and-training.md), [16](16-ai-adoption-guardrails.md)) | Simulation setup and the baseline simulation; role tracks; AI training, prompt data loss prevention (preview, as of 2026-10-13), and AI app discovery | Simulations every two months and verification drills; the Copilot readiness gate and a pilot of about 8 to 10 weeks; the expansion decision at M7 | More phishing reported, fewer clicks, and AI on approved tools |
+| WS-9 Security culture and AI adoption ([09](09-security-awareness-and-training.md), [16](16-ai-adoption-guardrails.md)) | Simulation setup and the baseline simulation; role tracks; AI training, prompt data loss prevention (preview, as of 2026-10-14), AI app discovery, and the product AI launch checklist with Engineering | Simulations every two months and verification drills; the Copilot readiness gate and a pilot of about 8 to 10 weeks; the expansion decision at M7 | More phishing reported, fewer clicks, and AI on approved tools under an approved AI security standard |
 
 ## Dependencies and the critical path
 
@@ -168,7 +169,7 @@ When Phase 4 work collides, the IT and Security Steering Group sets the order an
 - Certificate-based authentication, rejected for year one ([ADR-004](adr/ADR-004-phishing-resistant-authentication-rollout.md)).
 - A restore path for Teams messages, and the isolated backup copy if not funded at M3 ([ADR-006](adr/ADR-006-microsoft-365-backup.md)).
 - Closing R-02 and R-08, which in the illustration stay High, above appetite, at M7, because their strongest treatments sit with Engineering's roadmap and partners' controls ([11](11-risk-management.md)).
-- AI agents, which stay out of scope beyond intake ([16](16-ai-adoption-guardrails.md)).
+- A fuller AI agent standard; in year one, AI agents stay at policy level: intake approval, then document 07's controls for accounts that software uses ([16](16-ai-adoption-guardrails.md)).
 
 ## Resourcing and dependencies
 
@@ -202,7 +203,7 @@ Each ID points to the phase plan of the document its first two digits name.
 |---|---|
 | M1 | 05.11 |
 | M2 | 11.03, 10.09 |
-| M3 | 10.13, 10.14 |
+| M3 | 10.13, 10.14, 16.16 |
 | D120 | 12.07 |
 | M4 | 10.21 |
 | M5 | 10.23 |
@@ -253,8 +254,8 @@ Each ID points to the phase plan of the document its first two digits name.
 
 **WS-9 Security culture and AI adoption** ([09](09-security-awareness-and-training.md), [16](16-ai-adoption-guardrails.md)). Measures: KPI-14, KPI-15.
 
-- **Phase 4.** February: simulation training set up, the administrators' track, and the executive briefing (09.09, 09.10). March to April: the baseline simulation, role tracks, and the first quarterly assessment report (09.11, 09.12, 09.13). From March: AI training and acknowledgments, data loss prevention on Copilot prompts (preview, as of 2026-10-13), and AI app discovery (16.08, 16.09, 16.10).
-- **Phase 5.** Simulations every two months and verification drills in May and October (09.14, 09.15); the Copilot readiness gate, then a pilot of about 8 to 10 weeks with trained users (06.34, 16.11 to 16.13, 09.16); the expansion decision at M7 and the guardrails reviewed (16.14, 16.15); Cybersecurity Awareness Month and the program review (09.17).
+- **Phase 4.** February: simulation training set up, the administrators' track, and the executive briefing (09.09, 09.10). March to April: the baseline simulation, role tracks, and the first quarterly assessment report (09.11, 09.12, 09.13). From March: AI training and acknowledgments, data loss prevention on Copilot prompts (preview, as of 2026-10-14), and AI app discovery (16.08, 16.09, 16.10). April: the product AI launch checklist, with Engineering (16.17).
+- **Phase 5.** Simulations every two months and verification drills in May and October (09.14, 09.15); the Copilot readiness gate, then a pilot of about 8 to 10 weeks with trained users (06.34, 16.11 to 16.13, 09.16); the expansion decision at M7 and the guardrails and the AI security standard reviewed (16.14, 16.15); Cybersecurity Awareness Month and the program review (09.17).
 
 ### Dependencies
 
@@ -268,14 +269,15 @@ Each ID points to the phase plan of the document its first two digits name.
 | Consolidation waves (15.16) | The HR feed's worker-ID match (07.11), and the device order in ADR-008 | [ADR-005](adr/ADR-005-acquired-company-consolidation.md) |
 | Controls of record from 2027-04-01 (07.14, 13.19, 10.20) | The current period closing at M4 (10.21) | [10](10-governance-and-compliance-program.md) |
 | The acquired product line's Type 1 report (10.24) | Readiness (10.19), remediation (10.23), and the team on standard controls (15.22) | [10](10-governance-and-compliance-program.md), [15](15-enterprise-systems-and-saas.md) |
+| The product AI launch checklist (16.17) | The AI security standard approved at M3 (16.16) | [16](16-ai-adoption-guardrails.md) |
 | The Copilot pilot (16.13) | Oversharing fixed (06.18, 06.28, 15.18), and the readiness gate (16.11) | [16](16-ai-adoption-guardrails.md) |
 | DMARC reject on the main domain (06.27) | Every third-party sender aligned | [06](06-microsoft-365-security-baseline.md) |
 | The external penetration test (08.14) | The Phase 4 controls in place, and scope agreed with Engineering | [08](08-detection-and-incident-response.md) |
 
 ## Sources
 
-- Plan documents relied on (internal cross-references, not external sources): [01. Scenario and assumptions](01-scenario-and-assumptions.md); [02. The first 90 days](02-first-90-days.md); [04. Operating model, team, and budget](04-operating-model-team-and-budget.md); [05. Environment discovery](05-environment-discovery.md); [06. Microsoft 365 security baseline](06-microsoft-365-security-baseline.md); [07. Identity lifecycle: joiners, movers, and leavers](07-identity-lifecycle-joiners-movers-leavers.md); [08. Detection and incident response](08-detection-and-incident-response.md); [09. Security awareness and training](09-security-awareness-and-training.md); [10. Governance and compliance program](10-governance-and-compliance-program.md); [11. Risk management](11-risk-management.md); [12. Metrics and executive reporting](12-metrics-and-executive-reporting.md); [13. IT service management](13-it-service-management.md); [14. Business continuity and backup](14-business-continuity-and-backup.md); [15. Enterprise systems and SaaS](15-enterprise-systems-and-saas.md); [16. AI adoption guardrails](16-ai-adoption-guardrails.md); [17. Threat profile](17-threat-profile.md); [ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [ADR-002](adr/ADR-002-hr-system-of-record-drives-identity.md), [ADR-003](adr/ADR-003-managed-detection-and-response.md), [ADR-004](adr/ADR-004-phishing-resistant-authentication-rollout.md), [ADR-005](adr/ADR-005-acquired-company-consolidation.md), [ADR-006](adr/ADR-006-microsoft-365-backup.md), and [ADR-008](adr/ADR-008-endpoint-management-standard.md); and the [CSF 2.0 and SOC 2 crosswalk](crosswalk/csf2-soc2-crosswalk.md).
+- Plan documents relied on (internal cross-references, not external sources): [01. Scenario and assumptions](01-scenario-and-assumptions.md); [02. The first 90 days](02-first-90-days.md); [04. Operating model, team, and budget](04-operating-model-team-and-budget.md); [05. Environment discovery](05-environment-discovery.md); [06. Microsoft 365 security baseline](06-microsoft-365-security-baseline.md); [07. Identity lifecycle: joiners, movers, and leavers](07-identity-lifecycle-joiners-movers-leavers.md); [08. Detection and incident response](08-detection-and-incident-response.md); [09. Security awareness and training](09-security-awareness-and-training.md); [10. Governance and compliance program](10-governance-and-compliance-program.md); [11. Risk management](11-risk-management.md); [12. Metrics and executive reporting](12-metrics-and-executive-reporting.md); [13. IT service management](13-it-service-management.md); [14. Business continuity and backup](14-business-continuity-and-backup.md); [15. Enterprise systems and SaaS](15-enterprise-systems-and-saas.md); [16. AI security and adoption guardrails](16-ai-adoption-guardrails.md); [17. Threat profile](17-threat-profile.md); [ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [ADR-002](adr/ADR-002-hr-system-of-record-drives-identity.md), [ADR-003](adr/ADR-003-managed-detection-and-response.md), [ADR-004](adr/ADR-004-phishing-resistant-authentication-rollout.md), [ADR-005](adr/ADR-005-acquired-company-consolidation.md), [ADR-006](adr/ADR-006-microsoft-365-backup.md), and [ADR-008](adr/ADR-008-endpoint-management-standard.md); and the [CSF 2.0 and SOC 2 crosswalk](crosswalk/csf2-soc2-crosswalk.md).
 - Passkeys by default and retirement of Microsoft-provided SMS and voice authentication. Microsoft Learn. https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sms-voice-retirement . Checked 2026-10-13. Primary.
 - Security Suites (Microsoft Licensing guidance; Microsoft Defender Suite, previously Microsoft 365 E5 Security, and Microsoft Purview Suite, previously Microsoft 365 E5 Compliance). Microsoft. https://www.microsoft.com/licensing/guidance/Security-Suites . Checked 2026-10-13. Primary.
 - Enterprise data protection in Microsoft Copilot and Microsoft Copilot Chat (product name change). Microsoft Learn. https://learn.microsoft.com/en-us/microsoft-365/copilot/enterprise-data-protection . Checked 2026-10-13. Primary.
-- Microsoft Purview DLP for Microsoft 365 Copilot and Cowork (ms.date 2026-10-05), on blocking sensitive information types in prompts (preview). Microsoft Learn. https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about . Checked 2026-10-13. Primary.
+- Microsoft Purview DLP for Microsoft 365 Copilot and Cowork (ms.date 2026-10-05), on blocking sensitive information types in prompts (preview). Microsoft Learn. https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about . Checked 2026-10-14. Primary.

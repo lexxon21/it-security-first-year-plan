@@ -41,7 +41,7 @@ View A compares a whole CSF Category with a criterion, so it rarely reaches "equ
 | 13 | [IT service management](../13-it-service-management.md) |
 | 14 | [Business continuity and backup](../14-business-continuity-and-backup.md) |
 | 15 | [Enterprise systems and SaaS](../15-enterprise-systems-and-saas.md) |
-| 16 | [AI adoption guardrails](../16-ai-adoption-guardrails.md) |
+| 16 | [AI security and adoption guardrails](../16-ai-adoption-guardrails.md) |
 | 17 | [Threat profile](../17-threat-profile.md) |
 | playbook | [Payroll diversion and email compromise playbook](../playbooks/payroll-diversion-and-email-compromise.md) |
 | ADR-002 | [HR system of record drives identity](../adr/ADR-002-hr-system-of-record-drives-identity.md) |

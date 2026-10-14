@@ -129,6 +129,8 @@ Terms: **MFA** is multifactor authentication; a phishing-resistant method, such 
 | KPI-23 Access requests fulfilled automatically (%) | Systems Engineer (Identity and Endpoint) | 60 percent by M6; 75 by M7 | None |
 | KPI-24 Corporate IT changes completed without incident or rollback (%) | IT Operations Manager | 95 percent from Phase 3; 97 by M7 | None |
 
+KPI-17 records also carry document [08](08-detection-and-incident-response.md)'s AI-involved flag (yes or no); the flag leaves the definition, the cause list, and the count unchanged, and document [16](16-ai-adoption-guardrails.md)'s monthly AI summary reports the flagged incidents.
+
 ## Appendix: Scorecard status rules
 
 Proposal, approved with the targets at M3. Statuses are written in words, not color alone; a Director override is explained in the note.

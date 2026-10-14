@@ -8,7 +8,7 @@ The repository's own licenses cover original content only: the [MIT License](LIC
 
 ## MITRE ATT&CK
 
-- **Used:** technique and tactic IDs and names from MITRE ATT&CK Enterprise v20, in documents 08, 09, 14, and 17, ADR-006, the payroll diversion and email compromise playbook, and the headers of seven of the eight queries (q07 cites none; q01 and q06 map none and name T1078.004 only as the exposure they size). No technique descriptions are quoted.
+- **Used:** technique and tactic IDs and names from MITRE ATT&CK Enterprise v20, in documents 08, 09, 14, and 17, ADR-006, the payroll diversion and email compromise playbook, and the headers of seven of the eight queries (q07 cites none; q01 and q06 map none and name T1078.004 only as the exposure they size). Document 17 also names one ATT&CK detection strategy, by ID and name, in its prompt injection scenario (S-11). No technique descriptions are quoted.
 - **Terms:** MITRE's Terms of Use license ATT&CK for research, development, and commercial use, on condition that copies reproduce MITRE's copyright designation and the license. Both follow, as published on MITRE's Terms of Use page:
 
   The MITRE Corporation (MITRE) hereby grants you a non-exclusive, royalty-free license to use ATT&CK® for research, development, and commercial purposes. Any copy you make for such purposes is authorized provided that you reproduce MITRE's copyright designation and this license in any such copy.
@@ -16,6 +16,28 @@ The repository's own licenses cover original content only: the [MIT License](LIC
   "© 2026 The MITRE Corporation. This work is reproduced and distributed with the permission of The MITRE Corporation."
 
 - **Trademarks:** MITRE ATT&CK and ATT&CK are registered trademarks of The MITRE Corporation.
+
+## MITRE ATLAS
+
+- **Used:** MITRE ATLAS is cited by name and content release only. Document 16 cites MITRE ATLAS content release 2026.09 (released 2026-09-15) in its dated framework references and its Sources, and its Appendix A names ATLAS techniques in words, such as "LLM Prompt Injection (indirect)" and "AI Supply Chain Compromise", only where a control maps cleanly to an adversary technique. The names are cited with attribution to MITRE ATLAS. No ATLAS identifier, technique description, data file, or other ATLAS content is reproduced. ATLAS publishes content releases monthly; 2026.09 was the newest release in the ATLAS data manifest on 2026-10-14.
+- **Terms:** the LICENSE file in The MITRE Corporation's atlas-data repository names MITRE as the copyright holder for 2021 to 2026 and licenses the repository under the Apache License, Version 2.0 (https://www.apache.org/licenses/LICENSE-2.0). The terms view in the ATLAS website's source code carries the same Apache License 2.0 grant.
+- **Discrepancy noted:** the release statement in the atlas-data README gives a copyright line for The MITRE Corporation followed by "ALL RIGHTS RESERVED." and "Approved for Public Release; Distribution Unlimited." The README statement and the LICENSE file state different terms. This repository records both, uses only the content release number and technique names, with attribution, and reproduces no ATLAS content.
+- **Trademarks:** MITRE ATLAS™ is a trademark of The MITRE Corporation.
+
+## OWASP Top 10 for LLM Applications
+
+- **Used:** IDs and names from the OWASP Top 10 for LLM Applications 2026 (released August 2026), for example LLM01:2026 Prompt Injection and LLM08:2026 Hidden Context Exposure, cited with attribution in document 16, in its dated framework references and in Appendix A on the rows that cover product AI features. Document 16 also names the 2026 edition as the basis for testing product AI features before launch, attributes a few short paraphrases to it (that no reliable way to prevent prompt injection exists today, that System Prompt Leakage became Hidden Context Exposure, and that agent risks sit in a separate OWASP list), and names an informative reference that NIST lists for CSF 2.0, OWASP-LLM-Top10-v2.0-to-CSF-v2.0. No entry text is reproduced.
+- **Terms:** the 2026 edition's License and Usage page states "This document is licensed under Creative Commons, CC BY-SA 4.0." and links the full license text, and the OWASP GenAI Security Project website states that, unless otherwise specified, its content is Creative Commons Attribution-ShareAlike v4.0 and provided without warranty of service or accuracy. CC BY-SA 4.0 asks for credit, a link to the license, and an indication of any changes, and applies its ShareAlike condition to adapted material.
+- **Attribution:** "OWASP Top 10 for LLM Applications 2026" by the OWASP GenAI Security Project, https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/ , licensed under CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and provided by OWASP without warranty. The IDs and names are used unchanged. This repository's CC BY 4.0 license does not cover them.
+
+## CVE identifiers
+
+- **Used:** one CVE identifier, CVE-2025-32711, in document 16, which cites the NIST National Vulnerability Database and Microsoft Security Response Center pages for it. No CVE record text is reproduced.
+- **Terms:** the CVE Program's Terms of Use license CVE for reproduction and distribution, on condition that copies reproduce MITRE's copyright designation and the license. The license follows, as published in the source of the CVE website's Terms of Use page (the live page, https://www.cve.org/Legal/TermsOfUse , renders in the browser, so the checking tool read its source):
+
+  CVE Usage: MITRE hereby grants you a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable copyright license to reproduce, prepare derivative works of, publicly display, publicly perform, sublicense, and distribute Common Vulnerabilities and Exposures (CVE™). Any copy you make for such purposes is authorized provided that you reproduce MITRE's copyright designation and this license in any such copy.
+
+  The page refers to MITRE's copyright designation without giving its wording. This repository cites the one identifier and reproduces no CVE record content.
 
 ## NIST publications
 
@@ -31,11 +53,11 @@ The repository's own licenses cover original content only: the [MIT License](LIC
 ## US government works
 
 - **Used:** publications and pages of CISA (including the Zero Trust Maturity Model Version 2.0, the phishing-resistant MFA fact sheet, the SCuBA baselines and ScubaGear, and the Tabletop Exercise Packages, whose structure the tabletop template borrows); the FBI's Internet Crime Complaint Center (IC3), including its public service announcements and the 2025 Internet Crime Report; the IRS (Publication 3112); USCIS and DHS (Form I-9 and the E-Verify memorandum of understanding for employer agents); and the CFPB. Regulations as published in the eCFR, including the FTC Safeguards Rule (16 CFR Part 314), the HIPAA business associate notification rule (45 CFR 164.410), and 8 CFR 274a.2; Federal Register records; and, through GovInfo, sections of the United States Code (15 U.S.C. 1681a and 1681b) and a federal appeals court opinion. Short quotations are attributed where they appear.
-- **Terms:** under 17 U.S.C. 105, "Copyright protection under this title is not available for any work of the United States Government." Publications issued jointly with non-federal partners are not treated here as U.S. government works: CISA's #StopRansomware Guide (CISA, MS-ISAC, NSA, and FBI) is paraphrased, and the short passages quoted from it are attributed where they appear. No seal or logo of any agency is used.
+- **Terms:** under 17 U.S.C. 105, "Copyright protection under this title is not available for any work of the United States Government." Publications issued jointly with non-federal partners are not treated here as U.S. government works. CISA's #StopRansomware Guide (CISA, MS-ISAC, NSA, and FBI) is paraphrased, and the short passages quoted from it are attributed where they appear. The same applies to the joint AI security guidance that document 16 cites, issued by CISA, the NSA, or the FBI with partner agencies of other governments: AI Data Security (May 2025), Deploying AI Systems Securely (April 2024), the Guidelines for Secure AI System Development (November 2023), Careful Adoption of Agentic AI Services (May 2026), and the Five Eyes Cyber Security Agencies Statement (June 2026). They are paraphrased, and the short passages quoted from two of them are attributed where they appear. No seal or logo of any agency is used.
 
-## State statutes, regulations, and court opinions
+## State and local laws, regulations, and court opinions
 
-- **Used:** statutes, regulations, and court opinions of California (the California Consumer Privacy Act, the California Privacy Protection Agency's regulations, and an Attorney General release), Colorado, Connecticut, Delaware, Florida, Illinois (read through the Illinois Supreme Court's opinion), New York, Texas, and Washington, cited by section and paraphrased in documents 08, 10, and 16 and elsewhere where cited, with short quotations attributed where they appear. They are read as questions for counsel, not as legal advice (document 10).
+- **Used:** statutes, regulations, and court opinions of California (the California Consumer Privacy Act, the California Privacy Protection Agency's regulations, and an Attorney General release), Colorado, Connecticut, Delaware, Florida, Illinois (read through the Illinois Supreme Court's opinion), New York, Texas, and Washington, cited by section and paraphrased in documents 08, 10, and 16 and elsewhere where cited, with short quotations attributed where they appear. Document 16 also paraphrases New York City's Local Law 144 of 2021, on automated employment decision tools, from the page of the city's Department of Consumer and Worker Protection. They are read as questions for counsel, not as legal advice (document 10).
 
 ## Nacha
 
@@ -74,7 +96,6 @@ The repository's own licenses cover original content only: the [MIT License](LIC
 - **A public incident.** The December 2021 ransomware attack on a workforce management provider's private cloud is described in one neutral sentence in documents 14 and 17 and ADR-006. The affected company is named only in the titles of the news articles cited in their Sources sections.
 - **Audit commentary.** Document 10 and the crosswalk cite a large audit firm's summary of the 2022 revisions to the Trust Services Criteria points of focus, and document 10 cites a CPA firm's article on bridge letters. Both are paraphrased and labeled secondary in the Sources sections.
 - **A community mirror.** The SMTP AUTH date comes from a community mirror of Microsoft 365 Message Center posts, labeled secondary wherever it is cited.
-- **Other names.** OWASP appears only within the name of an informative reference that NIST lists for CSF 2.0 (document 16).
 
 ## Other sources and names
 
@@ -87,6 +108,14 @@ The repository's own licenses cover original content only: the [MIT License](LIC
 | Title | Publisher | URL | Date checked | Quality |
 |---|---|---|---|---|
 | Terms of Use (ATT&CK license, copyright designation, and trademark notice) | MITRE | https://attack.mitre.org/resources/legal-and-branding/terms-of-use/ | 2026-10-14 | Primary |
+| atlas-data LICENSE (Apache License, Version 2.0, and copyright line) | The MITRE Corporation, on GitHub | https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/LICENSE | 2026-10-14 | Primary |
+| atlas-data README (release statement with "ALL RIGHTS RESERVED"; monthly content releases) | The MITRE Corporation, on GitHub | https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/README.md | 2026-10-14 | Primary |
+| ATLAS data manifest (content release 2026.09, release date 2026-09-15) | The MITRE Corporation, on GitHub | https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/manifest.yaml | 2026-10-14 | Primary |
+| ATLAS website terms view (TermsView.vue, the source of the site's terms page, which the checking tool could not load directly) | The MITRE Corporation, on GitHub | https://raw.githubusercontent.com/mitre-atlas/atlas-website/main/src/views/TermsView.vue | 2026-10-14 | Primary |
+| D3FEND Terms of Use (MITRE ATLAS trademark statement) | The MITRE Corporation | https://next.d3fend.mitre.org/tou | 2026-10-14 | Primary |
+| OWASP GenAI LLM Top 10 2026 (resource page and site footer license notice; PDF "OWASP Top 10 for LLM Applications 2026", License and Usage, page 2) | OWASP GenAI Security Project | https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/ | 2026-10-14 | Primary |
+| Attribution-ShareAlike 4.0 International legal code, section 3 | Creative Commons | https://creativecommons.org/licenses/by-sa/4.0/legalcode.en | 2026-10-14 | Primary |
+| CVE website Terms of Use page source (TermsOfUse.vue on the default branch, "CVE Usage" license; the live page at https://www.cve.org/Legal/TermsOfUse renders in the browser) | CVE Program, on GitHub | https://raw.githubusercontent.com/CVEProject/cve-website/dev/src/views/Legal/TermsOfUse.vue | 2026-10-14 | Primary |
 | Copyright, Fair Use, and Licensing Statements for SRD, Data, Software, and Technical Series Publications (updated June 24, 2025) | NIST | https://www.nist.gov/open/copyright-fair-use-and-licensing-statements-srd-data-software-and-technical-series-publications | 2026-10-14 | Primary |
 | Copyright Law of the United States, Chapter 1, section 105 (United States Government works) | U.S. Copyright Office | https://www.copyright.gov/title17/92chap1.html | 2026-10-14 | Primary |
 | Terms & Conditions (Version 4), section 2 | AICPA & CIMA | https://www.aicpa-cima.com/help/terms-and-conditions | 2026-10-14 | Primary |

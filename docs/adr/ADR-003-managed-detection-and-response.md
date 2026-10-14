@@ -102,6 +102,8 @@ Weights are proposals. A provider that cannot contain inside Fabrikam's response
 | Reporting and evidence | 10% | Case records, monthly reports, and KPI-16 data usable as SOC 2 evidence and exportable |
 | Commercials and exit | 10% | Clear cost drivers (per user or per device, term, surge rates), data return, no lock-in |
 
+**AI-related signals.** The evaluation (action 08.06) asks Defender Experts MDR and each independent provider: Does the provider triage app governance alerts, Defender for Office 365 Plan 2 prompt injection detections (High confidence phishing, detection technology "Prompt injection protection"), and any Copilot jailbreak alerts Microsoft raises in the Defender portal (license not stated by Microsoft, checked 2026-10-14)? The answer is scored under the coverage criterion, so the weights do not change. Prompt DLP alerts (preview, as of 2026-10-14) reach the internal on-call by DLP alert email, Copilot audit flags are reviewed in document 16's monthly review (16.10), and neither goes to the provider. If alert emails do not work for the Copilot location, prompt DLP matches are seen in the Purview DLP alerts dashboard and the 16.10 review instead. Document [08](../08-detection-and-incident-response.md) sets this routing, and document [16](../16-ai-adoption-guardrails.md) follows it.
+
 ## Consequences
 
 Positive:
@@ -157,3 +159,8 @@ Negative:
 - Configure automatic attack disruption in Microsoft Defender XDR. Microsoft Learn. https://learn.microsoft.com/en-us/defender-xdr/configure-attack-disruption . Checked 2026-10-13. Primary.
 - Overview of Microsoft Defender for Endpoint Plan 1. Microsoft Learn. https://learn.microsoft.com/en-us/defender-endpoint/defender-endpoint-plan-1 . Checked 2026-10-13. Primary.
 - Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile (NIST SP 800-61 Rev. 3). NIST. https://csrc.nist.gov/pubs/sp/800/61/r3/final . Checked 2026-10-13. Primary.
+- Prompt injection protection in Microsoft Defender for Office 365 (ms.date 2026-09-02, updated 2026-09-10), the High confidence phishing verdict and the "Prompt injection protection" detection technology. Microsoft Learn. https://learn.microsoft.com/en-us/defender-office-365/step-by-step-guides/prompt-injection-protection-defender-for-office-365 . Checked 2026-10-14. Primary.
+- App governance in Microsoft Defender for Cloud Apps and Microsoft Defender XDR (ms.date 2026-09-28). Microsoft Learn. https://learn.microsoft.com/en-us/defender-cloud-apps/app-governance-manage-app-governance . Checked 2026-10-14. Primary.
+- Microsoft Copilot prompt defense in depth (ms.date 2026-09-10, updated 2026-09-30), step 3 of the attack response flow ("Alerts are created"): jailbreak classifier triggers expose signals in the Microsoft Defender portal and Microsoft Purview audit logging, with no license named for them. Microsoft Learn. https://learn.microsoft.com/en-us/microsoft-365/copilot/copilot-prompt-defense-in-depth . Checked 2026-10-14. Primary.
+- Microsoft Purview DLP for Microsoft 365 Copilot and Cowork (ms.date 2026-10-05), prompt blocking "in preview". Microsoft Learn. https://learn.microsoft.com/en-us/purview/dlp-microsoft365-copilot-location-learn-about . Checked 2026-10-14. Primary.
+- Data Loss Prevention policy reference (ms.date 2026-10-05, updated 2026-10-14), alert emails for rule matches and the table of email notification support by location. Microsoft Learn. https://learn.microsoft.com/en-us/purview/dlp-policy-reference . Checked 2026-10-14. Primary.
