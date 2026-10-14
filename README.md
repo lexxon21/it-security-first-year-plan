@@ -98,14 +98,6 @@ A suggested order; each row is a judgment call the linked document makes.
 
 Copyright 2026 Jacob Welch. Both licenses allow reuse and adaptation with credit, and both cover original content only. Third-party names, identifiers, and quoted material stay under their owners' terms, as [NOTICE.md](NOTICE.md) records.
 
-## AI assistance
-
-Anthropic's Claude researched, drafted, and revised the documents, data files, and queries in this repository, and checked their cited facts against their sources. Jacob Welch owns the project, decided its scope questions and what to publish, and is the accountable author. Decisions he made include these three:
-
-- **Public sources only for the AI guardrails.** The AI adoption guardrails ([document 16](docs/16-ai-adoption-guardrails.md)) draw only on public sources, chiefly NIST AI RMF 1.0, NIST AI 600-1, and Microsoft's published Copilot guidance.
-- **A day-120 results readout.** The first 90 days close with a Day 120 readout to the executive team, so the opening reads as 30, 60, 90, and 120 days ([document 02](docs/02-first-90-days.md)).
-- **Customer-owned devices at work sites.** The shared phones and tablets hourly workers use at work sites belong to customers, so Fabrikam controls only what its app keeps on them, and the plan treats securing the devices themselves as a control each customer operates ([document 10](docs/10-governance-and-compliance-program.md)).
-
 ## Author
 
 **Jacob Welch.** 17+ years in IT and systems administration, including regulated healthcare and financial services. Current role: Associate Director of Security and Compliance. [LinkedIn](https://www.linkedin.com/in/jacobwelch21)
