@@ -6,8 +6,6 @@ How an incoming Director of IT and Security would run the first year at Fabrikam
 
 **Start here:** the [executive summary](docs/00-executive-summary.md) gives the situation, the top five priorities, and the decisions the executive team is asked to make. IT and security leaders can go straight to the [judgment calls](#for-it-and-security-leaders).
 
-**AI-assisted.** Anthropic's Claude researched and drafted this repository, and Jacob Welch decided its scope questions and what to publish (see [AI assistance](#ai-assistance)).
-
 ## The scenario
 
 Fabrikam, Inc. (fictional) is a privately held, remote-first US software company of about 450 people. It sells a cloud workforce platform (recruiting, onboarding, HR, payroll, benefits, and time tracking) to several thousand employers with hourly workforces, so it holds their workers' Social Security numbers and bank details, and its customers depend on it to run payroll on time. Two acquisitions left duplicate identities, devices, file storage, and cloud applications. On day 1, IT is an operations manager and three generalists running a lightly configured Microsoft 365 E3, with no dedicated security staff. Fabrikam holds a SOC 2 Type II report on its core product, whose current review period ends in March 2027, and enterprise customers want the acquired product line covered too. It has chosen the NIST Cybersecurity Framework (CSF) 2.0 as its framework but has no formal risk register, and its policies are out of date. The Director reports to the chief technology officer (CTO), and the executive team approves the plan, the budget, and policies.
