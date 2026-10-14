@@ -1,0 +1,56 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q03, Microsoft Entra admin role assignments added or removed
+// Status: untested template
+// ATT&CK: T1098.003 (Account Manipulation: Additional Cloud Roles). MITRE ATT&CK v20
+// Data sources: CloudAppEvents in Microsoft Defender XDR advanced hunting, populated by Microsoft Defender for Cloud Apps from the Microsoft 365 audit log, using the operations Microsoft Purview lists as "Add member to role." and "Remove member from role."
+// Licensing assumptions: Microsoft Defender for Cloud Apps with the Microsoft 365 app connector, all components selected (Microsoft's default; CloudAppEvents needs at least Microsoft 365 activities), and auditing turned on in Microsoft Purview. Fabrikam (fictional) gets Defender for Cloud Apps with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. On E3 alone, search the Purview audit log (Audit (Standard), 180 days) or the Microsoft Entra audit log for the same operations.
+//
+// Purpose
+//   Lists every change to who holds a Microsoft Entra admin role, so each change can be matched
+//   to an approved change (Change Advisory Board) or, once licensed, a Privileged Identity
+//   Management (PIM) request. An unexplained role assignment is a classic way for an attacker
+//   to keep access (threat profile S-03 and S-06).
+//
+// How to read the result
+//   One row per change, newest first. Change is "added" or "removed". RolesNamed lists the
+//   roles from PrivilegedRoles that appear in the audit record, and GlobalAdministrator marks
+//   changes that mention the most powerful role. Role names are matched as text, so a change
+//   to Privileged Authentication Administrator also lists Authentication Administrator, and
+//   Cloud Application Administrator also lists Application Administrator; read the record to
+//   confirm which role changed. TargetObject is the account that gained or
+//   lost the role; Actor made the change. Operation names that contain "member to role" or
+//   "member from role" are all included, so related variants Microsoft records are caught too.
+//   Under the document 08 severity matrix, an unexplained privileged role assignment is SEV-2
+//   until explained, and an attacker in control of a Global Administrator account is SEV-1.
+//   The only standing Global Administrator assignments expected are the emergency access
+//   accounts from document 06 (action 06.01).
+//
+// Which KPI it feeds
+//   KPI-09 (standing privileged role assignments). The count itself comes from Microsoft Entra
+//   role assignments, and from PIM once Defender Suite brings Entra ID P2 (document 06,
+//   action 06.25); document 12 sets the source. This query explains every movement in that count.
+//
+// Tuning
+//   LookBack: at most 30 days. PrivilegedRoles: role display names to flag. On the first run,
+//   compare them with how role names appear in the tenant's own audit records and adjust.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+//   https://learn.microsoft.com/en-us/purview/audit-log-activities
+//   https://learn.microsoft.com/en-us/defender-cloud-apps/protect-office-365
+let LookBack = 30d;
+let PrivilegedRoles = dynamic(["Global Administrator", "Privileged Role Administrator", "Privileged Authentication Administrator", "Security Administrator", "Conditional Access Administrator", "Exchange Administrator", "SharePoint Administrator", "User Administrator", "Authentication Administrator", "Helpdesk Administrator", "Application Administrator", "Cloud Application Administrator", "Intune Administrator"]);
+CloudAppEvents
+| where Timestamp > ago(LookBack)
+| where ActionType contains "member to role" or ActionType contains "member from role"
+| extend Change = iff(ActionType contains "from role", "removed", "added")
+| extend RawText = tostring(RawEventData), CandidateRoles = PrivilegedRoles
+| mv-apply Role = CandidateRoles to typeof(string) on (
+    where RawText contains Role
+    | summarize RolesNamed = make_set(Role)
+    )
+| extend GlobalAdministrator = RawText contains "Global Administrator"
+| project Timestamp, Change, ActionType, RolesNamed, GlobalAdministrator,
+    TargetObject = ObjectName, TargetObjectId = ObjectId,
+    Actor = AccountDisplayName, ActorObjectId = AccountObjectId, IPAddress, CountryCode
+| order by Timestamp desc

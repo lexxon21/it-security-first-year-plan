@@ -1,0 +1,87 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q05, OAuth application consent grants and application permission (app role) assignments, with app-only grants, admin consent, and high-impact permissions flagged
+// Status: untested template
+// ATT&CK: T1528 (Steal Application Access Token); T1550.001 (Use Alternate Authentication Material: Application Access Token); T1671 (Cloud Application Integration). MITRE ATT&CK v20
+// Data sources: CloudAppEvents in Microsoft Defender XDR advanced hunting, populated by Microsoft Defender for Cloud Apps from the Microsoft 365 audit log: the "Consent to application" activity that Microsoft's illicit consent grant guidance tells admins to look for, and the activity the Microsoft Entra audit log reference names "Add app role assignment to service principal", which records an application permission granted to an app
+// Licensing assumptions: Microsoft Defender for Cloud Apps with the Microsoft 365 app connector, all components selected (Microsoft's default; CloudAppEvents needs at least Microsoft 365 activities), and auditing turned on in Microsoft Purview. Fabrikam (fictional) gets Defender for Cloud Apps with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. On E3 alone, search the Purview audit log (Audit (Standard)) for "Consent to application" and the Microsoft Entra audit log for "Add app role assignment to service principal".
+//
+// Purpose
+//   Consent phishing gives an attacker's application token-based access to mail and files that
+//   survives a password reset (threat profile S-05). An application permission (an app role
+//   assignment) gives an app access with no signed-in user at all, and some permissions let an
+//   app grant itself more. Document 06 limits user consent to verified publishers and low-impact
+//   permissions and turns on the admin consent workflow (action 06.12). This query lists every
+//   consent grant and every app role assignment so the team can confirm each one was expected.
+//
+// How to read the result
+//   One row per grant: app-only grants first, then admin consents, then by high-impact count.
+//   GrantType is "Application permission (app-only)" for an app role assignment, or
+//   "Delegated, admin consent" or "Delegated, user consent" for a consent. An admin consent that
+//   includes application permissions can appear twice: once as the consent and once for each
+//   app role assignment. Every app-only grant must match an approved request.
+//   AdminConsent is true when the consent record's IsAdminConsent property is True; Microsoft
+//   notes that this value means someone with Global Administrator access might have granted
+//   broad access to data, so each one must match an approved admin consent request.
+//   HighImpactPermissionsGranted lists the permissions from HighImpactPermissions found in the
+//   grant, compared as whole permission names (Mail.ReadBasic does not count as Mail.Read). If an
+//   app role assignment record carries only the role's ID, the list stays empty; review every
+//   app-only row anyway. ConsentedApp is the application; for app-only rows, confirm in the
+//   record which app received the permission. After action 06.12, a user consent that carries a
+//   high-impact permission should not happen at all; investigate it as a possible malicious app.
+//
+// Which KPI it feeds
+//   No catalog KPI measures consent directly. Each new application found here goes into the
+//   application inventory in document 15, the denominator of KPI-07 (SaaS applications behind
+//   single sign-on). A malicious grant is an incident counted in KPI-17 (cause: malicious OAuth app).
+//
+// Tuning
+//   LookBack: at most 30 days. HighImpactPermissions starts from the Microsoft Graph and Exchange
+//   permissions that Microsoft's managed consent policy keeps out of user consent (Manage app
+//   consent policies), plus permissions that allow tenant takeover or mail abuse:
+//   Application.ReadWrite.All, AppRoleAssignment.ReadWrite.All, RoleManagement.ReadWrite.Directory,
+//   Directory.ReadWrite.All, Mail.Send, MailboxSettings.ReadWrite, and the Exchange Online
+//   application permission full_access_as_app. Microsoft updates its list, so recheck it and add
+//   others as needed.
+//   First run: confirm that the scope list in a consent record is space-separated, so the
+//   whole-name comparison works, and confirm how CloudAppEvents records the app role assignment
+//   activity; if the tenant's records name it differently, adjust the filter, and if it is
+//   missing, search the Microsoft Entra audit log for it instead.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/defender-office-365/detect-and-remediate-illicit-consent-grants
+//   https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/manage-app-consent-policies
+//   https://learn.microsoft.com/en-us/entra/identity/monitoring-health/reference-audit-activities
+//   https://learn.microsoft.com/en-us/graph/permissions-reference
+//   https://learn.microsoft.com/en-us/exchange/client-developer/exchange-web-services/how-to-authenticate-an-ews-application-by-using-oauth
+//   https://learn.microsoft.com/en-us/defender-cloud-apps/protect-office-365
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+let LookBack = 30d;
+let HighImpactPermissions = dynamic(["Files.Read.All", "Files.ReadWrite.All", "Sites.Read.All", "Sites.ReadWrite.All", "Mail.Read", "Mail.ReadWrite", "Calendars.Read", "Chat.Read", "Chat.ReadWrite", "EAS.AccessAsUser.All", "EWS.AccessAsUser.All", "IMAP.AccessAsUser.All", "POP.AccessAsUser.All", "Application.ReadWrite.All", "AppRoleAssignment.ReadWrite.All", "RoleManagement.ReadWrite.Directory", "Directory.ReadWrite.All", "Mail.Send", "MailboxSettings.ReadWrite", "full_access_as_app"]);
+let Consents = CloudAppEvents
+    | where Timestamp > ago(LookBack)
+    | where ActionType startswith "Consent to application"
+    | mv-apply Property = RawEventData.ModifiedProperties on (
+        summarize
+            AdminConsentValue = take_anyif(tostring(Property.NewValue), tostring(Property.Name) endswith "IsAdminConsent"),
+            PermissionText = take_anyif(tostring(Property.NewValue), tostring(Property.Name) endswith "Permissions")
+        )
+    | extend AdminConsent = AdminConsentValue =~ "True"
+    | extend GrantedScopes = split(replace_regex(PermissionText, @"[\s,;\[\]]+", " "), " ")
+    | extend GrantType = iff(AdminConsent, "Delegated, admin consent", "Delegated, user consent");
+// An app role assignment record carries the permission inside JSON text, so every run of
+// characters that cannot belong to a permission name is treated as a separator.
+let AppRoleAssignments = CloudAppEvents
+    | where Timestamp > ago(LookBack)
+    | where ActionType startswith "Add app role assignment to service principal"
+    | extend PermissionText = tostring(RawEventData.ModifiedProperties)
+    | extend AdminConsent = bool(null)
+    | extend GrantedScopes = split(replace_regex(tostring(RawEventData), @"[^\w.]+", " "), " ")
+    | extend GrantType = "Application permission (app-only)";
+union Consents, AppRoleAssignments
+| extend HighImpactPermissionsGranted = set_intersect(GrantedScopes, HighImpactPermissions)
+| extend HighImpactCount = array_length(HighImpactPermissionsGranted)
+| extend AppOnly = GrantType startswith "Application"
+| project Timestamp, GrantType, ConsentedApp = ObjectName, ConsentedAppObjectId = ObjectId, OAuthAppId,
+    ConsentedBy = AccountDisplayName, ConsentedByObjectId = AccountObjectId,
+    AdminConsent, HighImpactCount, HighImpactPermissionsGranted, PermissionText, IPAddress, CountryCode, AppOnly
+| order by AppOnly desc, AdminConsent desc, HighImpactCount desc, Timestamp desc

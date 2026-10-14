@@ -1,0 +1,65 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q08, "Anyone" (anonymous) sharing links created, changed, used, and removed in SharePoint and OneDrive
+// Status: untested template
+// ATT&CK: T1530 (Data from Cloud Storage), for links used from unexpected places; otherwise posture measurement. MITRE ATT&CK v20
+// Data sources: CloudAppEvents in Microsoft Defender XDR advanced hunting, populated by Microsoft Defender for Cloud Apps from the Microsoft 365 audit log operations AnonymousLinkCreated, AnonymousLinkUpdated, AnonymousLinkUsed, and AnonymousLinkRemoved
+// Licensing assumptions: Microsoft Defender for Cloud Apps with the Microsoft 365 app connector, all components selected (Microsoft's default; CloudAppEvents needs at least Microsoft 365 activities), and auditing turned on in Microsoft Purview. Fabrikam (fictional) gets Defender for Cloud Apps with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. On E3 alone, search the Purview audit log (Audit (Standard)) for the same four operations.
+//
+// Purpose
+//   "Anyone" links let whoever holds the link open a file without signing in. At day 1 they are
+//   allowed and customer payroll exports sometimes sit in OneDrive during support cases
+//   (assumption A-06, risk R-07). Document 06 limits these links to view-only with a 7-day
+//   maximum before mid-December (action 06.18) and turns them off in Phase 4 (action 06.28).
+//   This query gives the baseline and then proves each step.
+//
+// How to read the result
+//   One row per file or folder. Created, Updated, Used, and Removed count the link operations in
+//   the window; UsedFromIPs and UsedFromCountries show where links were opened. Microsoft notes
+//   that the user behind an anonymous link may be unknown, but details such as the IP address are
+//   recorded. SensitiveLocation marks sites whose address contains one of SensitiveSiteWords
+//   as a whole term: has_any matches terms, so "payroll-team" matches "payroll" but
+//   "payrollteam" does not.
+//   PossiblyStillOpen compares counts inside the window only, so confirm in the item's sharing
+//   settings. Remove at once any link to customer payroll exports or support case data. Under the
+//   document 08 severity matrix, customer data found in an "Anyone" link with no sign of outside
+//   access is SEV-3, and any credible sign that it left Fabrikam's control is handled as at least
+//   SEV-2 until ruled out.
+//
+// Which KPI it feeds
+//   No catalog KPI measures open links directly. The counts are the baseline and the evidence for
+//   document 06 actions 06.18 and 06.28 (risk R-07), and the open-links supporting check in
+//   document 12 (sites flagged SensitiveLocation, which judges sensitivity by site-name words,
+//   not by file content). A confirmed exposure
+//   is an incident counted in KPI-17 (cause: misconfiguration or oversharing). After action 06.28
+//   the expected result is empty.
+//
+// Tuning
+//   LookBack: at most 30 days. SensitiveSiteWords: words that appear in the addresses of sites
+//   holding customer or employee data; adjust after the site inventory in document 15, adding
+//   any run-together site names as their own entries.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/purview/audit-log-activities
+//   https://learn.microsoft.com/en-us/office/office-365-management-api/office-365-management-activity-api-schema
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+//   https://learn.microsoft.com/en-us/defender-cloud-apps/protect-office-365
+//   https://learn.microsoft.com/en-us/kusto/query/datatypes-string-operators
+let LookBack = 30d;
+let SensitiveSiteWords = dynamic(["payroll", "support", "people", "finance", "benefits"]);
+CloudAppEvents
+| where Timestamp > ago(LookBack)
+| where ActionType in ("AnonymousLinkCreated", "AnonymousLinkUpdated", "AnonymousLinkUsed", "AnonymousLinkRemoved")
+| extend Item = coalesce(tostring(RawEventData.ObjectId), ObjectName), Site = tostring(RawEventData.SiteUrl)
+| summarize
+    Created = countif(ActionType == "AnonymousLinkCreated"),
+    Updated = countif(ActionType == "AnonymousLinkUpdated"),
+    Used = countif(ActionType == "AnonymousLinkUsed"),
+    Removed = countif(ActionType == "AnonymousLinkRemoved"),
+    CreatedBy = make_set_if(AccountDisplayName, ActionType == "AnonymousLinkCreated", 10),
+    UsedFromIPs = make_set_if(IPAddress, ActionType == "AnonymousLinkUsed", 20),
+    UsedFromCountries = make_set_if(CountryCode, ActionType == "AnonymousLinkUsed", 10),
+    FirstSeen = min(Timestamp),
+    LastSeen = max(Timestamp)
+    by Item, Site
+| extend PossiblyStillOpen = Created > Removed, SensitiveLocation = Site has_any (SensitiveSiteWords)
+| order by SensitiveLocation desc, Used desc, Created desc

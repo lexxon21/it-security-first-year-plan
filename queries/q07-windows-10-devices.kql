@@ -1,0 +1,50 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q07, Windows 10 devices still seen by Microsoft Defender
+// Status: untested template
+// ATT&CK: none (posture measurement)
+// Data sources: DeviceInfo in Microsoft Defender XDR advanced hunting (latest record per device, following Microsoft's sample query for the table)
+// Licensing assumptions: device data in advanced hunting from Microsoft Defender for Endpoint Plan 2, which Fabrikam (fictional) gets with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. Microsoft 365 E3 includes Defender for Endpoint Plan 1, whose listed capabilities do not include advanced hunting; on E3 alone, use the Intune device inventory filtered by operating system version.
+//
+// Purpose
+//   Windows 10 reached end of support on 2025-10-14. Commercial Extended Security Updates (ESU)
+//   Year 1 ended on 2026-10-13 and Year 2 ends on 2027-10-12. Microsoft sells ESU by year, only
+//   for Windows 10 version 22H2, and a buyer who starts in Year 2 pays for Year 1 too. Every
+//   device this query finds needs a dated path from document 06 (action 06.07 in Phase 1):
+//   upgrade to Windows 11 where the hardware qualifies, replace it, or bridge it with Year 2 ESU,
+//   with any spend approved by the CFO. Action 06.30 removes the last ones in Phase 4.
+//
+// How to read the result
+//   One row per Windows 10 device seen in the last 14 days, most recently seen first.
+//   OSVersionInfo and OSBuild (Windows 10 version 22H2 is build 19045) show whether the device
+//   runs version 22H2, which ESU requires.
+//   OnboardingStatus other than onboarded means Defender only discovered the device on a network;
+//   find its owner. SensorHealthState shows whether an onboarded device still reports. Devices
+//   not seen in the window do not appear, so compare the list with the Intune inventory.
+//
+// Which KPI it feeds
+//   KPI-10 (compliant devices), where document 12's catalog lists this query as the list of
+//   Windows 10 devices still in service. It also helps reconcile the KPI-06 denominator: a
+//   device here that Intune does not manage counts against KPI-06. The expected result after
+//   action 06.30 is empty.
+//
+// Tuning
+//   LookBack: 14 days by default, at most 30. The OSPlatform match ignores spaces, because the
+//   schema page describes values such as "Windows 11" and "Windows 10" in prose.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceinfo-table
+//   https://learn.microsoft.com/en-us/lifecycle/faq/extended-security-updates
+//   https://learn.microsoft.com/en-us/windows/whats-new/extended-security-updates
+//   https://learn.microsoft.com/en-us/defender-endpoint/defender-endpoint-plan-1
+//   https://learn.microsoft.com/en-us/windows/release-health/release-information
+let LookBack = 14d;
+DeviceInfo
+| where Timestamp > ago(LookBack)
+| extend IngestionTime = ingestion_time()
+| where isnotempty(OSPlatform)
+| summarize arg_max(IngestionTime, *) by DeviceId
+| where replace_string(OSPlatform, " ", "") =~ "Windows10"
+| project DeviceName, DeviceId, OSPlatform, OSVersion, OSVersionInfo, OSBuild,
+    OnboardingStatus, SensorHealthState, DeviceType, JoinType, ExposureLevel,
+    LoggedOnUsers, LastSeen = Timestamp
+| order by LastSeen desc

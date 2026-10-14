@@ -1,0 +1,55 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q06, enabled accounts with no successful sign-in in the last 30 days
+// Status: untested template
+// ATT&CK: none (posture measurement). Dormant enabled accounts are exposure to T1078.004 (Valid Accounts: Cloud Accounts). MITRE ATT&CK v20
+// Data sources: IdentityInfo and EntraIdSignInEvents (preview, as of 2026-10-13) in Microsoft Defender XDR advanced hunting
+// Licensing assumptions: EntraIdSignInEvents needs Microsoft Entra ID P2. Microsoft says IdentityInfo is populated by Microsoft Defender for Identity (or Microsoft Sentinel) together with Microsoft Entra ID, and that the CreatedDateTime, AssignedRoles, Manager, and Type columns need Defender for Identity, Defender for Cloud Apps, or Defender for Endpoint Plan 2 licensing. Fabrikam (fictional) gets these with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes them. Confirm that IdentityInfo returns rows before relying on this query. On E3 alone (Microsoft Entra ID P1), use Microsoft Entra's own last sign-in data: the Last interactive sign-in time column in the Microsoft Entra admin center user list, or signInActivity in Microsoft Graph, whose lastSuccessfulSignInDateTime property Microsoft says needs Microsoft Entra ID P1 or P2. The column covers interactive sign-ins only, and Microsoft's pages differ on lastSuccessfulSignInDateTime (the Microsoft Graph signInActivity reference says it includes non-interactive sign-ins; the inactive-accounts guide says interactive only), so read lastNonInteractiveSignInDateTime as well before treating an account as unused.
+//
+// Purpose
+//   Finds enabled accounts that nobody has used recently: people who left but kept access
+//   (risk R-05), acquired-company accounts with unclear owners (assumption A-02), forgotten
+//   service or shared accounts, and stale guests. It complements the account reconciliation in
+//   document 07 (action 07.02) between reconciliations.
+//
+// How to read the result
+//   One row per enabled account with no successful sign-in in the window, accounts holding
+//   admin roles first. Check each against the HR system of record and the owner list from
+//   document 07: a person who has left is a missed leaver (disable the account now and record
+//   it so KPI-12 reflects it); a service or shared account needs a named owner or blocked
+//   sign-in; a guest goes to the guest clean-up in document 07.
+//   Limits: advanced hunting keeps 30 days of data, so longer inactivity (for example 90 days)
+//   needs Microsoft Entra's own last sign-in data, as Microsoft's guidance on managing inactive
+//   user accounts describes (cited in document 07). Emergency access accounts sign in rarely by
+//   design: list them in ExcludedAccounts and test them on their own schedule (document 06).
+//
+// Which KPI it feeds
+//   KPI-12 (leaver access removed within target): every leaver found here missed the target.
+//   It also feeds the identity inventory behind risk R-05.
+//
+// Tuning
+//   InactiveWindow: at most 30 days. ExcludedAccounts: lower-case UPNs of emergency access and
+//   documented exceptions, each with an owner.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-identityinfo-table
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-entraidsigninevents-table
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-overview
+//   https://learn.microsoft.com/en-us/entra/identity/monitoring-health/howto-manage-inactive-user-accounts
+//   https://learn.microsoft.com/en-us/graph/api/resources/signinactivity
+let InactiveWindow = 30d;
+let ExcludedAccounts = dynamic([]);
+let RecentSignIns = EntraIdSignInEvents
+    | where Timestamp > ago(InactiveWindow)
+    | where ErrorCode == 0
+    | summarize LastSuccessfulSignIn = max(Timestamp) by AccountObjectId;
+IdentityInfo
+| where Timestamp > ago(7d)
+| summarize arg_max(Timestamp, *) by AccountObjectId
+| where IsAccountEnabled == true
+| where isnull(CreatedDateTime) or CreatedDateTime < ago(InactiveWindow)
+| where tolower(AccountUpn) !in (ExcludedAccounts)
+| join kind=leftanti RecentSignIns on AccountObjectId
+| extend AssignedRoleCount = coalesce(array_length(AssignedRoles), long(0))
+| project AccountUpn, AccountDisplayName, AccountObjectId, Type, TenantMembershipType,
+    Department, JobTitle, Manager, CreatedDateTime, AssignedRoles, AssignedRoleCount
+| order by AssignedRoleCount desc, TenantMembershipType asc, CreatedDateTime asc

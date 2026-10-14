@@ -1,0 +1,59 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q02, sign-ins from legacy authentication clients, including authenticated SMTP
+// Status: untested template
+// ATT&CK: T1078.004 (Valid Accounts: Cloud Accounts); T1110.003 (Brute Force: Password Spraying). MITRE ATT&CK v20
+// Data sources: EntraIdSignInEvents in Microsoft Defender XDR advanced hunting (preview, as of 2026-10-13), which holds Microsoft Entra interactive and non-interactive user sign-ins
+// Licensing assumptions: Microsoft states that this table needs Microsoft Entra ID P2, which Fabrikam (fictional) gets with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. On E3 alone, filter the Microsoft Entra sign-in logs by Client App, as Microsoft's own steps describe.
+//
+// Purpose
+//   Legacy protocols (POP, IMAP, authenticated SMTP, Exchange ActiveSync, and older clients)
+//   cannot do multifactor authentication. Microsoft recommends blocking them and says that, by
+//   its own analysis, more than 99 percent of password spray attacks use legacy authentication
+//   protocols. Successful sign-ins are the dependencies to migrate before the legacy
+//   authentication block in document 06 (action 06.10) and before Exchange Online turns
+//   SMTP AUTH Basic authentication off by default for existing tenants at the end of
+//   December 2026 (actions 06.05 and 06.15; the date comes from Microsoft's message center as
+//   relayed in document 06). Failed sign-ins from these clients are often password guessing.
+//
+// How to read the result
+//   Microsoft's guidance: a client shown as browser or as a modern mobile or desktop client uses
+//   modern authentication, while a specific protocol name, such as Exchange ActiveSync, means
+//   legacy authentication. The query applies that rule and returns one row per account, client,
+//   and outcome.
+//   Outcome "success": the migration list. Give each row an owner and a fix (OAuth 2.0, the
+//   Microsoft Graph sendMail API, or retirement). SmtpAuth marks the scanners and applications
+//   that send mail this way.
+//   Outcome "failure" from many addresses against many accounts: likely password spraying.
+//   Hand it to the on-call (document 08).
+//   Once the block is enforced, expect failures only.
+//
+// Which KPI it feeds
+//   No catalog KPI directly. It is the work list for document 06 actions 06.05, 06.10, and
+//   06.15, and it supports KPI-08 by closing sign-in paths that skip MFA.
+//
+// Tuning
+//   LookBack: at most 30 days. Accept a remaining legacy sender only as a documented exception
+//   with an owner and an end date.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/entra/identity/conditional-access/policy-block-legacy-authentication
+//   https://learn.microsoft.com/en-us/entra/identity/monitoring-health/workbook-legacy-authentication
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-entraidsigninevents-table
+let LookBack = 30d;
+EntraIdSignInEvents
+| where Timestamp > ago(LookBack)
+| where isnotempty(ClientAppUsed)
+| extend ModernClient = ClientAppUsed has "Browser" or (ClientAppUsed has "Mobile" and ClientAppUsed has "Desktop")
+| where not(ModernClient)
+| extend Outcome = iff(ErrorCode == 0, "success", "failure")
+| summarize
+    SignIns = count(),
+    FirstSeen = min(Timestamp),
+    LastSeen = max(Timestamp),
+    DistinctIPs = dcount(IPAddress),
+    IPAddresses = make_set(IPAddress, 20),
+    Countries = make_set(Country, 10),
+    Applications = make_set(Application, 10)
+    by AccountUpn, ClientAppUsed, Outcome
+| extend SmtpAuth = ClientAppUsed has "SMTP"
+| order by Outcome desc, SignIns desc

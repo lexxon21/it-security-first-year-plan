@@ -1,0 +1,82 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q04, inbox rules and mailbox settings that forward or redirect mail outside the company
+// Status: untested template
+// ATT&CK: T1114.003 (Email Collection: Email Forwarding Rule); T1564.008 (Hide Artifacts: Email Hiding Rules) only where a forwarding change also hides mail (HidingActions). MITRE ATT&CK v20
+// Data sources: CloudAppEvents in Microsoft Defender XDR advanced hunting, populated by Microsoft Defender for Cloud Apps from the Microsoft 365 audit log: New-InboxRule, Set-InboxRule, and UpdateInboxRules (mailbox audit) and Set-Mailbox (Exchange admin audit)
+// Licensing assumptions: Microsoft Defender for Cloud Apps with the Microsoft 365 app connector, all components selected (Microsoft's default; CloudAppEvents needs at least Microsoft 365 activities), auditing turned on in Microsoft Purview, and mailbox audit logging on for each mailbox. Fabrikam (fictional) gets Defender for Cloud Apps with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001); Microsoft 365 E5 also includes it. On E3 alone, search the Purview audit log (Audit (Standard)) for the same operations.
+//
+// Purpose
+//   A rule that forwards or redirects mail outside the company is a common sign of a taken-over
+//   mailbox and a tool of payroll and invoice fraud (risk R-01, threat profile S-01 and S-04).
+//   Document 06 turns automatic external forwarding off (action 06.14), so such a rule should
+//   fail to deliver, but its creation is still a strong compromise signal.
+//
+// How to read the result
+//   One row per rule or mailbox change, newest first. ExternalTargets lists recipient addresses
+//   outside AcceptedDomains. NeedsReview is true when a forwarding recipient was given by name or
+//   alias instead of an address (Exchange accepts any value that identifies a recipient), so a
+//   person must check it. HidingActions shows whether the same change also deletes, moves, or
+//   marks mail as read, the pattern used to hide replies from the mailbox owner.
+//   Outlook client rule changes (UpdateInboxRules) record their actions in a different shape, so
+//   for those rows the query takes any outside address found in the record and leaves
+//   HidingActions empty; read the record itself before acting.
+//   Out of scope: rules that only hide mail (delete, move, or mark as read) without forwarding
+//   it outside the company. Find those with audit log search for the same operations and with
+//   the custom detection for finance, payroll, People, and executive mailboxes (document 08,
+//   action 08.12).
+//   Treat a forwarding rule on a finance, payroll, People, or executive mailbox as a suspected
+//   compromise and start the payroll diversion and email compromise playbook.
+//
+// Which KPI it feeds
+//   KPI-17 (security incidents by severity and cause) for each confirmed finding. As a posture
+//   check, the expected result is empty: zero external forwarding outside approved exceptions.
+//
+// Tuning
+//   LookBack: at most 30 days. AcceptedDomains: replace the placeholders with every accepted
+//   domain, including the older brand domains and the tenant's initial onmicrosoft.com domain,
+//   in lower case.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/purview/audit-log-activities
+//   https://learn.microsoft.com/en-us/office/office-365-management-api/office-365-management-activity-api-schema
+//   https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/new-inboxrule
+//   https://learn.microsoft.com/en-us/powershell/module/exchangepowershell/set-mailbox
+//   https://learn.microsoft.com/en-us/defender-cloud-apps/protect-office-365
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+let LookBack = 30d;
+let AcceptedDomains = dynamic(["fabrikam.example", "older-brand-one.example", "older-brand-two.example"]);
+let ForwardParameters = dynamic(["ForwardTo", "ForwardAsAttachmentTo", "RedirectTo", "ForwardingSmtpAddress", "ForwardingAddress"]);
+let HidingParameters = dynamic(["DeleteMessage", "SoftDeleteMessage", "MoveToFolder", "MarkAsRead"]);
+let AddressPattern = @"([\w.%+-]+@[\w-]+(?:\.[\w-]+)+)";
+let RuleEvents = CloudAppEvents
+    | where Timestamp > ago(LookBack)
+    | where ActionType in~ ("New-InboxRule", "Set-InboxRule", "Set-Mailbox", "UpdateInboxRules");
+let CmdletChanges = RuleEvents
+    | where ActionType !~ "UpdateInboxRules"
+    | mv-apply Parameter = RawEventData.Parameters on (
+        summarize
+            ForwardValues = make_set_if(tostring(Parameter.Value), tostring(Parameter.Name) in~ (ForwardParameters) and isnotempty(tostring(Parameter.Value))),
+            HidingActions = make_set_if(tostring(Parameter.Name), tostring(Parameter.Name) in~ (HidingParameters))
+        )
+    | where array_length(ForwardValues) > 0
+    | extend TargetText = strcat_array(ForwardValues, ";");
+let ClientChanges = RuleEvents
+    | where ActionType =~ "UpdateInboxRules"
+    | extend TargetText = tostring(RawEventData)
+    | where TargetText contains "Forward" or TargetText contains "Redirect"
+    | extend ForwardValues = dynamic([]), HidingActions = dynamic([]);
+union CmdletChanges, ClientChanges
+| extend Addresses = extract_all(AddressPattern, TargetText)
+| extend Addresses = iff(array_length(Addresses) > 0, Addresses, dynamic(["no-address"]))
+| mv-apply Address = Addresses to typeof(string) on (
+    extend Domain = tolower(tostring(split(Address, "@")[1]))
+    | summarize
+        ExternalTargets = make_set_if(tolower(Address), isnotempty(Domain) and Domain !in~ (AcceptedDomains)),
+        RecipientsWithoutAddress = countif(isempty(Domain))
+    )
+| extend NeedsReview = RecipientsWithoutAddress > 0
+| where array_length(ExternalTargets) > 0 or NeedsReview
+| project Timestamp, ActionType, ChangedObject = ObjectName, Actor = AccountDisplayName,
+    ActorObjectId = AccountObjectId, IPAddress, CountryCode,
+    ExternalTargets, ForwardValues, NeedsReview, HidingActions
+| order by Timestamp desc

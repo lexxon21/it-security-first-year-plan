@@ -1,0 +1,63 @@
+// Reference query. Not deployed in any employer environment.
+// Title: q01, successful sign-ins that did not require multifactor authentication, by account
+// Status: untested template
+// ATT&CK: none (posture measurement). It sizes exposure to T1078.004 (Valid Accounts: Cloud Accounts). MITRE ATT&CK v20
+// Data sources: EntraIdSignInEvents in Microsoft Defender XDR advanced hunting (preview, as of 2026-10-13; Microsoft says it replaces AADSignInEventsBeta on 2026-10-19), which holds Microsoft Entra interactive and non-interactive user sign-ins
+// Licensing assumptions: Microsoft states that this table needs Microsoft Entra ID P2. Fabrikam (fictional) gets P2 with Microsoft Defender Suite on Microsoft 365 E3 (ADR-001, from Phase 4); Microsoft 365 E5 also includes it. Microsoft 365 E3 alone (Entra ID P1) cannot run this query.
+//
+// Purpose
+//   Finds the accounts, and the applications they reached, where a successful sign-in did not
+//   require multifactor authentication (MFA), plus sign-ins that no Conditional Access policy
+//   applied to. Each one is a gap under the phishing-resistant rollout (ADR-004, document 06).
+//
+// How to read the result
+//   One row per account. SingleFactorSignIns counts successful sign-ins whose
+//   AuthenticationRequirement was singleFactorAuthentication, which Microsoft describes as
+//   "no MFA was required". NoPolicyApplied counts successful sign-ins with
+//   ConditionalAccessStatus 2 ("policies not applied"). Expect only documented exceptions.
+//   Anything else is a Conditional Access gap to close or an account to investigate.
+//   Limit: this table records whether MFA was required, not which method satisfied it, so it
+//   cannot tell a passkey from a text message code.
+//   First run: the table holds interactive and non-interactive sign-ins, while Microsoft's own
+//   "Sign-ins by authentication requirement" chart counts successful interactive sign-ins only.
+//   Add LogonType to the summarize grouping and confirm that its values separate interactive
+//   from non-interactive sign-ins (Microsoft's schema page describes LogonType with Windows
+//   logon types and lists no non-interactive value); if they do, report the two separately
+//   before treating a non-interactive single-factor sign-in as a gap.
+//
+// Which KPI it feeds
+//   KPI-08 (phishing-resistant MFA coverage). As a cross-check for KPI-08 (targets in
+//   document 12), the expected result is empty outside documented exceptions. KPI-08 itself,
+//   and the list of users who still rely on SMS or voice before Microsoft retires them on
+//   2027-02-01 (2027-07-01 for Global Administrators and external users), come from the
+//   Microsoft Entra authentication methods activity report (Registration and Usage tabs,
+//   Entra ID P1 or P2), which shows sign-ins by method used and each user's registered methods.
+//
+// Tuning
+//   LookBack: at most 30 days, because advanced hunting keeps 30 days of data.
+//   ExcludedAccounts: lower-case UPNs of documented exceptions, each with an owner and an end date.
+//
+// References (checked 2026-10-13)
+//   https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-entraidsigninevents-table
+//   https://learn.microsoft.com/en-us/entra/identity/authentication/howto-authentication-methods-activity
+//   https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sms-voice-retirement
+let LookBack = 30d;
+let ExcludedAccounts = dynamic([]);
+EntraIdSignInEvents
+| where Timestamp > ago(LookBack)
+| where ErrorCode == 0
+| where tolower(AccountUpn) !in (ExcludedAccounts)
+| extend SingleFactor = AuthenticationRequirement =~ "singleFactorAuthentication"
+| summarize
+    SuccessfulSignIns = count(),
+    SingleFactorSignIns = countif(SingleFactor),
+    NoPolicyApplied = countif(ConditionalAccessStatus == 2),
+    SingleFactorApps = make_set_if(Application, SingleFactor, 20),
+    ClientApps = make_set(ClientAppUsed, 10),
+    Countries = make_set(Country, 10),
+    LastSingleFactor = maxif(Timestamp, SingleFactor),
+    IsGuest = take_any(IsGuestUser)
+    by AccountObjectId, AccountUpn
+| where SingleFactorSignIns > 0 or NoPolicyApplied > 0
+| extend SingleFactorPercent = round(100.0 * SingleFactorSignIns / SuccessfulSignIns, 1)
+| order by SingleFactorSignIns desc
