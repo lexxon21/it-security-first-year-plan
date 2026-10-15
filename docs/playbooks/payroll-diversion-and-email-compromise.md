@@ -14,7 +14,7 @@
 
 ## Purpose and scope
 
-This playbook tells responders at Fabrikam (fictional) what to do when someone asks, by email, phone, voice message, chat, or video call, to change where an employee's pay or a vendor's payment goes, and when a mailbox shows signs of takeover. It covers Fabrikam's own finance and HR (R-01). Bank-detail changes made inside Fabrikam's product by a customer's administrator are a product incident, handled with Engineering under document [08](../08-detection-and-incident-response.md)'s interim escalation card until the R-02 playbook is written in Phase 5, although the communication steps here still apply. Every step is defensive.
+This playbook tells responders at Fabrikam (fictional) what to do when someone asks, by email, phone, voice message, chat, or video call, to change where an employee's pay or a vendor's payment goes, and when a mailbox shows signs of takeover. It covers Fabrikam's own finance and HR (R-01). Bank-detail changes customers make inside Fabrikam's product are owned by Engineering and are out of scope here. Every step is defensive.
 
 ## Triggers
 
@@ -156,11 +156,11 @@ These actions belong to document 08's phase plan, and the IDs match it.
 | Phase 2 | 08.05 | Desk-check this playbook with the CFO and VP of People before the year-end payroll peak, as part of drafting the incident response plan for POL-08 | Finance and People know the verification and escalation steps before mid-December | KPI-02 | Director of IT and Security | WS-4 |
 | Phase 2 | 08.07 | Confirm coverage from mid-December through January, including a named finance contact for bank recalls and the IC3 reporting path | Year-end and tax form season has named responders | KPI-16 | IT Operations Manager | WS-4 |
 | Phase 4 | 08.09 | Run the executive tabletop on this playbook in late February 2027 and track every action | Tested decisions and owned improvement actions | KPI-18 | Director of IT and Security | WS-4 |
-| Phase 4 | 08.12 | March to April: build and validate custom detections for mailbox rule and forwarding changes and risky sign-ins on finance, payroll, People, and executive accounts | The early signs of this attack raise alerts | KPI-16 | Security Engineer | WS-4 |
+| Phase 4 | 08.12 | March to April: build and validate custom detections for mailbox rule and forwarding changes and risky sign-ins on finance, payroll, People, and executive accounts | The early signs of this attack raise alerts | KPI-16 | Director of IT and Security | WS-4 |
 
 ## Resourcing and dependencies
 
-- **Roles.** Director of IT and Security, IT Operations Manager, Systems Engineer (Identity and Endpoint), Service Desk Analyst, and Security Engineer; the CFO, VP of People, General Counsel, and Chief Customer Officer; the payroll and accounts payable leads as process owners.
+- **Roles.** Director of IT and Security, IT Operations Manager, Systems Engineer (Identity and Endpoint), and Service Desk Analyst; the CFO, VP of People, General Counsel, and Chief Customer Officer; the payroll and accounts payable leads as process owners.
 - **Partners.** The MDR provider for after-hours detection and containment once live (document 08, [ADR-003](../adr/ADR-003-managed-detection-and-response.md)); an incident response retainer, or pre-agreed emergency terms with an incident response firm, in place before mid-December, for an active compromise (document 08); Fabrikam's bank for payment recalls.
 - **Licenses.** Microsoft 365 E3 covers the core steps: audit log search with MailItemsAccessed, Entra sign-in logs, message trace, Real-time detections (Defender for Office 365 Plan 1), session revocation, and manual device isolation. Microsoft Defender Suite ([ADR-001](../adr/ADR-001-microsoft-365-security-licensing.md)) adds advanced hunting for the queries, Threat Explorer, automatic attack disruption, and risk-based sign-in detections (Entra ID P2); Microsoft 365 E5 also includes these capabilities.
 - **Depends on.** Document 08 (severity, roles, decision path, holding statements, logging), the contract clause inventory with General Counsel, documents 06, 07, 09, and 13, ADR-004, and the queries in `queries/`.
@@ -170,7 +170,6 @@ These actions belong to document 08's phase plan, and the IDs match it.
 - Out-of-band verification depends on people doing it under time pressure; attackers time requests before payroll cutoffs, month-end, and holidays.
 - Lookalike domains, display-name tricks, and genuinely compromised partner mailboxes all get past email authentication, so the known-number call is the control that matters most.
 - A late discovery can outrun the 30-day windows in Entra (P1) and advanced hunting until the log archive and retention decisions in document 08 are in place.
-- Customer payroll administrators sit outside Fabrikam's control; product-side protections are a product decision with Engineering (R-02).
 - The queries are untested templates and depend on licensing that is not yet approved.
 - How affected employees are paid, and whether a diverted payment is recoverable, are business and legal questions for the CFO, the VP of People, and General Counsel, not for this playbook.
 

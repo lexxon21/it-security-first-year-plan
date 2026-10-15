@@ -34,9 +34,9 @@ This template runs a 90-minute executive tabletop for Fabrikam (fictional) on it
 | Employee pay and communication | VP of People | Their own role |
 | Legal | General Counsel | Their own role, and describes how CEO approval would be obtained |
 | Customer communication | Chief Customer Officer | Their own role |
-| Technology executive | CTO | Their own role, and speaks for Engineering on product questions |
+| Technology executive | CTO | Their own role, and coordinates with Engineering if the incident reaches product systems |
 | On-call and IT operations | IT Operations Manager | Their own role and the on-call |
-| Facilitator (not a player) | For the first run, the MDR provider's exercise lead or an outside facilitator, because the GRC Analyst and the Security Engineer start in March 2027 in the base case; for later runs, either of them as well | Runs the clock and reads the injects |
+| Facilitator (not a player) | The MDR provider's exercise lead or an outside facilitator, because the Director of IT and Security plays the incident commander and cannot also facilitate | Runs the clock and reads the injects |
 | Note-taker and evaluator (not a player) | A second non-player | Completes the decision log and the evaluation sheet |
 
 The payroll and accounts payable leads may observe.
@@ -67,7 +67,7 @@ Two to three weeks before the exercise:
 | MDR provider | Onboarding, not yet live; after-hours alerts reach the on-call as Defender email notifications turned into a phone page; an incident response retainer, or pre-agreed emergency terms with an incident response firm, in place since before mid-December (document 08) | |
 | Sign-in methods | Administrators on phishing-resistant methods since December; the wave 2 group (finance, payroll, People, Support staff with customer data access, executives, and IT staff daily accounts) enforced in February; push MFA or passkeys for everyone else, and no employee on SMS or voice after 2027-02-01 (document 06) | |
 | Email authentication | DMARC aggregate reporting on every sending domain; the older brand domain that no longer sends already parked at p=reject; enforcement under way from February, the older brand domain that still sends first and the main domain last (document 06) | |
-| Payroll calendar | Fabrikam's own payroll runs on Friday; several customers are mid-cycle | |
+| Payroll calendar | Fabrikam's own payroll runs on Friday | |
 
 ## Timed injects
 
@@ -79,7 +79,7 @@ Two to three weeks before the exercise:
 | 0:32 to 0:47 | 3 | Wednesday, 22:50. A high-severity alert reaches the on-call: a new inbox rule on an accounts payable team member's mailbox moves messages that mention invoices or bank details to an obscure folder. It was created minutes after a sign-in from an unfamiliar location. If the scenario conditions say the MDR is live, it has already revoked the sessions and disabled the account under the pre-approved matrix. | Who is incident commander tonight? What severity? Who must be told tonight, and who can wait until morning? What happens if nobody answers the phone? Is the inject 2 payment now on hold? | D2 |
 | 0:47 to 0:59 | 4 | Friday, 08:00. Payroll ran overnight. The customer success manager from inject 1 calls: their pay did not arrive. Records show the direct-deposit change from Tuesday was keyed in. | Who calls the bank, and how fast? Who reports to IC3? How is the employee paid on time, and who decides? What is said to the employee? | D3, D6 |
 | 0:59 to 1:12 | 5 | Friday, 11:00. The investigation finds that the compromised mailbox holds a support-case thread with one customer's payroll export (Social Security numbers and bank details), and the attacker's session synced that folder. | Is customer data involved? What does that customer's contract require, and by when? One customer or more? Which holding statement, approved by whom, sent by whom? Do the logs reach back far enough to know what else was touched? | D4, D5 |
-| 1:12 to 1:20 | 6 | Friday, 13:00. A customer's payroll administrator forwards a message received from the compromised Fabrikam address, asking them to update Fabrikam's remittance details. | Who contacts this customer and any others who may have received the message, and what do they say? Does Engineering need to check recent bank-detail changes in the product? | D7 |
+| 1:12 to 1:20 | 6 | Friday, 13:00. A customer's payroll administrator forwards a message received from the compromised Fabrikam address, asking them to update Fabrikam's remittance details. | Who contacts this customer and any others who may have received the message, and what do they say? | D7 |
 | 1:20 to 1:30 | Hot wash | An immediate debrief led by the facilitator | What worked? What would have failed in a real incident? Which three actions matter most, with owners and dates? | None |
 
 Facilitator background for inject 2: the FBI warns that criminals can use AI-generated audio to impersonate public figures or people the target knows in order to get payments, and can generate video for real-time video chats with people posing as company executives (PSA I-120324-PSA, December 3, 2024). The CFO is a player in the room, so the facilitator asks the CFO how accounts payable would tell the real CFO from a cloned voice, and what the CFO expects them to do when they cannot.
@@ -92,7 +92,7 @@ Facilitator background for inject 5: Microsoft documents that when a mailbox fol
 - **VP of People:** How does an employee change direct deposit today? How is someone whose pay was diverted paid, and how fast? What do staff hear, and from whom?
 - **General Counsel:** Which contracts define the notice clock, and from which event? When does a legal hold start? When is law enforcement involved beyond IC3?
 - **Chief Customer Officer:** Who speaks to the affected customer? What do customer-facing teams say if asked?
-- **CTO:** Is the product involved? Who in Engineering checks product-side bank changes, and how quickly?
+- **CTO:** If the incident reaches product systems, who in Engineering is engaged, and how quickly?
 - **Director of IT and Security:** When was the incident commander named? Which questions could the logs answer, and which not?
 - **IT Operations Manager:** Did the alert reach a person? What could the on-call do alone, and what needed someone else?
 
@@ -178,7 +178,6 @@ For each area: what happened, why (process, people, technology, or missing infor
 - Read each situation as written and do not reveal the next inject early.
 - If players solve the problem in inject 1, let them; the later injects still test escalation, legal, and communication decisions.
 - If the real state on the day differs from the scenario conditions, adjust the inject wording rather than skipping it.
-- Variant for R-02: replace injects 5 and 6 with a customer administrator account takeover in the product, and add the Engineering Manager and the Chief Product Officer.
 
 ## Sources
 

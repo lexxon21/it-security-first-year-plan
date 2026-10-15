@@ -11,19 +11,19 @@ The Director of IT and Security proposes this decision; the executive team appro
 ## Context
 
 - **How Fabrikam got here.** Fabrikam (fictional) grew through two acquisitions of smaller workforce-software companies. The products sell as one platform, and the acquired companies' email domains already run in Fabrikam's primary Microsoft 365 tenant. Some file storage, device management, identities, and SaaS applications from the acquisitions are still separate or duplicated (assumption A-08). Accounts from the acquisitions have unclear owners (A-02). Of the two older brand domains from the acquisitions, one no longer sends mail but publishes no SPF or DMARC record, and the other sends only through a marketing service and has no DMARC record (A-05).
-- **What the split costs.** Duplicate tools nobody fully owns (R-09). Leavers whose access survives in a system the leaver process does not reach (R-05); document [07](../07-identity-lifecycle-joiners-movers-leavers.md) carries those systems as a manual checklist item until consolidation. Administrators in systems outside Fabrikam's privileged access controls (R-06). Integration credentials and enterprise apps for tools nobody uses (R-08). Investigations that must search several sets of logs (R-10). Duplicate contracts. The acquired product line also needs a dated path into SOC 2 Type II scope at M5 (document [10](../10-governance-and-compliance-program.md)), which is easier when its team works on Fabrikam's standard controls.
+- **What the split costs.** Duplicate tools nobody fully owns (R-09). Leavers whose access survives in a system the leaver process does not reach (R-05); document [07](../07-identity-lifecycle-joiners-movers-leavers.md) carries those systems as a manual checklist item until consolidation. Administrators in systems outside Fabrikam's privileged access controls (R-06). Integration credentials and enterprise apps for tools nobody uses (R-08). Investigations that must search several sets of logs (R-10). Duplicate contracts.
 - **What M1 must answer.** Whether a leftover Microsoft 365 tenant exists and what it holds, whether another identity provider is in use, which file servers sit in the two offices inherited from the acquisitions, which other cloud storage is in use, and how many people, devices, and gigabytes are involved. Durations wait for those counts (document [05](../05-environment-discovery.md)).
 - **Calendar.** Customer-facing changes freeze from mid-December to January 31. Exchange Online disables SMTP AUTH Basic authentication by default for existing tenants at the end of December 2026, per Microsoft's message center as relayed by a community mirror (document [06](../06-microsoft-365-security-baseline.md)). Microsoft-provided SMS and voice MFA retire on 2027-02-01, and users with no other method then face a blocking registration prompt. The current SOC 2 review period closes at M4 (end of March 2027), M5 and M6 fall in month 9 (July 2027), and M7 is in October 2027.
-- **Capacity.** An IT Operations Manager and three IT generalists run the service desk, devices, and Microsoft 365. The Security Engineer and the GRC Analyst start in March 2027 in the base case, after the executive team approves the budget at M3, or in February if the executive team pre-approves both roles at M2; until then the Director (decisions) and the Systems Engineer (Identity and Endpoint) (hands-on work) cover Security Engineer duties, and the Director and the outside audit-readiness consultant cover GRC Analyst duties (documents [03](../03-twelve-month-roadmap.md) and [04](../04-operating-model-team-and-budget.md)).
-- **Scope boundary.** The acquired product line's own code and infrastructure belong to Engineering under the RACI in document 04. This record covers the corporate IT of the acquired teams: identities, devices, files, and SaaS. Mail already runs in the primary tenant.
+- **Capacity.** An IT Operations Manager and three IT generalists run the service desk, devices, and Microsoft 365. The company adds no security or GRC hire: the Director of IT and Security takes on the security-engineering and GRC work, with the Systems Engineer (Identity and Endpoint) for hands-on work, the outside audit-readiness consultant for SOC 2, and contracted specialist help for surge and build work (documents [03](../03-twelve-month-roadmap.md) and [04](../04-operating-model-team-and-budget.md)).
+- **Scope boundary.** Any product code and infrastructure from the acquisitions belong to Engineering under the RACI in document 04. This record covers the corporate IT of the acquired teams: identities, devices, files, and SaaS. Mail already runs in the primary tenant.
 - **Dependencies.** [ADR-002](ADR-002-hr-system-of-record-drives-identity.md) makes the HR record the source of identity, so acquired people are matched by worker ID, and the HR feed goes live in February 2027 (action 07.11). [ADR-008](ADR-008-endpoint-management-standard.md) sets Intune as the one endpoint standard and fixes the order for moving a device out of another tenant. [ADR-001](ADR-001-microsoft-365-security-licensing.md) decides the licenses for SaaS discovery and governance, and [ADR-004](ADR-004-phishing-resistant-authentication-rollout.md) the sign-in methods that migrated staff register.
 
 ## Decision drivers
 
 1. One identity per person, driven by the HR record, before M6 (ADR-002, KPI-12).
 2. One device standard and one compliance signal for Conditional Access (ADR-008, KPI-06).
-3. No disruption to customers' payroll support: customer-facing changes after the freeze, and customer-facing integrations last.
-4. SOC 2 continuity: no evidence break before M4 (KPI-03), and the acquired product line's team on standard controls before M5.
+3. No disruption to customer-facing work: customer-facing changes after the freeze, and customer-facing integrations last.
+4. SOC 2 continuity: no evidence break before M4 (KPI-03); the acquired teams move onto Fabrikam's standard corporate controls through consolidation.
 5. Service desk capacity in a small team (R-14, KPI-20, KPI-21).
 6. A rollback point for every step, and a communication plan for every change people will notice.
 7. Cost: end duplicate contracts at their notice dates and use what Microsoft 365 E3 already includes.
@@ -44,7 +44,7 @@ Prepare in Phases 1 to 3, move people in waves from late February 2027, retire d
 Leave any acquired tenant, devices, and tools in place and connect them. Microsoft Entra's multitenant organization feature lets an organization "define a boundary around the Microsoft Entra tenants that your organization owns". It needs Microsoft Entra ID P1 (one license per employee per multitenant organization, and at least one per tenant), allows up to 100 active tenants, and a tenant can create or join only one. Cross-tenant synchronization of users needs a P1 license for each synchronized user in the source tenant, while the target tenant uses Microsoft Entra External ID monthly active user billing and needs at least one P1 license for automatic redemption. Synchronizing groups needs Microsoft Entra ID Governance (or Microsoft Entra Suite); Microsoft's release notes list it as a public preview in March 2026 and as generally available in May 2026 (checked 2026-10-13).
 
 - **Pros.** The least disruption now, no migration project, familiar tools for each team, and quick collaboration across tenants.
-- **Cons.** Two sets of Conditional Access policies, admin roles, emergency access accounts, and logs for the same small team to run. Every leaver must be removed in two places (R-05), and access reviews and investigations must cover both (R-10). Duplicate licenses and contracts continue (R-09). Devices enrolled in another tenant cannot give ADR-008's single compliance signal. The SOC 2 system description and its evidence grow more complex, and the acquired product line's team would sit on different controls at M5.
+- **Cons.** Two sets of Conditional Access policies, admin roles, emergency access accounts, and logs for the same small team to run. Every leaver must be removed in two places (R-05), and access reviews and investigations must cover both (R-10). Duplicate licenses and contracts continue (R-09). Devices enrolled in another tenant cannot give ADR-008's single compliance signal. The SOC 2 system description and its evidence grow more complex, and the acquired teams would sit on different corporate controls.
 - **Verdict.** Rejected as an end state. Cross-tenant synchronization of users is allowed only as a temporary bridge during the waves, if a leftover tenant still hosts something staff need, and it is removed at decommissioning.
 
 ### Option 3: A single big-bang weekend migration
@@ -52,7 +52,7 @@ Leave any acquired tenant, devices, and tools in place and connect them. Microso
 Move every acquired identity, device, file store, and application over one weekend.
 
 - **Pros.** The shortest period of mixed states, one communication, and duplicate costs that end sooner.
-- **Cons.** A device reset takes a working session and Macs must be wiped for automated enrollment, so a small team cannot cover the acquired fleet in one weekend. Cross-tenant OneDrive and SharePoint moves allow no incremental or delta passes, so a failed weekend has no clean way back. Microsoft recommends making UPN changes in batches and starting cross-tenant site moves with a few sites, the opposite of one large event. Monday would bring a service desk flood just when Support and Finance must serve customers' payroll. Any weekend before February collides with the freeze, year-end, and the 2027-02-01 SMS and voice retirement, and any weekend before April risks SOC 2 exceptions.
+- **Cons.** A device reset takes a working session and Macs must be wiped for automated enrollment, so a small team cannot cover the acquired fleet in one weekend. Cross-tenant OneDrive and SharePoint moves allow no incremental or delta passes, so a failed weekend has no clean way back. Microsoft recommends making UPN changes in batches and starting cross-tenant site moves with a few sites, the opposite of one large event. Monday would bring a service desk flood just when Support and Finance are at their busiest. Any weekend before February collides with the freeze, year-end, and the 2027-02-01 SMS and voice retirement, and any weekend before April risks SOC 2 exceptions.
 - **Verdict.** Rejected. It concentrates the risk in one irreversible event that a lean team cannot staff.
 
 ## Decision
@@ -88,7 +88,7 @@ gantt
 | Phase 2 (December) | Business owners choose survivors, with no cutovers. Identity map drafted from the HR record | M2 |
 | Phase 3 (January) | Migration Manager agents installed and file servers scanned read-only. A rehearsal on the IT team's own accounts, devices, and files, with copies only. Runbooks, rollback points, and communications written. Executive approval at M3. Small January waves for teams outside year-end work were considered and deferred, because January carries year-end support and the run-up to the SMS and voice retirement | M3 approval |
 | Phase 4 (February to April) | Waves from late February. Each person moves in the order identity (matched through the HR feed), device (ADR-008's order), files, then SaaS. Acquired teams join document 06's managed-device rings (CA-06) only after their device wave. Teams with payroll and customer duties move mid-week, outside peaks agreed with their leaders. Systems in the current SOC 2 system description move after M4 or with the SOC 2 audit firm's agreement. Customer-facing integrations move last, and the older brand domain that still sends follows document 06's enforcement path | KPI-20, KPI-21, and KPI-24 hold before each next wave |
-| Phase 5 (May to October) | Remaining waves. The acquired product line's team on standard identity, devices, and files before M5, and one identity for everyone before M6. Decommissioning by M7: any leftover tenant, file servers sanitized under NIST SP 800-88 Rev. 2, retired SaaS with deletion confirmed, and retired domains | M7 |
+| Phase 5 (May to October) | Remaining waves. The acquired companies' teams on standard identity, devices, and files before M5, and one identity for everyone before M6. Decommissioning by M7: any leftover tenant, file servers sanitized under NIST SP 800-88 Rev. 2, retired SaaS with deletion confirmed, and retired domains | M7 |
 
 Rules for every wave:
 
@@ -117,7 +117,7 @@ Acquired staff already sign in to the primary tenant and may already have a OneD
 - Leavers and access reviews reach acquired staff through document 07 (KPI-12, KPI-13).
 - Every acquired device reports one compliance signal (KPI-06).
 - Duplicate contracts end at their notice dates, a cost offset in document 04's budget.
-- The acquired product line's team is on standard controls before M5, which supports document 10's route into SOC 2 scope.
+- The acquired teams are on Fabrikam's standard corporate controls before M5, which closes the consolidation gaps.
 
 ### Negative
 
@@ -146,7 +146,7 @@ Acquired staff already sign in to the primary tenant and may already have a OneD
 - The M1 inventory finds a leftover tenant that still holds mailboxes, or a separate identity provider used for administration.
 - Microsoft makes cross-tenant SharePoint migration generally available or changes its Enterprise Agreement-only terms.
 - Two consecutive waves miss the KPI-20 or KPI-24 targets.
-- The SOC 2 audit firm declines in-period cutovers for a system, or document 10's route to M5 needs the acquired product line's team earlier.
+- The SOC 2 audit firm declines in-period cutovers for a system, or consolidation needs the acquired teams on standard controls earlier.
 - Fabrikam signs another acquisition. This record then becomes the playbook, with Option 2 as a time-boxed bridge.
 - The first annual program review (M7).
 

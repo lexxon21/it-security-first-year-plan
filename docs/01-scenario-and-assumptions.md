@@ -14,16 +14,16 @@ All cadences, targets, thresholds, and timelines in this repository are proposal
 
 Fabrikam is a privately held US software company.
 
-- **What it sells.** A cloud workforce platform for employers with hourly workforces at client sites (security services, commercial cleaning, and staffing agencies). The platform covers recruiting and onboarding, core HR, payroll, benefits administration, and time tracking with GPS location at clock-in. Product has proposed voice verification for customers' administrators who call Fabrikam's support line. The proposal is held at the privacy review gate (document [10](10-governance-and-compliance-program.md)) and is not live.
+- **What it sells.** A cloud workforce platform for employers with hourly workforces at client sites (security services, commercial cleaning, and staffing agencies). The platform covers recruiting and onboarding, core HR, payroll, benefits administration, and time tracking. Engineering owns the product platform and its security; it sits outside the Director's scope.
 - **Customers.** Several thousand small and mid-sized employers. Their HR and payroll staff use the web application. Their hourly workers use the mobile app on their own phones or on shared phones and tablets at work sites, which customers buy and manage. Customers depend on Fabrikam to run payroll on time.
 - **Size and shape.** About 450 employees: roughly a third in Engineering and Product, then Customer Support and Success, Sales and Marketing, and General and Administrative. Remote-first, with two small offices inherited from acquisitions.
 - **History.** Fabrikam grew through two acquisitions of smaller workforce-software companies. The products now sell as one platform. The acquired companies' email domains already run in Fabrikam's primary Microsoft 365 tenant. Some file storage, device management, identities, and software as a service (SaaS) applications from the acquisitions are still separate or duplicated.
 
 ## Product platform and data
 
-The platform is multi-tenant SaaS hosted with one public cloud provider (deliberately unnamed). Engineering runs it, under the CTO. It integrates with customers' ERP and accounting systems (API and connectors), benefits carriers, and background screening providers, and it offers a public customer API. Product runs a customer status page, hosted apart from Microsoft 365 and the product platform. The Director's scope is corporate IT plus company-wide security governance, risk, and compliance. Product cloud security engineering is shared with Engineering under the RACI (responsible, accountable, consulted, informed) matrix in document [04](04-operating-model-team-and-budget.md). The SOC 2 scope covers both.
+The platform is multi-tenant SaaS hosted with one public cloud provider (deliberately unnamed). Engineering runs it and owns its security, availability, and recovery, under the CTO. It integrates with customers' ERP and accounting systems (API and connectors), benefits carriers, and background screening providers, and it offers a public customer API. Product runs a customer status page, hosted apart from Microsoft 365 and the product platform. The Director's scope is the company's own internal IT and security plus the company-wide SOC 2 program and its corporate controls. The product platform and its security are Engineering's and are out of scope; only the duties that connect the two are recorded in the RACI (responsible, accountable, consulted, informed) matrix in document [04](04-operating-model-team-and-budget.md). Fabrikam's SOC 2 report covers the product, but Engineering owns the product controls while the Director owns the program and the corporate controls.
 
-For its customers, Fabrikam processes applicant data, Form I-9 and E-Verify data, Social Security numbers, tax withholding forms, and direct-deposit bank details; benefits enrollment data, including dependents; background check results from screening partners; GPS location captured at clock-in; and payroll registers. Fabrikam is a service provider to its customers (the employers), and contracts set its notification duties.
+For its customers, the product processes applicant data, Form I-9 and E-Verify data, Social Security numbers, tax withholding forms, and direct-deposit bank details; benefits enrollment data, including dependents; background check results from screening partners; and payroll registers. Fabrikam is a service provider to its customers (the employers), and contracts set its notification duties. Engineering owns this product data and its protection.
 
 ## Corporate IT and people on day 1
 
@@ -35,8 +35,7 @@ For its customers, Fabrikam processes applicant data, Form I-9 and E-Verify data
 ## Compliance on day 1
 
 - A SOC 2 Type II report covers the core HR and payroll product for the Security, Availability, and Confidentiality categories. The current review period ends in month 5 of the Director's tenure, at the end of March 2027.
-- An acquired product line is not yet in SOC 2 scope, and enterprise customers are asking for it.
-- Payroll and tax funds move through a banking partner, which is a subservice organization for SOC purposes. The executive team decides by M7 whether Fabrikam also needs a SOC 1 report or the Processing Integrity category (document [10](10-governance-and-compliance-program.md)).
+- The executive team decides by M7 whether Fabrikam also needs a SOC 1 report or the Processing Integrity category, both of which would cover product controls that Engineering owns (document [10](10-governance-and-compliance-program.md)).
 - NIST CSF 2.0 is the chosen hub framework, with no Organizational Profile yet. There is no formal risk register, and the policies written for the first audit are out of date.
 
 ## Reporting line and decision rights
@@ -65,17 +64,17 @@ Working assumptions, not findings. The M1 listening report (day 30) records whet
 | A-03 | Lifecycle | People emails IT to onboard and offboard; accounts are created by hand; offboarding sometimes lags. No access reviews. SaaS access is granted ad hoc | Sample of recent joiners and leavers against HR dates |
 | A-04 | Devices | Windows laptops are in Intune with inconsistent compliance policies; Macs are partly managed. Local admin rights are common, with no Windows LAPS. A few Windows 10 devices remain, with unknown commercial Extended Security Updates (ESU) coverage; Year 1 ended 2026-10-13 | Reconciled device inventory; Windows 10 list |
 | A-05 | Email | Defender for Office 365 Plan 1 (in E3 since the July 2026 update) runs on default policies. The main domain publishes DMARC at p=none, and its aggregate reports go to a mailbox nobody reviews. Of the two older brand domains from the acquisitions, one no longer sends mail but publishes no SPF or DMARC record, and the other sends only through a marketing service and has no DMARC record. Third-party services in four categories (CRM, support desk, marketing automation, transactional email) send as Fabrikam's domains, and some of them do not sign with a Fabrikam domain. Some devices and business applications may still send mail through SMTP AUTH with Basic authentication, which Exchange Online disables by default at the end of December 2026 (a secondary source) | Per-domain records and where their reports go; sender list; SMTP AUTH clients report |
-| A-06 | Data | Teams and SharePoint sprawl. "Anyone" sharing links are allowed. No sensitivity labels. Customer payroll exports are sometimes emailed or kept in OneDrive during support cases | Sharing settings; support case walk-through |
+| A-06 | Data | Teams and SharePoint sprawl. "Anyone" sharing links are allowed. No sensitivity labels. Sensitive company and employee files are sometimes emailed or kept in OneDrive | Sharing settings; file-handling review |
 | A-07 | Detection | Defender for Endpoint alerts go to a shared mailbox. No after-hours coverage. Audit logging is on at standard retention | Alert routing trace; retention settings |
 | A-08 | SaaS | Duplicate tools from the acquisitions. No application inventory. Single sign-on covers some apps | Application inventory v1 |
-| A-09 | Resilience | No Microsoft 365 backup beyond retention settings. The corporate continuity plan is out of date. Engineering owns product disaster recovery; the last test date is unknown | Retention settings; plan review; SRE lead |
+| A-09 | Resilience | No Microsoft 365 backup beyond retention settings. The corporate continuity plan is out of date. Product disaster recovery is Engineering's and out of scope | Retention settings; corporate continuity plan review |
 | A-10 | Governance | SOC 2 evidence is gathered by hand near audit time. Control owners are unclear. Policies are stale. Vendor reviews are ad hoc | SOC 2 report and readiness tracker review |
 | A-11 | People | Annual training video only. No phishing simulation | Training records |
-| A-12 | AI | Employees use public AI tools without guidance. Leadership is interested in Microsoft Copilot (formerly Microsoft 365 Copilot). Product teams are building AI features | Stakeholder conversations; product review |
+| A-12 | AI | Employees use public AI tools without guidance. Leadership is interested in Microsoft Copilot (formerly Microsoft 365 Copilot) | Stakeholder conversations |
 
 ## Out of scope
 
-- **Product cloud architecture.** Engineering owns the platform's design and operation; the plan covers only the shared security duties in the RACI.
+- **The product platform.** Engineering owns the platform's design, operation, security, availability, and recovery; the plan covers only the duties that connect it to corporate IT, as recorded in the RACI.
 - **Legal advice.** The plan names questions for the General Counsel and does not answer them.
 - **Prices and detailed costs.** Licenses and cost drivers are named with their relative size, never with prices.
 - **Physical security beyond the two offices.** Data center security sits with the cloud provider and with Microsoft.
@@ -91,7 +90,7 @@ Working assumptions, not findings. The M1 listening report (day 30) records whet
 
 ## Resourcing and dependencies
 
-- **Roles.** The Director of IT and Security owns this document. In Phase 1 the IT Operations Manager, the Engineering Manager, and the Site Reliability Engineering (SRE) lead supply the verifying facts.
+- **Roles.** The Director of IT and Security owns this document. In Phase 1 the IT Operations Manager and the Engineering Manager supply the verifying facts.
 - **Partners and licenses.** None beyond the Microsoft 365 E3 tools and partners named in document 05.
 - **Depends on.** Documents 04 (RACI and forums) and 05 (verification). Every other document depends on this one.
 

@@ -10,15 +10,15 @@ The Director of IT and Security proposes this decision; the executive team appro
 
 ## Context
 
-At day 1, Fabrikam (fictional) gathers SOC 2 evidence by hand near audit time, control owners are unclear, and a finance manager coordinates SOC 2 part time with an outside audit-readiness consultant (assumption A-10). The current review period for the core HR and payroll product ends on 2027-03-31 (M4), and the next one should start on 2027-04-01 with no gap. Document [10](../10-governance-and-compliance-program.md) brings the acquired product line into scope: readiness from February 2027, a dated path at M5, a Type 1 report as of 2027-08-31, and a first Type II period that ends with the core product's period on 2028-03-31. AICPA's SOC 2 guide says a service auditor is engaged for either a type 1 or a type 2 examination, not a mix of the two, so for several months Fabrikam runs two products and two report types at once. Several controls of record also change when the next period starts: the HR-driven identity lifecycle ([ADR-002](ADR-002-hr-system-of-record-drives-identity.md)) and MDR monitoring ([ADR-003](ADR-003-managed-detection-and-response.md)).
+At day 1, Fabrikam (fictional) gathers SOC 2 evidence by hand near audit time, control owners are unclear, and a finance manager coordinates SOC 2 part time with an outside audit-readiness consultant (assumption A-10). The current review period ends on 2027-03-31 (M4), and the next one should start on 2027-04-01 with no gap. Several controls of record also change when the next period starts: the HR-driven identity lifecycle ([ADR-002](ADR-002-hr-system-of-record-drives-identity.md)) and MDR monitoring ([ADR-003](ADR-003-managed-detection-and-response.md)).
 
 Evidence lives in many systems: Microsoft Entra ID, Intune, and Defender in Microsoft 365; the public cloud provider that hosts the product; the HR system of record, which is Fabrikam's own product; the IT service management (ITSM) tool, which holds joiner, leaver, change, incident, and vendor intake records; and code hosting and CI/CD for product changes. Some of it expires. Microsoft Entra keeps sign-in and audit logs for 30 days on Entra ID P1, and Microsoft Purview Audit (Standard), included in Microsoft 365 E3, keeps unified audit log records for 180 days. Document [06](../06-microsoft-365-security-baseline.md) archives logs for investigations; this decision is about control evidence, which has to be captured on a schedule rather than rebuilt months later.
 
-The team is small: the Director, a GRC Analyst (hiring sequence in document [04](../04-operating-model-team-and-budget.md)), and an IT team of about five. NIST CSF 2.0 is the hub framework, and the [crosswalk](../crosswalk/csf2-soc2-crosswalk.md) relates it to the SOC 2 criteria. The SOC 2 audit firm needs evidence that shows its source and when it was collected, and Fabrikam needs to be able to leave any tool with its records intact. AICPA's ethics staff noted in April 2026 that business arrangements between CPA firms and SOC tool providers can raise significant threats to compliance with the AICPA Code of Professional Conduct, so the tool choice and the audit firm relationship stay separate.
+The team is small: the Director of IT and Security, who takes on the GRC and SOC 2 program work with the outside audit-readiness consultant, and an IT team of about five. NIST CSF 2.0 is the hub framework, and the [crosswalk](../crosswalk/csf2-soc2-crosswalk.md) relates it to the SOC 2 criteria. The SOC 2 audit firm needs evidence that shows its source and when it was collected, and Fabrikam needs to be able to leave any tool with its records intact. AICPA's ethics staff noted in April 2026 that business arrangements between CPA firms and SOC tool providers can raise significant threats to compliance with the AICPA Code of Professional Conduct, so the tool choice and the audit firm relationship stay separate.
 
 ## Decision drivers
 
-1. Two products in SOC 2 scope within the plan year, with shared corporate controls tested once and used for both.
+1. A next SOC 2 period that starts with no gap, with corporate controls captured once and reused across the program.
 2. A lean team (R-14): collecting evidence and reminding control owners must not depend on one person's memory.
 3. Evidence produced as work happens, so a failing control is found and fixed months before the audit firm samples it (KPI-03, KPI-04).
 4. Integrations with Microsoft 365 (Entra ID, Intune, Defender), the cloud provider, the HR system of record, the ITSM tool, and code hosting.
@@ -38,7 +38,7 @@ Software as a service that connects to identity, device, cloud, HR, ticketing, a
 Pros:
 - Evidence arrives on a schedule from the systems that run the controls, which ends the near-audit scramble (A-10).
 - Scheduled tests show drift between examinations, for example an administrator without phishing-resistant MFA or a laptop without disk encryption, while there is still time to fix it.
-- Shared corporate controls can be scoped once to both products, which suits the acquired product line's Type 1 and Type II.
+- Corporate controls can be scoped once and reused across the SOC 2 program, so evidence is captured as work happens.
 - Policy reviews, vendor reviews, and exceptions sit in one place with reminders (KPI-02, KPI-04, KPI-05).
 - An auditor workspace shortens the request-and-response cycles of fieldwork.
 - Custom frameworks, where a product offers them, let the CSF 2.0 Core and the crosswalk load directly (confirmed during selection, not assumed).
@@ -49,7 +49,7 @@ Cons:
 - Automated tests check settings, not judgment. A passing test does not show that an access review was thoughtful or that a vendor review read the report, so manual controls still need human evidence.
 - Connectors may not cover Fabrikam's own HR product or Engineering's custom tooling, so some evidence stays manual.
 - Lock-in, if export is weak.
-- Setup and mapping work in February and March (the Director, then the GRC Analyst), while the current period closes.
+- Setup and mapping work in February and March (the Director, with the outside audit-readiness consultant), while the current period closes.
 
 ### Option B: Spreadsheets and shared folders (not chosen; kept as the fallback)
 
@@ -80,23 +80,23 @@ Pros:
 Cons:
 - Built for organizations with dedicated GRC administrators; Fabrikam would need configuration work and administration it does not have.
 - Evidence connectors for Fabrikam's specific SaaS and cloud systems would have to be confirmed one by one, and any gap becomes custom integration work.
-- Time to value would likely miss the start of the next period in April 2027 and the acquired product line's Type 1.
-- Cost and administration out of proportion to a company of about 450 people with one GRC Analyst.
+- Time to value would likely miss the start of the next period in April 2027.
+- Cost and administration out of proportion to a company of about 450 people with a lean team.
 
 Rejected because its administration and time to value do not fit the plan year or the team. It comes back into consideration if Fabrikam later needs enterprise risk management or internal audit modules.
 
 ## Decision
 
-Fabrikam will adopt a compliance automation platform (category) for SOC 2 evidence and control monitoring. The Director of IT and Security, with the outside audit-readiness consultant, evaluates products in Phase 3 against the criteria below (action 10.15), because the GRC Analyst starts in March 2027 in the base case; the executive team approves the subscription with the budget at M3; the contract is signed in February 2027 after the audit firm walks through sample evidence (10.18); and the platform goes live for the review period that starts on 2027-04-01 (10.20). The current period's evidence stays in its existing form until it closes (M4), so nothing moves mid-period.
+Fabrikam will adopt a compliance automation platform (category) for SOC 2 evidence and control monitoring. The Director of IT and Security, with the outside audit-readiness consultant, evaluates products in Phase 3 against the criteria below (action 10.15); the executive team approves the subscription with the budget at M3; the contract is signed in February 2027 after the audit firm walks through sample evidence (10.18); and the platform goes live for the review period that starts on 2027-04-01 (10.20). The current period's evidence stays in its existing form until it closes (M4), so nothing moves mid-period.
 
 Guardrails:
 
 1. **Systems of record stay the source of truth.** Entra ID, Intune, the ITSM tool, the cloud provider, and code hosting run the controls; the platform reads and records.
 2. **No customer workforce data in the platform.** Evidence is configuration, metadata, and samples with personal data kept to a minimum; a record that holds customer data is referenced, not uploaded.
-3. **Narrow connectors.** Each connector gets the narrowest permissions its vendor documents. The Security Engineer (until that role starts, March 2027 in the base case, the Director of IT and Security with the Systems Engineer (Identity and Endpoint)) reviews them before connection and with the other integration credentials afterward, and platform administrators sign in through Microsoft Entra single sign-on with phishing-resistant MFA, enforced by a Conditional Access authentication strength (Microsoft Entra ID P1, included in Microsoft 365 E3).
+3. **Narrow connectors.** Each connector gets the narrowest permissions its vendor documents. The Director of IT and Security, with the Systems Engineer (Identity and Endpoint), reviews them before connection and with the other integration credentials afterward, and platform administrators sign in through Microsoft Entra single sign-on with phishing-resistant MFA, enforced by a Conditional Access authentication strength (Microsoft Entra ID P1, included in Microsoft 365 E3).
 4. **No Secure Score as evidence.** Microsoft Secure Score is not audit evidence. Microsoft says it "isn't an absolute measurement of how likely your system or data could be breached", and document 06 treats it as a tracking input only.
 5. **Separate from the audit firm.** The platform and the audit firm are chosen separately, with no bundled audit-and-platform deal, and Fabrikam asks the audit firm to disclose any business arrangement with the chosen vendor.
-6. **A passing test is not the same as an effective control.** Manual and judgment controls (access reviews, vendor reviews, risk acceptance) keep their human evidence, and the GRC Analyst samples automated results each quarter (proposal).
+6. **A passing test is not the same as an effective control.** Manual and judgment controls (access reviews, vendor reviews, risk acceptance) keep their human evidence, and the Director of IT and Security samples automated results each quarter (proposal).
 
 If the subscription is not approved at M3, Option B applies with a structured control matrix, a monthly evidence calendar, and the same evidence rules (document 10, section 3.5), and the Director records the effect on R-11 and R-14 for their owners.
 
@@ -107,12 +107,12 @@ Weights are proposals. A product that cannot export everything in open formats, 
 | Criterion | Weight | What good looks like |
 |---|---|---|
 | Integrations | 25% | Working connectors for Microsoft Entra ID, Intune, and Defender, the cloud provider that hosts the products, the ITSM tool, and code hosting, plus a supported path for the HR system of record (API or scheduled file), shown in a trial against Fabrikam's own tenant rather than a demonstration environment |
-| Two products and two report types | 15% | Controls scoped per system, shared corporate controls tested once, and a Type 1 and a Type II period running side by side |
+| Scoping across systems | 15% | Controls scoped per system, with shared corporate controls tested once and reused across the SOC 2 program |
 | Auditor access | 15% | An auditor workspace with named accounts and MFA, sample requests handled in the tool, evidence showing its source and collection time, and access that ends with fieldwork |
 | Exportability and exit | 15% | Full export of controls, mappings, evidence, test history, policies, and vendor records in open formats; an API; deletion confirmed in writing at exit |
 | Frameworks and mapping | 10% | Custom frameworks, tested by loading the CSF 2.0 Core and the [crosswalk data](../../data/csf2-soc2-crosswalk.csv); room to add criteria later |
 | Vendor security | 10% | Its own current SOC 2 Type II report, data location, subprocessor list, breach notice terms that fit Fabrikam's shortest customer clock (document [08](../08-detection-and-incident-response.md)), and least-privilege connectors |
-| Effort and cost drivers | 10% | Live before 2027-04-01, administration one GRC Analyst can carry, and cost drivers stated plainly (headcount, products, frameworks, integrations) |
+| Effort and cost drivers | 10% | Live before 2027-04-01, administration a lean team can carry, and cost drivers stated plainly (headcount, products, frameworks, integrations) |
 
 Because the HR system of record feeds Microsoft Entra ID (ADR-002), the platform can read worker status from Entra. A direct HR connection is needed only for fields Entra does not hold, such as screening completion dates under POL-14, which keeps the least data leaving the HR system.
 
@@ -121,14 +121,14 @@ Because the HR system of record feeds Microsoft Entra ID (ADR-002), the platform
 Positive:
 - Evidence is collected as work happens, and control failures are found early (KPI-03, KPI-04).
 - Policy reviews (KPI-02), vendor reviews (KPI-05), and exceptions are tracked in one place.
-- Shared controls serve both products and the CSF 2.0 Profile, mapped once through the crosswalk.
+- Shared corporate controls serve the SOC 2 program and the CSF 2.0 Profile, mapped once through the crosswalk.
 - Less dependence on any one person (R-14); the finance manager's part-time SOC 2 role ends cleanly at M4.
 - Fieldwork takes less of the audit firm's and the control owners' time.
 
 Negative:
 - A recurring subscription; document 04 sizes the cost drivers.
 - A new integration with broad read access to govern (R-08).
-- Setup work in Phase 4, alongside the close of the current period and the acquired product line's readiness assessment.
+- Setup work in Phase 4, alongside the close of the current period.
 - The risk of false confidence if people stop looking behind a passing test.
 
 ## Risks and mitigations
@@ -139,9 +139,9 @@ Negative:
 | The audit firm will not rely on platform evidence | An evidence walkthrough with the audit firm in February 2027 (10.18), before go-live |
 | The platform vendor has a breach or fails | Breach notice and exit terms in the contract; a full export kept in Fabrikam's SharePoint each quarter (proposal); Option B as the fallback |
 | Lock-in | Export tested before purchase and again each year |
-| Automated tests mistaken for assurance | Quarterly sampling by the GRC Analyst; human evidence for manual controls; the audit firm tests independently |
+| Automated tests mistaken for assurance | Quarterly sampling by the Director of IT and Security; human evidence for manual controls; the audit firm tests independently |
 | Independence concerns | Separate selection, a disclosure question to the audit firm, and no bundled deals |
-| Customer data ends up in the tool | Evidence rules in POL-05 and document 10; the GRC Analyst checks uploads during sampling |
+| Customer data ends up in the tool | Evidence rules in POL-05 and document 10; the Director of IT and Security checks uploads during sampling |
 | The subscription is not approved at M3 | Option B fallback; the effect on R-11 and R-14 goes to their owners |
 
 ## Revisit when

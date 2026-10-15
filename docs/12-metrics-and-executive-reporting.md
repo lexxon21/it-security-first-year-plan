@@ -8,7 +8,7 @@ This document sets how the information technology (IT) and security program at F
 
 ## Principles
 
-- **Measure what drives decisions.** A KPI stays only if it shows whether a control works or whether a top risk (R-01 to R-15, document [11](11-risk-management.md)) is moving. The test comes from the National Institute of Standards and Technology (NIST): keep a data point if it "directly illustrates the performance of a valid control or tracks the presence of a material risk to the organization's objective" (Special Publication (SP) 800-55, Volume 1, Sec. 2.4).
+- **Measure what drives decisions.** A KPI stays only if it shows whether a control works or whether a top risk (R-01, R-03, and R-05 to R-15, document [11](11-risk-management.md)) is moving. The test comes from the National Institute of Standards and Technology (NIST): keep a data point if it "directly illustrates the performance of a valid control or tracks the presence of a material risk to the organization's objective" (Special Publication (SP) 800-55, Volume 1, Sec. 2.4).
 - **Few, stable measures.** 24 in the catalog and 11 on the monthly page. Definitions and targets change only at a Quarterly Risk Review or the annual review, with a recorded reason.
 - **Baselines first.** Every KPI gets a first value, or "no data yet" with a date, by M1 (day 30; document [05](05-environment-discovery.md)); targets with monthly interim steps follow for approval at M3.
 - **Ratings are not measures.** SP 800-55 Volume 1 states that "qualitative and semi-quantitative assessments are not considered measurements" (Sec. 2.2). Document 11's risk ratings are assessments; the KPIs show whether the treatments behind them work.
@@ -25,7 +25,7 @@ Every report below goes to the executive team (document [04](04-operating-model-
 | Annual program review (M7) | Late October 2027 | KPIs against targets, re-baselined risks, catalog changes, next-year plan |
 | Board summary | After a Quarterly Risk Review, if the CEO asks | Two pages at most: top risks, KPI-01, KPI-03, KPI-08, KPI-16, and KPI-19, SOC 2 status, serious incidents. The CEO decides what goes to the investor board |
 
-The Director prepares each report, with the governance, risk, and compliance (GRC) Analyst for the Quarterly Risk Review once that role starts (March 2027 in the base case). Milestones M1 to M7 and D120 are defined in document [03](03-twelve-month-roadmap.md).
+The Director prepares each report. Milestones M1 to M7 and D120 are defined in document [03](03-twelve-month-roadmap.md).
 
 ## Scorecard design
 
@@ -39,7 +39,7 @@ One page, three sections, the same KPIs every month. Each row shows the current 
 
 Three blocks follow: **So what** (up to three sentences from the Director), **Top risks: movement** (only risks whose rating, owner, or treatment changed, or flagged by a KPI or supporting check), and **Decisions needed** (options, a recommendation, the deciding executive, and a date). A watch line names any other KPI that is Off track.
 
-**Supporting checks.** Three checks are not KPIs and have no KPI IDs. They are reported in the risk movement rows and at the Quarterly Risk Review, not as scorecard rows: bank-detail and direct-deposit changes with a recorded call-back, from Finance's and People's monthly sample, which those teams add to the monthly pull set up in 12.04 (R-01); sending domains at p=reject, meaning Fabrikam asks receiving mail systems to reject mail that fails its email authentication (R-01, R-02); and open links to sensitive content, from query [q08](../queries/q08-anonymous-sharing-links.kql) (R-07).
+**Supporting checks.** Three checks are not KPIs and have no KPI IDs. They are reported in the risk movement rows and at the Quarterly Risk Review, not as scorecard rows: bank-detail and direct-deposit changes with a recorded call-back, from Finance's and People's monthly sample, which those teams add to the monthly pull set up in 12.04 (R-01); sending domains at p=reject, meaning Fabrikam asks receiving mail systems to reject mail that fails its email authentication (R-01); and open links to sensitive content, from query [q08](../queries/q08-anonymous-sharing-links.kql) (R-07).
 
 Each status (On track, At risk, Off track, Baseline only, or No data yet) is written in words, not color alone, by rules approved at M3 (Appendix: Scorecard status rules). Small monthly counts (leavers, incidents, restore tests, survey responses) use three-month rolling values and show the count (n).
 
@@ -49,7 +49,7 @@ The 24 KPIs follow the NIST Cybersecurity Framework (CSF) 2.0 Functions (KPI-01 
 
 ## Producing trustworthy numbers
 
-Each month, owners pull their sources (business days 1 to 3), the GRC Analyst computes the values and re-checks large swings (day 4), owners confirm (day 5), and the Director interprets (day 6); until the GRC Analyst starts (March 2027 in the base case, or February if the role is pre-approved at M2), the Director compiles with the IT Operations Manager. Appendix: Data quality and known limits sets the checks on the numbers and the limits of the sources.
+Each month, owners pull their sources (business days 1 to 3), the Director computes the values and re-checks large swings with the IT Operations Manager (day 4), owners confirm (day 5), and the Director interprets (day 6). Appendix: Data quality and known limits sets the checks on the numbers and the limits of the sources.
 
 ## Phase plan
 
@@ -62,15 +62,15 @@ Each month, owners pull their sources (business days 1 to 3), the GRC Analyst co
 | Phase 3 | 12.05 | Propose targets, due dates, interim targets, and tolerances for every KPI, for executive team approval at M3 | Approved targets and status rules (M3) | KPI-01 to KPI-24 | Director of IT and Security | WS-5 |
 | Phase 3 | 12.06 | Hold the first Quarterly Risk Review with the M3 approval: every top risk's owner and treatment plan, and the full catalog | Every top risk owned, with an approved treatment plan | KPI-01 | Director of IT and Security | WS-5 |
 | Phase 4 | 12.07 | Present the Day 120 readout (end of February 2027) on Friday 2027-02-26 | First measured results (D120) | KPI-08, KPI-09, KPI-12, KPI-20 | Director of IT and Security | WS-5 |
-| Phase 4 | 12.08 | Hand collection to the GRC Analyst once that role starts; move pulls to repeatable reports and the queries in `queries/` as Phase 4 licenses arrive, marking each changed source | Lower effort; source changes visible | KPI-09, KPI-11, KPI-15, KPI-16 | GRC Analyst | WS-5 |
-| Phase 4 | 12.09 | April: run the first quarterly re-performance: recompute two KPIs and trace leavers and new hires end to end | Errors fixed before the review | KPI-12, KPI-22 | GRC Analyst | WS-5 |
+| Phase 4 | 12.08 | Move pulls to repeatable reports and the queries in `queries/` as Phase 4 licenses arrive, marking each changed source | Lower effort; source changes visible | KPI-09, KPI-11, KPI-15, KPI-16 | Director of IT and Security | WS-5 |
+| Phase 4 | 12.09 | April: run the first quarterly re-performance: recompute two KPIs and trace leavers and new hires end to end | Errors fixed before the review | KPI-12, KPI-22 | Director of IT and Security | WS-5 |
 | Phase 4 | 12.10 | Hold the month-6 Quarterly Risk Review in late April 2027 ([illustrative sample](templates/quarterly-risk-review-sample.md)) | Risks re-rated; decisions recorded | KPI-01, KPI-03 | Director of IT and Security | WS-5 |
 | Phase 5 | 12.11 | Hold the month-9 Quarterly Risk Review in late July 2027 with the M5 and M6 checks | M5 and M6 confirmed against their KPIs | KPI-03, KPI-08, KPI-12, KPI-22 | Director of IT and Security | WS-5 |
 | Phase 5 | 12.12 | Run the first annual program review (M7): KPIs against targets, re-baselined risks, catalog changes, year-two targets; draft the board summary for the CEO | M7 met; year-two targets proposed | KPI-01 to KPI-24 | Director of IT and Security | WS-5 |
 
 ## Resourcing and dependencies
 
-- **Roles.** The Director of IT and Security owns executive reporting. The IT Operations Manager compiles with the Director until the GRC Analyst starts (March 2027 in the base case) and takes over; until the Security Engineer and the GRC Analyst start (document 04), the Director holds their KPIs. The Engineering Manager and the Site Reliability Engineering (SRE) lead supply the product lines of KPI-11 and KPI-19, the vice president (VP) of People's team human resources (HR) data, and the chief financial officer's (CFO's) team vendor data and the budget status.
+- **Roles.** The Director of IT and Security owns executive reporting and holds the governance, risk, compliance, detection-metric, vulnerability, training, and simulation KPIs; the IT Operations Manager compiles the numbers with the Director. The vice president (VP) of People's team supplies human resources (HR) data, and the chief financial officer's (CFO's) team supplies vendor data and the budget status. Engineering reports its own product platform figures under the shared RACI (document 04).
 - **Partners.** The managed detection and response (MDR) provider (KPI-16), the SOC 2 audit firm (KPI-03 and KPI-04), and the IT hardware partner (the KPI-06 denominator).
 - **Licenses.** Microsoft 365 E3 in Phases 1 to 3; from Phase 4, Microsoft Defender Suite and Microsoft Entra ID Governance (architecture decision record [ADR-001](adr/ADR-001-microsoft-365-security-licensing.md); detail in Appendix: Data quality and known limits). Without Defender Suite, KPI-11, KPI-15, and KPI-16 stay on interim sources and their targets are proposed again.
 - **Cost drivers.** No new reporting tool: the work runs on the existing IT service management tool, the HR system of record, the training platform, and the compliance automation platform ([ADR-007](adr/ADR-007-compliance-automation-platform.md), category only). The main cost is people time, about one working day a month once routine.
@@ -81,7 +81,7 @@ Each month, owners pull their sources (business days 1 to 3), the GRC Analyst co
 - **Measurement effort (R-14).** NIST says data collection should be light enough "to ensure that available resources are primarily used to correct problems rather than collect data" (SP 800-55 Vol. 1, Sec. 3.1.3). If production takes more than about a day a month once routine, the catalog shrinks.
 - **Early values are proxies.** M3 targets rest on one or two months of baselines and some interim sources, so the month-6 review may adjust them, with recorded reasons; a slipped M3 licensing decision delays the series that depend on it.
 - **No blame.** No individual phishing results reach executive reports; NIST SP 800-50 Rev. 1 says simulation activities "should not be punitive, nor should any employee be called out for their response."
-- **Engineering data.** If the product lines of KPI-11 and KPI-19 are missing, the scorecard says so rather than presenting corporate figures as the whole picture.
+- **Engineering data.** KPI-11 and KPI-19 cover corporate endpoints and corporate systems; Engineering reports product vulnerability and product recovery separately under the RACI (document 04), and the scorecard does not present the corporate figures as covering the product.
 - **Open question for the SOC 2 audit firm.** Whether it will use any KPI data in its testing; the default assumption is that it will not.
 
 ## Framework mapping
@@ -105,23 +105,23 @@ Terms: **MFA** is multifactor authentication; a phishing-resistant method, such 
 | KPI | Owner | Headline target (proposal) | Also reported in |
 |---|---|---|---|
 | KPI-01 Top risks with an owner and an approved treatment plan (%) | Director of IT and Security | 100 percent by M3 and every month after | Scorecard; board summary |
-| KPI-02 Policies reviewed within their cycle (%) | GRC Analyst | 100 percent from M3; none overdue by more than 30 days | Steering Group when a policy is overdue |
-| KPI-03 SOC 2 controls operating without exceptions (%) | GRC Analyst | No new exceptions caused by the Director's changes (period closing at M4); management testing 95 percent from Phase 4, 98 by M7 | Scorecard; board summary |
-| KPI-04 Open audit exceptions and their median age | GRC Analyst | Owner and committed date within 10 business days; median age under 60 days from Phase 4 | Scorecard |
-| KPI-05 Third parties handling customer or employee data with a current review (%) | GRC Analyst | 100 percent of third parties with customer data access by month 9 (July 2027); 90 percent of all in-scope third parties by M7 | None |
+| KPI-02 Policies reviewed within their cycle (%) | Director of IT and Security | 100 percent from M3; none overdue by more than 30 days | Steering Group when a policy is overdue |
+| KPI-03 SOC 2 controls operating without exceptions (%) | Director of IT and Security | No new exceptions caused by the Director's changes (period closing at M4); management testing 95 percent from Phase 4, 98 by M7 | Scorecard; board summary |
+| KPI-04 Open audit exceptions and their median age | Director of IT and Security | Owner and committed date within 10 business days; median age under 60 days from Phase 4 | Scorecard |
+| KPI-05 Third parties handling customer or employee data with a current review (%) | Director of IT and Security | 100 percent of third parties with customer data access by month 9 (July 2027); 90 percent of all in-scope third parties by M7 | None |
 | KPI-06 Devices managed in Intune out of devices known (%) | IT Operations Manager | 90 percent by the end of Phase 4; 98 by M7 | None |
 | KPI-07 SaaS applications behind single sign-on (%) | Systems Engineer (Identity and Endpoint) | By M7, 90 percent of those holding customer or employee data and 70 percent of all | None |
 | KPI-08 Phishing-resistant MFA coverage, admins and all users (%) | Systems Engineer (Identity and Endpoint) | Admins 100 percent by the end of Phase 2; all employees 90 percent by M6, 95 by M7; nobody on SMS or voice alone after 2027-02-01 | Scorecard; board summary |
 | KPI-09 Standing privileged role assignments (count) | Director of IT and Security | Fewer than five Global Administrators, emergency access accounts included (end of Phase 1); fewer than 10 standing assignments (end of Phase 2); only the 2 emergency access accounts (end of Phase 4) | Scorecard |
 | KPI-10 Compliant devices (%) | Systems Engineer (Identity and Endpoint) | 90 percent by the end of Phase 4; 97 by M7 | None |
-| KPI-11 Critical and high vulnerabilities fixed within target (%) | Security Engineer | 90 percent within the patch policy's deadlines (14 days for critical, 30 for high) by M6; 95 by M7 | None |
+| KPI-11 Critical and high vulnerabilities fixed within target (%) | Director of IT and Security | 90 percent within the patch policy's deadlines (14 days for critical, 30 for high) by M6; 95 by M7 | None |
 | KPI-12 Leaver access removed within target (%) | IT Operations Manager | At least 98 percent from M6; every urgent leaver within one hour | Scorecard |
-| KPI-13 Access reviews completed on time (%) | GRC Analyst | 95 percent from the second automated review cycle | None |
-| KPI-14 Security training completion (%) | GRC Analyst | 95 percent by due date; new hires in their first week | None |
-| KPI-15 Phishing simulation report rate and click rate | Security Engineer | By M7, against the first campaign at comparable difficulty: report rate up by at least half, click rate down by at least half | None |
-| KPI-16 Mean time to acknowledge and to contain high-severity incidents | Security Engineer | From MDR go-live: acknowledge within 15 minutes, contain within 4 hours | Scorecard; board summary |
-| KPI-17 Security incidents by severity and cause (count) | Security Engineer | No count target; every incident classified within 5 business days of closure | SEV-1 and SEV-2 counts in the scorecard note |
-| KPI-18 Exercise and post-incident actions closed on time (%) | GRC Analyst | 90 percent from Phase 4 | Steering Group pre-read |
+| KPI-13 Access reviews completed on time (%) | Director of IT and Security | 95 percent from the second automated review cycle | None |
+| KPI-14 Security training completion (%) | Director of IT and Security | 95 percent by due date; new hires in their first week | None |
+| KPI-15 Phishing simulation report rate and click rate | Director of IT and Security | By M7, against the first campaign at comparable difficulty: report rate up by at least half, click rate down by at least half | None |
+| KPI-16 Mean time to acknowledge and to contain high-severity incidents | Director of IT and Security | From MDR go-live: acknowledge within 15 minutes, contain within 4 hours | Scorecard; board summary |
+| KPI-17 Security incidents by severity and cause (count) | Director of IT and Security | No count target; every incident classified within 5 business days of closure | SEV-1 and SEV-2 counts in the scorecard note |
+| KPI-18 Exercise and post-incident actions closed on time (%) | Director of IT and Security | 90 percent from Phase 4 | Steering Group pre-read |
 | KPI-19 Restore tests meeting target recovery times (%) | IT Operations Manager | Every scheduled test run; 90 percent meet their recovery time objective from Phase 4 | Scorecard; board summary |
 | KPI-20 Service desk tickets resolved within target (%) | IT Operations Manager | 85 percent from Phase 3; 90 by M7 | Scorecard |
 | KPI-21 Employee satisfaction with IT support (CSAT) | IT Operations Manager | 90 percent by M7 | Scorecard |
@@ -151,7 +151,7 @@ Where more than one rule applies, the less favorable status applies.
 
 - **One versioned definition per KPI,** in the catalog. KPI-08, for example, comes from Microsoft Entra's Authentication methods activity report, which Microsoft says needs Entra ID P1 or P2, and from Conditional Access state. Query [q01](../queries/q01-sign-ins-without-strong-auth.kql), which counts successful sign-ins that did not require MFA, is only a cross-check.
 - **Reconciled denominators.** Device, application, vendor, and people counts are checked monthly against the document 05 inventories, so no KPI improves because its denominator shrank.
-- **Separation where practical.** The GRC Analyst collects and the owner explains; the Director reviews the GRC Analyst's own KPIs. Each quarter, two KPIs are recomputed from raw data.
+- **Separation where practical.** Each KPI owner pulls and explains their own values, and the Director reviews them; for the KPIs the Director owns, the IT Operations Manager runs the monthly recompute cross-check. Each quarter, two KPIs are recomputed from raw data.
 - **Restricted inputs.** Inputs hold names and incident detail, so they stay restricted for 13 months; the scorecard shows aggregates only.
 
 **Licenses behind the sources.** Phases 1 to 3: Microsoft 365 E3, including Microsoft Entra ID P1 reports and logs, Intune, Defender for Endpoint Plan 1, Defender for Office 365 Plan 1 (in E3 since the July 2026 update), and Microsoft Purview Audit (Standard). From Phase 4 ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md)): Microsoft Defender Suite, which includes Microsoft Entra ID P2, Defender for Endpoint Plan 2, Defender for Office 365 Plan 2, and Defender for Cloud Apps, and Microsoft Entra ID Governance.

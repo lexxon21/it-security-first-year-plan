@@ -6,7 +6,7 @@ These checklists put document [07](../07-identity-lifecycle-joiners-movers-leave
 
 Owner roles are those in document [04](../04-operating-model-team-and-budget.md), plus the People team (the VP of People's organization), the manager, the sponsor (the Fabrikam employee accountable for a contractor or guest), the system owner (the business owner of an application), and the new hire. SRE means Site Reliability Engineering, and PIM means Privileged Identity Management.
 
-Recruiting is prepared in Phase 3. Offers go out after the executive team approves the budget at M3 (Thursday 2027-01-28), so in the base case the GRC Analyst and the Security Engineer start in March 2027. As an option, the executive team can pre-approve both roles at M2 so offers go out in January and both start in February. Until each role starts, the Director of IT and Security covers the Security Engineer's steps, and the Director with the outside audit-readiness consultant covers the GRC Analyst's (documents [03](../03-twelve-month-roadmap.md) and 04).
+The company does not hire a Security Engineer or a GRC Analyst. The Director of IT and Security covers the security-engineering steps, and the Director with the outside audit-readiness consultant covers the GRC and SOC 2 steps (documents [03](../03-twelve-month-roadmap.md) and 04).
 
 ## Joiner
 
@@ -106,9 +106,9 @@ Target: Microsoft Entra ID access ends within one hour of notice.
 | U4 | Disable admin accounts and remove PIM assignments, if any | Systems Engineer (Identity and Endpoint) | Microsoft Entra ID, PIM |
 | U5 | Remove production and support tooling access within the hour | SRE lead | Product cloud access tooling, support tooling |
 | U6 | Remove finance and payroll system access within the hour | Finance manager | Finance and accounting system, HR system |
-| U7 | Rotate shared secrets the person knew in the enterprise password vault, and change the safe combinations for the emergency access keys if they had access (document 06) | Security Engineer (Director of IT and Security until the Security Engineer starts) | Credential vault (document 06) |
+| U7 | Rotate shared secrets the person knew in the enterprise password vault, and change the safe combinations for the emergency access keys if they had access (document 06) | Director of IT and Security | Credential vault (document 06) |
 | U8 | Apply General Counsel's holds before any deletion and pause the post-offboarding deletion | IT Operations Manager | Microsoft 365 retention (POL-15) |
-| U9 | Alert on sign-in attempts against the disabled account for 30 days | Security Engineer, with the MDR provider once live if it triages custom detections (Director of IT and Security until the Security Engineer starts, with the on-call rotation in document [08](../08-detection-and-incident-response.md)) | Microsoft Entra sign-in logs |
+| U9 | Alert on sign-in attempts against the disabled account for 30 days | Director of IT and Security, with the MDR provider once live if it triages custom detections, and the on-call rotation in document [08](../08-detection-and-incident-response.md) | Microsoft Entra sign-in logs |
 | U10 | Close the ticket with timestamps for KPI-12 | IT Operations Manager | ITSM tool |
 
 ## Contractor end
@@ -120,7 +120,7 @@ Target: Microsoft Entra ID access ends within one hour of notice.
 | C3 | To extend, enter the new end date in HR before the old one passes and re-approve sensitive access for the new term | Sponsor | HR system, My Access portal |
 | C4 | At the end date, run standard leaver steps L6 to L11, automated where possible | Systems Engineer (Identity and Endpoint) | Lifecycle Workflows |
 | C5 | Recover Fabrikam equipment and confirm data is returned or destroyed under the contract | Sponsor, with the Service Desk Analyst | ITSM tool |
-| C6 | Tell the contracting firm that access has ended and close the engagement under POL-10 | Sponsor, with the GRC Analyst (Director of IT and Security until the GRC Analyst starts, with the outside audit-readiness consultant) | Third-party records |
+| C6 | Tell the contracting firm that access has ended and close the engagement under POL-10 | Sponsor, with the Director of IT and Security and the outside audit-readiness consultant | Third-party records |
 
 ## Sources
 

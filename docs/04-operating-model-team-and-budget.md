@@ -4,9 +4,9 @@
 
 ## Purpose and scope
 
-This document sets out how Fabrikam, Inc. (fictional) organizes IT and security for the plan year: the team and hiring sequence, partners, who does what, forums, the budget proposal, and what the Director of IT and Security needs from each executive. Costs appear as categories, cost drivers, and relative size, never as dollar figures, and every cadence is a proposal ([01](01-scenario-and-assumptions.md)).
+This document sets out how Fabrikam, Inc. (fictional) organizes internal IT and security for the plan year: the team, partners, who does what, forums, the budget proposal, and what the Director of IT and Security needs from each executive. The Director runs the company's own IT and security and the SOC 2 program; the product platform Fabrikam sells is Engineering's and is out of scope. Costs appear as categories, cost drivers, and relative size, never as dollar figures, and every cadence is a proposal ([01](01-scenario-and-assumptions.md)).
 
-**Terms.** IT: information technology. KPI: key performance indicator. MDR: managed detection and response. MFA: multifactor authentication. GRC: governance, risk, and compliance. RACI: responsible, accountable, consulted, informed. SRE: Site Reliability Engineering. CEO, CFO, and CTO: the chief executive, financial, and technology officers. VP: vice president. HR: human resources. AI: artificial intelligence. ADR: architecture decision record. CSF: the National Institute of Standards and Technology (NIST) Cybersecurity Framework 2.0. SOC 2 is the attestation report on Fabrikam's controls that customers ask for; a Type 1 report covers control design at one date, and a Type II report also covers operation over a period ([10](10-governance-and-compliance-program.md)). Class A data is the data whose loss stops support for customers' payroll, Fabrikam's own payroll or payments, or incident response ([14](14-business-continuity-and-backup.md)). A Temporary Access Pass is a time-limited code that lets a person set up a sign-in method. Phases and milestones (M1 to M7) follow document [03](03-twelve-month-roadmap.md).
+**Terms.** IT: information technology. KPI: key performance indicator. MDR: managed detection and response. MFA: multifactor authentication. GRC: governance, risk, and compliance. RACI: responsible, accountable, consulted, informed. SRE: Site Reliability Engineering. CEO, CFO, and CTO: the chief executive, financial, and technology officers. VP: vice president. HR: human resources. AI: artificial intelligence. ADR: architecture decision record. CSF: the National Institute of Standards and Technology (NIST) Cybersecurity Framework 2.0. SOC 2 is the attestation report on Fabrikam's controls that customers ask for; a Type 1 report covers control design at one date, and a Type II report also covers operation over a period ([10](10-governance-and-compliance-program.md)). Class A data is the data whose loss stops Fabrikam's own payroll or payments, or incident response ([14](14-business-continuity-and-backup.md)). A Temporary Access Pass is a time-limited code that lets a person set up a sign-in method. Phases and milestones (M1 to M7) follow document [03](03-twelve-month-roadmap.md).
 
 ## Decision rights
 
@@ -16,21 +16,20 @@ The Director proposes the plan, budget, and policies, owns execution, and is acc
 
 | Role | Day 1 | Month 12 | Main work |
 |---|---|---|---|
-| Director of IT and Security | Starts, reporting to the CTO | In post | Plan, budget, and policies; execution; incident command; chairs the IT and Security Steering Group; covers the new roles until each starts |
+| Director of IT and Security | Starts, reporting to the CTO | In post | Plan, budget, and policies; execution; incident command; chairs the IT and Security Steering Group; personally runs the security-engineering and the GRC and SOC 2 program work (Privileged Identity Management, MDR liaison, detections, simulations, data loss prevention, the risk register, vendor reviews, KPIs, and the compliance platform) |
 | IT Operations Manager | In post | In post | Service desk, Change Advisory Board, lifecycle, consolidation waves, on-call lead, backups |
 | Service Desk Analyst | Two of the three IT generalists | Same | The queue, caller verification, Temporary Access Passes, identity reconciliation |
-| Systems Engineer (Identity and Endpoint) | The third IT generalist | Same | Conditional Access, Intune, single sign-on, provisioning, automation; most early build work, and the Security Engineer's hands-on work until that role starts |
-| Security Engineer | None | From March 2027 in the base case | Privileged Identity Management, MDR liaison, detections, simulations, data loss prevention |
-| GRC Analyst | None; a finance manager coordinates SOC 2 part time with an outside readiness consultant | From March 2027 in the base case | SOC 2, the risk register, vendor reviews, KPIs, the compliance platform |
-| Product security | Senior engineers, informally | The Engineering Manager and the SRE lead | Production access, vulnerabilities, recovery, incidents (see the RACI) |
+| Systems Engineer (Identity and Endpoint) | The third IT generalist | Same | Conditional Access, Intune, single sign-on, provisioning, automation; most of the hands-on build work, with contracted specialist help for surge and build |
+| SOC 2 support (existing) | A finance manager, part time, with an outside readiness consultant | Finance manager part time; the readiness consultant kept at least through M4 | Supports the Director's SOC 2 program work and the evidence calendar; the Director leads |
+| Product security | Senior engineers, informally | The Engineering Manager and the SRE lead | Engineering-owned and out of the Director's scope: the product platform, its security, recovery, and product incidents (see the RACI) |
 
-Primary on-call rotates weekly among the IT team and, once in post, the Security Engineer, with the Director as escalation.
+Primary on-call rotates weekly among the IT team, with the Director as escalation.
 
-## Hiring sequence
+## Operating model: no new headcount
 
-Recruiting is prepared in Phase 3. Offers go out after the executive team approves the budget at M3 (Thursday 2027-01-28), so in the base case the GRC Analyst and the Security Engineer start in March 2027. As an option, the executive team can pre-approve both roles at M2 so offers go out in January and both start in February.
+Rather than hire a security engineer or a governance, risk, and compliance analyst, the Director personally takes on the security-engineering and the GRC and SOC 2 program work, which Fabrikam has no dedicated person for today. The existing IT team stays and keeps its work: the IT Operations Manager and three IT generalists (one of them the Systems Engineer, who covers identity and endpoint) run the service desk, devices, identity, change, and backups. External vendors and automation cover what a small team cannot carry alone: the managed detection and response provider, the SOC 2 audit firm, the penetration testing firm, and the IT hardware partner, plus Microsoft FastTrack and contracted specialist help.
 
-Until each role starts, the interim owners in document [03](03-twelve-month-roadmap.md) carry its duties, and the appendix counts each role's actions by month. Interim owners cover each new role's March actions until it starts and pair with it through its first month; if either role starts after March, its March and April actions stay with the interim owners, and the next Quarterly Risk Review reports the effect on M6. Implementation help comes first from FastTrack for Microsoft 365, Microsoft's deployment assistance benefit, requested in December (06.23); the M3 budget then carries contracted build help for February to April and surge support for the February peak and the consolidation waves ([13](13-it-service-management.md)). The build partner's scope and the surge support terms are agreed in January, so contracted help starts right after M3.
+Implementation help comes first from FastTrack for Microsoft 365, Microsoft's deployment assistance benefit, requested in December (06.23); the M3 budget then carries contracted specialist help for February to April and surge support for the February peak and the consolidation waves ([13](13-it-service-management.md)). The specialist help's scope and the surge support terms are agreed in January, so it starts right after M3. The appendix counts the phase-plan actions each role owns by month, so the executive team can see where the Director's and the team's load concentrates.
 
 ## Partners
 
@@ -38,7 +37,7 @@ Four partners support the plan (appendix): the MDR provider, the SOC 2 audit fir
 
 ## Who does what: the RACI
 
-The appendix RACI names one accountable party per activity, including the shared product security split: Engineering for the product platform, incidents, and disaster recovery, and the Chief Product Officer for customer administrator protection (R-02).
+The appendix RACI names one accountable party per activity. The product rows are Engineering-owned and out of the Director's scope: Engineering for the product platform, product incidents, and product disaster recovery.
 
 ## Forums and cadence
 
@@ -50,26 +49,25 @@ The executive team approves the budget at M3 on current quotes ([ADR-001](adr/AD
 
 | Category | What it pays for | Cost drivers | Relative size (proposed order, confirmed by quotes at M3) |
 |---|---|---|---|
-| People | The two new roles; contracted build help and surge support; on-call pay or time off; training | Headcount and start dates; build and surge hours; the on-call policy; built or bought training content (M3) | Largest new recurring line |
-| Licensing ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md)) | From Phase 4: Microsoft Defender Suite (formerly Microsoft 365 E5 Security) for all users (endpoint detection and response, risk-based sign-in, phishing simulation, and the data an MDR provider needs) and Microsoft Entra ID Governance (automated joiners and leavers, just-in-time administration); the fallback is in ADR-001. Conditional: a small certificate add-on for office Wi-Fi. Phase 5: Microsoft Copilot (formerly Microsoft 365 Copilot) pilot licenses after the readiness gate | About 450 seats, contract staff included for Governance; renewal dates | Second: a moderate per-user uplift (ADR-001), with Governance seats the largest identity cost (07) |
-| Partners and services | The MDR service; the incident response retainer or pre-agreed emergency terms; SOC 2 audit fees; the readiness consultant until the GRC Analyst starts and at least through M4; one external penetration test, June to August 2027 (08); outside counsel if needed | MDR pricing basis; retainer terms; audit scope (two products, an added Type 1); test scope | The MDR service is the largest partner line; audit fees rise with the second product |
+| People | Contracted specialist help and surge support; on-call pay or time off; training | Build and surge hours; the on-call policy; built or bought training content (M3) | A recurring line below licensing and the partner services, because no new roles are added |
+| Licensing ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md)) | From Phase 4: Microsoft Defender Suite (formerly Microsoft 365 E5 Security) for all users (endpoint detection and response, risk-based sign-in, phishing simulation, and the data an MDR provider needs) and Microsoft Entra ID Governance (automated joiners and leavers, just-in-time administration); the fallback is in ADR-001. Conditional: a small certificate add-on for office Wi-Fi. Phase 5: Microsoft Copilot (formerly Microsoft 365 Copilot) pilot licenses after the readiness gate | About 450 seats, contract staff included for Governance; renewal dates | The largest new recurring line: a per-user uplift (ADR-001), with Governance seats the largest identity cost (07) |
+| Partners and services | The MDR service; the incident response retainer or pre-agreed emergency terms; SOC 2 audit fees; the readiness consultant through the current period, at least through M4; one external penetration test, June to August 2027 (08); outside counsel if needed | MDR pricing basis; retainer terms; audit scope; test scope | The MDR service is the largest partner line |
 | Tooling ([ADR-006](adr/ADR-006-microsoft-365-backup.md), [ADR-007](adr/ADR-007-compliance-automation-platform.md)) | Microsoft 365 Backup; an isolated copy of class A data, if funded; the compliance platform, contracted in February 2027 and in use from April; small tools for on-call paging, log storage and alerting (08), vaults, email authentication reporting, lookalike domain monitoring from Phase 4 (15.19), out-of-band messaging and a phone bridge (14), a lab tenant (08), and Wi-Fi authentication; security keys and administrators' phones | Protected data volume (Microsoft 365 Backup is pay-as-you-go, billed through Azure); log volume; class A size; platform scope | Small next to the lines above, except backup, which grows with data |
-| Internal time (no new spend) | Engineering time for the acquired product line, the product recovery test, the R-02 and R-08 treatments, and product KPI data; People time for new-hire identity checks; Finance and People time for call-backs; executive time for risk sessions | Engineering scope agreed with the Engineering Manager; hires and bank-detail changes per month | Engineering time is the largest internal cost, sized by quarter with the Engineering Manager before M3 |
+| Internal time (no new spend) | Engineering time for the R-08 treatment; People time for new-hire identity checks; Finance and People time for call-backs; executive time for risk sessions | Engineering scope agreed with the Engineering Manager; hires and bank-detail changes per month | Engineering time is the largest internal cost, sized by quarter with the Engineering Manager before M3 |
 | Contingency | A Windows 10 update bridge; single sign-on and provisioning upgrades; cross-tenant migration add-ons (sold to Enterprise Agreement customers; ADR-005 records the SharePoint site tool as private preview, as of 2026-10-13); Private Access for one surviving application (ADR-001); an independent cybersecurity audit, if General Counsel confirms the thresholds apply (10); extra incident response hours; and a costed simulation option if Defender Suite is declined | What discovery finds | Only if triggered; sized at M3 |
 
 Most new recurring lines start between February and April 2027, so year one carries part of a year of each; the M3 proposal shows the year-one amount and the full-year run rate. Duplicate contracts from the acquisitions end at their notice dates and offset part of the cost ([15](15-enterprise-systems-and-saas.md), [ADR-005](adr/ADR-005-acquired-company-consolidation.md), [ADR-008](adr/ADR-008-endpoint-management-standard.md)).
 
-**If a line is declined.** Without the two roles, the interim cover continues and the build stays with two people. Without Governance, the M6 lifecycle milestone is at risk and leaver removal stays partly manual. Without Defender Suite, the fallback keeps just-in-time administration and lifecycle automation, but the MDR service cannot work meaningfully, so the interim on-call model continues and R-10's residual risk goes to its owner ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [ADR-003](adr/ADR-003-managed-detection-and-response.md)). Document [16](16-ai-adoption-guardrails.md)'s AI controls that need Defender Suite (AI app discovery on laptops, app governance, and prompt injection detection on inbound email) also drop out (16.06). Without the platform, a control matrix and evidence calendar take its place ([ADR-007](adr/ADR-007-compliance-automation-platform.md)). If the isolated copy is declined, the CEO, as owner of R-03, accepts the residual risk for a set period within document [11](11-risk-management.md)'s limits ([ADR-006](adr/ADR-006-microsoft-365-backup.md)).
+**If a line is declined.** Without Governance, the M6 lifecycle milestone is at risk and leaver removal stays partly manual. Without Defender Suite, the fallback keeps just-in-time administration and lifecycle automation, but the MDR service cannot work meaningfully, so the interim on-call model continues and R-10's residual risk goes to its owner ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [ADR-003](adr/ADR-003-managed-detection-and-response.md)). Document [16](16-ai-adoption-guardrails.md)'s AI controls that need Defender Suite (AI app discovery on laptops, app governance, and prompt injection detection on inbound email) also drop out (16.06). Without the platform, a control matrix and evidence calendar take its place ([ADR-007](adr/ADR-007-compliance-automation-platform.md)). If the isolated copy is declined, the CEO, as owner of R-03, accepts the residual risk for a set period within document [11](11-risk-management.md)'s limits ([ADR-006](adr/ADR-006-microsoft-365-backup.md)).
 
 ## What the Director needs from each executive
 
 | Executive | Risks owned (proposed) | What the Director needs |
 |---|---|---|
-| CEO | R-03 | Chair the Quarterly Risk Review (proposal); approve the incident response plan; decide what reaches the investor board; accept R-03's residual if the isolated copy is declined, and join any acceptance of R-02 or R-08 |
+| CEO | R-03 | Chair the Quarterly Risk Review (proposal); approve the incident response plan; decide what reaches the investor board; accept R-03's residual if the isolated copy is declined, and join any acceptance of R-08 |
 | CFO | R-01, R-09, R-11 | Approve any Windows 10 bridge, and before mid-December class A backup spend and an incident response retainer, or pre-agreed emergency terms; agree that finance and payroll join the MFA and endpoint baselines in February; set the loss threshold that raises incident severity; have Finance call back on every vendor bank-detail change and track Governance and Entra ID P2 renewals, so administrator access stays time-bound ([06](06-microsoft-365-security-baseline.md)) |
-| CTO | R-04, R-06, R-08, R-14 | Agree the discovery rules; before mid-December, as R-04's owner, accept the product recovery position through year-end on the evidence from 14.01, or ask Engineering for a limited recovery check that changes no production system; size Engineering time by quarter before M3; decide the R-08 engineering asks: single sign-on and MFA on code hosting, secret scanning that blocks credentials at commit, protected branches, pipeline secrets in a vault, and dependency alerts; approve customer-facing changes during the freeze with the Chief Customer Officer |
-| Chief Product Officer | R-02 | At M3, decide the Director's R-02 proposal, which Engineering builds: MFA by default for customer administrators and payroll approvers, with passkeys and federation to the customer's identity provider where offered; step-up authentication on bank-detail changes, with notice to the worker and the administrator; a hold or verification before the first payment to a new bank account; and detection of a destination account that recurs across workers or customers ([11](11-risk-management.md)). If declined, R-02 stays outside appetite, and the Chief Product Officer and the CEO accept it for a set period; while its current rating stays Critical, only the executive team can accept it, 30 days at a time. Decide customer payroll contingency guidance with the Chief Customer Officer |
-| Chief Customer Officer | R-07 | Time customer-facing changes such as sharing limits, and approve the email authentication enforcement calendar; own how Support handles customer payroll files; send approved customer notices |
+| CTO | R-06, R-08, R-14 | Agree the discovery rules; size Engineering time by quarter before M3; decide the R-08 engineering asks: single sign-on and MFA on code hosting, secret scanning that blocks credentials at commit, protected branches, pipeline secrets in a vault, and dependency alerts; approve customer-facing changes during the freeze with the Chief Customer Officer |
+| Chief Customer Officer | R-07 | Time customer-facing changes such as sharing limits, and approve the email authentication enforcement calendar; own how Support handles sensitive files in Microsoft 365; send approved customer notices |
 | VP of People | R-05, R-13, R-15 | Decide on-call pay or time off before the rotation starts in November; staff the new-hire identity check and enter terminations on the day notice is given; call back on every employee direct-deposit change; phone urgent leavers in; issue the interim AI notice; lead employee communication in incidents and consolidation waves |
 | General Counsel | R-10, R-12 | Build the contract clause inventory; answer the legal questions log, including the automated decisionmaking position before 2027-01-01 and, in Phase 1, whether California's cybersecurity audit regulations apply, which would add an independent cybersecurity audit; approve the holding statements and contract templates |
 
@@ -79,9 +77,9 @@ Budget lines come from [ADR-001](adr/ADR-001-microsoft-365-security-licensing.md
 
 ## Risks and open questions
 
-- **Hiring timing.** In the base case the interim owners carry the February registration peak and MDR onboarding; pre-approval at M2 brings both starts to February.
+- **Capacity.** The Director personally carries the February registration peak, the M4 close, and MDR onboarding, with the IT team, contracted specialist help, and automation; the capacity appendix shows where the load concentrates.
 - **A small team.** On-call fatigue and key-person dependency (R-14) stay high until the MDR service is live ([08](08-detection-and-incident-response.md), [11](11-risk-management.md)).
-- **Engineering capacity.** R-02 (customer administrator takeover), R-04 (product outage in payroll processing windows), and R-08 (integration credential compromise) depend on Engineering's roadmap and partners' controls ([11](11-risk-management.md)).
+- **Engineering capacity.** R-08 (integration credential compromise) depends on Engineering's roadmap and partners' controls ([11](11-risk-management.md)).
 
 ## Framework mapping
 
@@ -90,7 +88,7 @@ By identifier only, consistent with the [crosswalk](crosswalk/csf2-soc2-crosswal
 | Theme | NIST CSF 2.0 | SOC 2 (2017 Trust Services Criteria) |
 |---|---|---|
 | Roles, structure, and the RACI | GV.RR-01, GV.RR-02 | CC1.1, CC1.3 |
-| Team, hiring, and resources | GV.RR-03, GV.RR-04 | CC1.4 |
+| Team and resources | GV.RR-03, GV.RR-04 | CC1.4 |
 | Accountability for assigned duties | GV.RR-02, GV.RR-04 | CC1.5 |
 | Forums and oversight | GV.OV-01, GV.OV-02, GV.OV-03 | CC1.2, CC4.1, CC4.2 |
 | Partners and shared responsibilities | GV.SC-02, GV.SC-05 | CC2.3, CC9.2 |
@@ -100,13 +98,13 @@ By identifier only, consistent with the [crosswalk](crosswalk/csf2-soc2-crosswal
 | Partner | Role, timing, and governance |
 |---|---|
 | MDR provider | Round-the-clock triage and pre-approved containment in Microsoft Defender; Microsoft's Defender Experts MDR Plan 1 is scored against at least two independent providers, chosen at M3, and live by the end of April. Microsoft states that neither Defender Experts plan is an incident response engagement, so an incident response retainer, or pre-agreed emergency terms with an incident response firm, is in place before mid-December with the CFO's approval; it folds into the MDR contract only if the chosen provider includes incident response, and otherwise stays beside it. Response authority is approved with POL-08 |
-| SOC 2 audit firm | Agrees in-period changes before M4; tests both periods and the acquired product line's Type 1 and Type II; does not design or run Fabrikam's controls, and discloses any arrangement with the compliance platform's vendor |
-| Penetration testing firm | One external test in year one, June to August 2027, after the Phase 4 controls land and before the Type 1 date, scoped with Engineering to the corporate tenant and identity, the customer administrator sign-in and bank-change paths, and integrations (documents 08 and 17); findings feed KPI-18 and the R-02 and R-08 ratings; no recurring cadence is set |
+| SOC 2 audit firm | Agrees in-period changes before M4; tests the current and the next period; does not design or run Fabrikam's controls, and discloses any arrangement with the compliance platform's vendor |
+| Penetration testing firm | One external test in year one, June to August 2027, after the Phase 4 controls land, scoped with Engineering to the corporate tenant and identity, and integrations (documents 08 and 17); findings feed KPI-18 and the R-08 rating; no recurring cadence is set |
 | IT hardware partner | Enrollment at purchase, home delivery, spares, returns, sanitization certificates, security keys, and administrators' phones; a deeper POL-10 review, because its devices may hold Restricted data |
 
 ## Appendix: RACI
 
-R does the work, A answers for the outcome (one per row), C is consulted, and I is informed. Engineering includes the CTO, the Engineering Manager, the SRE lead, and the Chief Product Officer where named. Policy owners and co-owners are in document 10. The last five rows are the shared product security split with Engineering; the SOC 2 scope covers both sides.
+R does the work, A answers for the outcome (one per row), C is consulted, and I is informed. Engineering includes the CTO, the Engineering Manager, the SRE lead, and the Chief Product Officer where named. Policy owners and co-owners are in document 10. The last four rows are the product security split; Engineering owns the product platform and its controls, which are out of the Director's scope, and Fabrikam's SOC 2 report covers both the corporate and the product controls.
 
 | Activity | Corporate IT | Engineering | People | Legal | Finance |
 |---|---|---|---|---|---|
@@ -119,14 +117,13 @@ R does the work, A answers for the outcome (one per row), C is consulted, and I 
 | Vendor payment and bank-detail changes | C | I | I | C | A, R |
 | Employee direct-deposit changes | C | I | A, R | C | C |
 | Microsoft 365 backup and corporate continuity | A, R | I | R | R | R |
-| SOC 2 program, including the acquired product line's route | A, R | R (product controls and gaps) | R (HR records) | C | R until M4, then C |
+| SOC 2 program | A, R | R (product controls and gaps) | R (HR records) | C | R until M4, then C |
 | Third-party risk and application intake | A, R | C | I | R (contracts) | R (payment after intake) |
 | Acquisition consolidation | A, R | C | R | C | R |
 | Product platform security | C | A, R | I | I | I |
 | Product incidents | R (security investigation) | A, R (technical response) | I | C | I |
 | Product disaster recovery and its yearly test | C | A, R | I | C | I |
-| Customer administrator protection (R-02) | C | A (Chief Product Officer), R | I | C | I |
-| Review gate for product changes, AI features included | R | A (Chief Product Officer), R | I | R | I |
+| Review gate for product changes | C | A (Chief Product Officer), R | I | R | I |
 
 Rows come from documents 01, 06 to 16, ADR-002, ADR-005, ADR-006, and the [payroll diversion playbook](playbooks/payroll-diversion-and-email-compromise.md).
 
@@ -141,48 +138,43 @@ Rows come from documents 01, 06 to 16, ADR-002, ADR-005, ADR-006, and the [payro
 
 ## Appendix: capacity by role and month
 
-How many phase-plan actions each role owns in each month from November 2026 to April 2027, counted from the phase plans of documents 01 and 05 to 17. An action counts once in each month it runs, under the first role its Owner cell names, so 08.13 counts under the GRC Analyst although the Director runs its April notification drill, and 16.17 (April), whose Owner cell names the Engineering Manager first, is not counted. Phase 1, 2, and 3 actions count in November, December, and January; 06.23, a Phase 3 action, also counts in December, when the Director requests FastTrack. A Phase 4 action counts in the months its row names: one month, a range, or from a month to the end of April; a Phase 4 row that names no month counts in each Phase 4 month its owner is in post. Action 10.20 counts under the Director in February and the GRC Analyst in March, as its Owner cell sets. Every action weighs the same, so the counts show where work concentrates, not hours. Recurring duties are not counted: on-call weeks, the service desk queue, the Change Advisory Board, monthly reviews, and incident command.
+How many phase-plan actions each role owns in each month from November 2026 to April 2027, counted from the phase plans of documents 01 and 05 to 17. An action counts once in each month it runs, under the first role its Owner cell names; an action whose Owner cell names an Engineering or product role first is not counted here. Because Fabrikam adds no security engineer or GRC analyst, the security-engineering and the GRC and SOC 2 program actions that such roles would carry count under the Director, who takes that work personally. Phase 1, 2, and 3 actions count in November, December, and January; 06.23, a Phase 3 action, also counts in December, when the Director requests FastTrack. A Phase 4 action counts in the months its row names: one month, a range, or from a month to the end of April; a Phase 4 row that names no month counts in each Phase 4 month. Every action weighs the same, so the counts show where work concentrates, not hours. Recurring duties are not counted: on-call weeks, the service desk queue, the Change Advisory Board, monthly reviews, and incident command.
 
 | Role | November 2026 | December 2026 | January 2027 | February 2027 | March 2027 | April 2027 |
 |---|---|---|---|---|---|---|
-| Director of IT and Security | 29 | 20 | 25 | 11 | 7 | 6 |
+| Director of IT and Security | 29 | 20 | 25 | 9 | 17 | 21 |
 | IT Operations Manager | 17 | 14 | 2 | 6 | 6 | 5 |
 | Service Desk Analyst (two people) | 1 | 3 | 4 | 2 | 1 | 1 |
 | Systems Engineer (Identity and Endpoint) | 7 | 8 | 11 | 14 | 11 | 8 |
-| Security Engineer (from March 2027 in the base case) | Not in post | Not in post | Not in post | Not in post | 10 | 9 |
-| GRC Analyst (from March 2027 in the base case) | Not in post | Not in post | Not in post | Not in post | 2 | 8 |
-| All roles | 54 | 45 | 42 | 33 | 37 | 37 |
+| All roles | 54 | 45 | 42 | 31 | 35 | 35 |
 
 **What the counts show.**
 
-- **Phases 1 to 3 rest on the Director:** 73 actions in 90 days (06.23 counted in both December and January), while the Director covers both unfilled roles and commands SEV-1 and SEV-2 incidents (document 08). The readiness consultant drafts the policy set and the evidence calendar for the Director's review, and the finance manager supports SOC 2 through M4 (document 10).
-- **The Systems Engineer carries the build.** December holds 8 actions. Consent and guest limits, file server scans, and the endpoint baseline with its elevation service sit in January (06.12, 06.13, 15.05, 15.07, 06.17, 13.08), so January holds 11, and finance and payroll join the endpoint baseline in February, in weeks 2 to 3 after their identity changes in week 1 (06.24). February is the peak at 14 actions, beside the service desk's registration surge after 2027-02-01. FastTrack, requested in December, and contracted build help, scoped in January (06.23), are in place for February to April.
-- **March changes the shape.** In the base case the Security Engineer takes 10 actions in March, and the GRC Analyst 2 in March and 8 in April. Interim owners cover each role's March actions until it starts and pair with it through its first month (hiring sequence), and when Phase 4 work collides, the IT and Security Steering Group sets the order and consolidation waves yield first (document 15).
+- **Phases 1 to 3 rest on the Director:** 73 actions in 90 days (06.23 counted in both December and January), while the Director personally runs the security-engineering and the GRC and SOC 2 program work and commands SEV-1 and SEV-2 incidents (document 08). The readiness consultant drafts the policy set and the evidence calendar for the Director's review, and the finance manager supports SOC 2 through M4 (document 10).
+- **The Systems Engineer carries the build.** December holds 8 actions. Consent and guest limits, file server scans, and the endpoint baseline with its elevation service sit in January (06.12, 06.13, 15.05, 15.07, 06.17, 13.08), so January holds 11, and finance and payroll join the endpoint baseline in February, in weeks 2 to 3 after their identity changes in week 1 (06.24). February is the peak at 14 actions, beside the service desk's registration surge after 2027-02-01. FastTrack, requested in December, and contracted specialist help, scoped in January (06.23), are in place for February to April.
+- **March and April stay heavy for the Director.** The security-engineering and the GRC and SOC 2 program work that dedicated hires would otherwise carry falls to the Director, lifting the Director's count to 17 in March and 21 in April. When Phase 4 work collides, the IT and Security Steering Group sets the order and consolidation waves yield first (document 15), and contracted specialist help absorbs surge and build work.
 
 **Actions behind the counts.** Each ID points to the phase plan of the document its first two digits name.
 
-- **Director of IT and Security.** November: 01.01, 05.01, 05.03, 05.04, 05.09 to 05.11, 06.03, 07.03, 07.04, 08.02, 08.04, 09.01, 09.02, 10.01 to 10.06, 11.01, 11.02, 12.01, 12.02, 14.02, 14.03, 16.01, 16.02, 17.01. December: 06.23, 07.06, 08.05, 08.06, 09.03, 10.07 to 10.12, 11.03 to 11.05, 12.03, 12.04, 14.07, 15.04, 16.03, 16.04. January: 01.02, 05.13, 06.23, 07.08, 08.08, 09.07, 09.08, 10.13 to 10.17, 11.06, 11.07, 12.05, 12.06, 13.13, 13.14, 14.09, 15.09, 16.05 to 16.07, 16.16, 17.02. February: 05.14, 08.09, 08.10, 09.10, 10.18 to 10.20, 11.08, 12.07, 14.13, 17.03. March: 05.14, 08.10, 09.12, 10.19, 10.21, 11.08, 14.13. April: 05.14, 08.10, 09.12, 10.19, 12.10, 14.13.
+- **Director of IT and Security.** November: 01.01, 05.01, 05.03, 05.04, 05.09 to 05.11, 06.03, 07.03, 07.04, 08.02, 08.04, 09.01, 09.02, 10.01 to 10.06, 11.01, 11.02, 12.01, 12.02, 14.02, 14.03, 16.01, 16.02, 17.01. December: 06.23, 07.06, 08.05, 08.06, 09.03, 10.07 to 10.12, 11.03 to 11.05, 12.03, 12.04, 14.07, 15.04, 16.03, 16.04. January: 01.02, 05.13, 06.23, 07.08, 08.08, 09.07, 09.08, 10.13 to 10.17, 11.06, 11.07, 12.05, 12.06, 13.13, 13.14, 14.09, 15.09, 16.05 to 16.07, 16.16, 17.02. February: 05.14, 08.09, 08.10, 09.10, 10.18, 10.20, 11.08, 12.07, 17.03. March: 05.14, 06.28, 06.30, 08.10, 08.12, 09.11, 09.12, 10.20, 10.21, 11.08, 12.08, 15.15, 15.18, 15.20, 16.08 to 16.10. April: 05.14, 06.28, 06.30, 07.14, 08.10, 08.12, 08.13, 09.12, 09.13, 10.22, 11.09, 12.08, 12.09, 12.10, 13.19, 15.15, 15.18, 15.20, 16.08 to 16.10.
 - **IT Operations Manager.** November: 05.02, 05.05 to 05.08, 06.05, 06.07, 06.08, 07.01, 07.02, 08.01, 13.01 to 13.04, 14.01, 15.01. December: 05.12, 06.15, 06.20, 07.05, 08.07, 09.04, 13.06, 13.07, 13.09 to 13.11, 14.05, 14.06, 15.06. January: 07.09, 15.10. February: 06.31, 07.11, 14.10, 15.16, 15.17, 15.21. March: 06.31, 13.18, 14.12, 15.16, 15.17, 15.21. April: 06.31, 14.14, 15.16, 15.17, 15.21.
 - **Service Desk Analyst.** November: 13.05. December: 06.11, 07.07, 15.08. January: 06.21, 07.10, 09.06, 13.12. February: 13.15, 13.20. March and April: 13.20.
 - **Systems Engineer (Identity and Endpoint).** November: 06.01, 06.02, 06.04, 06.06, 08.03, 15.02, 15.03. December: 06.09, 06.10, 06.14, 06.16, 06.18, 06.19, 09.05, 14.04. January: 06.12, 06.13, 06.17, 06.22, 13.08, 14.08, 15.05, 15.07, 15.11 to 15.13. February: 06.24 to 06.27, 06.29, 07.12, 07.15, 08.11, 09.09, 13.16, 13.17, 14.11, 15.14, 15.19. March: 06.25 to 06.27, 06.29, 07.13, 07.15, 08.11, 13.16, 13.17, 15.14, 15.19. April: 06.26, 06.27, 06.29, 07.15, 08.11, 13.17, 15.14, 15.19.
-- **Security Engineer.** March: 06.28, 06.30, 08.12, 09.11, 15.15, 15.18, 15.20, 16.08 to 16.10. April: the same, except 09.11.
-- **GRC Analyst.** March: 10.20, 12.08. April: 07.14, 08.13, 09.13, 10.22, 11.09, 12.08, 12.09, 13.19.
 
 ## Appendix: action index
 
-The actions behind this document's hiring, budget, and forum lines. Each ID points to the phase plan of the document its first two digits name.
+The actions behind this document's operating-model, budget, and forum lines. Each ID points to the phase plan of the document its first two digits name.
 
 | Line in this document | Actions |
 |---|---|
-| SOC 2 coordination until the GRC Analyst starts, with the readiness consultant kept until then and at least through M4 | 10.16 |
-| Actions before March 2027 that name an interim owner until a new role starts | 06.25, 08.10, 09.09, 10.19, 10.20, 14.11, 17.03 |
-| FastTrack requested in December; the build partner's scope and the surge support terms agreed in January, and surge staff trained on the caller verification script on 28 and 29 January, after the M3 approval | 06.23, 13.14 |
-| Surge support, the spare pool, partner terms, and the hiring triggers in the M3 budget; the triggers checked at month 9 | 13.14, 13.23 |
+| SOC 2 coordination by the Director, with the readiness consultant kept at least through M4 | 10.16 |
+| Actions carried by the Director and the existing team rather than a dedicated hire | 06.25, 08.10, 09.09, 10.20, 14.11, 17.03 |
+| FastTrack requested in December; the contracted specialist help's scope and the surge support terms agreed in January, and surge staff trained on the caller verification script on 28 and 29 January, after the M3 approval | 06.23, 13.14 |
+| Surge support, the spare pool, partner terms, and the capacity triggers in the M3 budget; the triggers checked at month 9 | 13.14, 13.23 |
 | Licensing: Microsoft Defender Suite or the fallback, and Microsoft Entra ID Governance | 06.23, 07.08 |
 | Conditional licensing lines: the certificate add-on for office Wi-Fi; Private Access for a surviving application | 06.26, 06.31 |
 | Copilot pilot line in the M3 budget; pilot licenses after the readiness gate | 16.06, 16.11 |
 | MDR provider and the incident response retainer: evaluation and retainer before mid-December, selection at M3, and live by the end of April | 08.06, 08.08, 08.10 |
-| The product recovery position before mid-December, on the Phase 1 evidence | 14.01, 14.07, 11.04 |
 | Finance and payroll on the MFA and endpoint baselines in February, the timing the CFO agrees | 06.10, 06.17, 06.24 |
 | On-call paging, and alerts on emergency access sign-ins, Temporary Access Passes, and method changes | 08.01, 08.03 |
 | Lookalike domain monitoring from Phase 4 | 15.19 |

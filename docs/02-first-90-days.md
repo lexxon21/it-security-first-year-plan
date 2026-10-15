@@ -15,7 +15,7 @@ This document assembles the Phase 1 to 3 actions into one sequence for the Direc
 - Signs of active harm go to the CTO and the accountable executive the same day, and the fix takes the emergency change path ([08](08-detection-and-incident-response.md), [13](13-it-service-management.md)).
 - Baselines come before changes, so D120 can show what moved.
 - Changes customers would notice land before mid-December or after January 31, and policies start in report-only mode, which records what a policy would block without blocking it; from mid-December through January, finance and payroll staff see no new sign-in or device enforcement and business teams no simulations or exercises ([06](06-microsoft-365-security-baseline.md), [08](08-detection-and-incident-response.md), [09](09-security-awareness-and-training.md), [13](13-it-service-management.md), [ADR-004](adr/ADR-004-phishing-resistant-authentication-rollout.md)).
-- Before M3, spend beyond Microsoft 365 E3 is limited to class A backup (data whose loss stops support for customers' payroll, Fabrikam's own payroll or payments, or incident response) and any Windows 10 bridge the CFO approves; an incident response retainer, or pre-agreed emergency terms, before mid-December with the CFO's approval; and the small items listed under Resourcing and dependencies ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [08](08-detection-and-incident-response.md), [14](14-business-continuity-and-backup.md)).
+- Before M3, spend beyond Microsoft 365 E3 is limited to class A backup (data whose loss stops Fabrikam's own payroll or payments, or incident response) and any Windows 10 bridge the CFO approves; an incident response retainer, or pre-agreed emergency terms, before mid-December with the CFO's approval; and the small items listed under Resourcing and dependencies ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md), [08](08-detection-and-incident-response.md), [14](14-business-continuity-and-backup.md)).
 - No Microsoft Copilot (formerly Microsoft 365 Copilot) license comes before the oversharing work ([16](16-ai-adoption-guardrails.md)).
 - The Director never accepts risk or approves exceptions on Fabrikam's behalf, and product security and product disaster recovery stay with Engineering ([04](04-operating-model-team-and-budget.md), [11](11-risk-management.md)).
 
@@ -56,13 +56,11 @@ From that date Microsoft stops sending its own text and voice codes for most use
 
 ### Building for February
 
-The HR feed is built and tested, data loss prevention for payroll identifiers runs in simulation, class B data goes under backup, and consolidation is rehearsed; compliance platforms are evaluated for the M3 budget. Until the GRC Analyst starts, the Director covers the role with the readiness consultant, kept until then and at least through M4, and the finance manager supports SOC 2 through M4.
+The HR feed is built and tested, data loss prevention for payroll identifiers runs in simulation, class B data goes under backup, and consolidation is rehearsed; compliance platforms are evaluated for the M3 budget. The Director personally covers the GRC and SOC 2 program work with the readiness consultant, kept at least through M4, and the finance manager supports SOC 2 through M4.
 
 ### The M3 package
 
-On Thursday 2027-01-28, alongside the first Quarterly Risk Review, the executive team approves the 12-month plan, the budget ([04](04-operating-model-team-and-budget.md)), and the items in the appendix, including both CSF Profiles: the current Profile, where Fabrikam's practice stands (at Category level, with Subcategory detail by M7), and the target, where the plan commits to take it. Policy co-owners and the IT and Security Steering Group clear the policies and KPI targets in January, so they reach the executive team as one consent item; the meeting spends its time on the budget, the appetite, and the R-02 and R-08 decisions.
-
-For R-02, the Chief Product Officer decides the Director's proposal, which Engineering builds: MFA by default for customer administrators and payroll approvers, step-up authentication on bank-detail changes, a hold or verification before the first payment to a new bank account, and detection of a destination account that recurs across workers or customers ([11](11-risk-management.md)). Recruiting is prepared in Phase 3, and offers go out after M3, so in the base case both new roles start in March 2027, or in February if the executive team pre-approves them at M2 ([04](04-operating-model-team-and-budget.md)).
+On Thursday 2027-01-28, alongside the first Quarterly Risk Review, the executive team approves the 12-month plan, the budget ([04](04-operating-model-team-and-budget.md)), and the items in the appendix, including both CSF Profiles: the current Profile, where Fabrikam's practice stands (at Category level, with Subcategory detail by M7), and the target, where the plan commits to take it. Policy co-owners and the IT and Security Steering Group clear the policies and KPI targets in January, so they reach the executive team as one consent item; the meeting spends its time on the budget, the appetite, and the R-08 decision.
 
 ### Day 90 readout (M3)
 
@@ -90,14 +88,13 @@ Baselines come from 05.10, and full KPI names and targets from [12](12-metrics-a
 ### What D120 flags as at risk
 
 - Anything funded only through the fallback ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md)), and R-10's gap until the MDR provider is live ([11](11-risk-management.md)).
-- The hiring date: in the base case both new roles start in March 2027, after the readout ([04](04-operating-model-team-and-budget.md)).
 - Service desk load after 2027-02-01; the next consolidation wave waits if service KPIs slip ([15](15-enterprise-systems-and-saas.md)).
 - The audit firm's agreement on MDR monitoring evidence ([08](08-detection-and-incident-response.md)).
 - The main domain may hold DMARC at quarantine into early Phase 5 ([06](06-microsoft-365-security-baseline.md)).
 
 ## Resourcing and dependencies
 
-- **Roles.** The Director leads, the IT team runs exports and changes, document [04](04-operating-model-team-and-budget.md) sets executive time and each role's monthly load, and document [03](03-twelve-month-roadmap.md) names the interim cover.
+- **Roles.** The Director leads, the IT team runs exports and changes, and document [04](04-operating-model-team-and-budget.md) sets executive time and each role's monthly load.
 - **Partners.** The SOC 2 audit firm, the readiness consultant, an incident response firm, the IT hardware partner, and the penetration testing firm's past reports ([05](05-environment-discovery.md), [06](06-microsoft-365-security-baseline.md), [08](08-detection-and-incident-response.md), [10](10-governance-and-compliance-program.md)).
 - **Licenses and spend.** Microsoft 365 E3 only before M3 ([ADR-001](adr/ADR-001-microsoft-365-security-licensing.md)), plus security keys, administrators' phones, log storage and alerting, a DMARC report processor, vaults, on-call paging, class A backup consumption, the incident response retainer, and any Windows 10 bridge ([06](06-microsoft-365-security-baseline.md), [08](08-detection-and-incident-response.md), [14](14-business-continuity-and-backup.md)).
 - **Depends on** documents 01 and 05 to 17 and the ADRs; feeds [00](00-executive-summary.md) and [03](03-twelve-month-roadmap.md).
@@ -163,8 +160,8 @@ Actions by period, in the order of the sections above. Each ID points to the pha
 | "Anyone" sharing links limited to view-only with a 7-day expiry, after the Chief Customer Officer's team warns customers who receive them | 06.18 |
 | Class A data under Microsoft 365 Backup with a first timed restore; continuity kit; Fabrikam's own payroll fallback | 14.04, 14.05, 14.06 |
 | The incident response retainer or pre-agreed emergency terms, with the CFO's approval; the MDR evaluation: Microsoft's Defender Experts MDR Plan 1 against at least two independent providers | 08.06 |
-| The CTO's year-end decision on the product recovery position, on the evidence from 14.01; business impact sessions and POL-09 drafted with Engineering | 14.07 |
-| Finance, payroll, and People sessions with a payroll diversion desk check; the interim escalation card for a suspected customer administrator takeover (R-02); named year-end coverage, with the incident response firm's contact; R-01, R-03, and R-04 reviewed with their owners; freeze calendar, with Remote Help confirmed; fourth-quarter SOC 2 controls finished | 09.03, 08.05, 08.07, 11.04, 13.09, 10.09 |
+| Business impact sessions with each function leader, and POL-09 drafted | 14.07 |
+| Finance, payroll, and People sessions with a payroll diversion desk check; named year-end coverage, with the incident response firm's contact; R-01 and R-03 reviewed with their owners; freeze calendar, with Remote Help confirmed; fourth-quarter SOC 2 controls finished | 09.03, 08.05, 08.07, 11.04, 13.09, 10.09 |
 | Service levels and portal; investigation logging confirmed | 13.06, 06.19 |
 
 ### Phase 2, the rest of December
@@ -189,7 +186,7 @@ Actions by period, in the order of the sections above. Each ID points to the pha
 | In the first half of January, before the HR integration credential is issued: app consent limited, existing grants reviewed, orphaned application access revoked, and integration credentials vaulted; then guests bounded, and inherited file servers scanned with their "Anyone" links removed | 06.12, 15.05, 06.13, 15.07 |
 | Endpoint baseline, with Quick Assist removed and a Microsoft Store restriction against reinstalling it, and the elevation service for everyone except finance and payroll, who join in February, weeks 2 to 3 (06.24) | 06.17, 13.08 |
 | HR feed built and tested; data loss prevention for payroll identifiers in simulation; class B backup; the IT service management tool behind single sign-on, automation guardrails set, domain paths approved, and consolidation rehearsed | 07.09, 06.22, 14.08, 15.10 to 15.13 |
-| SOC 2 coordination covered until the GRC Analyst starts (March 2027 in the base case), with the readiness consultant kept until then and at least through M4, management responses to inherited exceptions drafted, and control owners confirming next-period design; platforms evaluated for the M3 budget; contract templates approved; evidence refreshed for the current Profile; security champions recruited | 10.16, 10.15, 10.17, 05.13, 09.08 |
+| SOC 2 coordination covered by the Director with the readiness consultant, kept at least through M4, management responses to inherited exceptions drafted, and control owners confirming next-period design; platforms evaluated for the M3 budget; contract templates approved; evidence refreshed for the current Profile; security champions recruited | 10.16, 10.15, 10.17, 05.13, 09.08 |
 | The build partner's scope for February to April and the surge support terms agreed in January, and surge staff trained on the caller verification script on 28 and 29 January, after the M3 approval, so help is in place for the first week of February | 06.23, 13.14 |
 
 ### The M3 package
@@ -197,11 +194,11 @@ Actions by period, in the order of the sections above. Each ID points to the pha
 | The executive team approves | Actions |
 |---|---|
 | The 12-month plan, on verified facts and a validated threat profile | 01.02, 17.02 |
-| The budget ([04](04-operating-model-team-and-budget.md)): Microsoft Defender Suite and Microsoft Entra ID Governance, or the fallback; the MDR provider; backup and an isolated copy; the compliance platform; single sign-on and consolidation upgrades; AI discovery and a Microsoft Copilot pilot; surge support and hiring triggers; the two new roles | 06.23, 07.08, 08.08, 14.09, 10.15, 15.09, 16.06, 13.14 |
+| The budget ([04](04-operating-model-team-and-budget.md)): Microsoft Defender Suite and Microsoft Entra ID Governance, or the fallback; the MDR provider; backup and an isolated copy; the compliance platform; single sign-on and consolidation upgrades; AI discovery and a Microsoft Copilot pilot; surge support and hiring triggers | 06.23, 07.08, 08.08, 14.09, 10.15, 15.09, 16.06, 13.14 |
 | POL-01 to POL-15 with the AI section, the AI security standard under POL-01, and the lifecycle and training clauses, cleared beforehand by policy co-owners and the IT and Security Steering Group; the incident response plan; the risk appetite | 10.14, 16.05, 16.16, 09.07, 07.08, 13.13, 08.08, 14.09, 11.06 |
 | Both CSF Profiles: the current one at Category level and the target | 10.13 |
-| KPI targets, and treatment plans for every Critical and High risk, R-02 and R-08 included, at the first Quarterly Risk Review | 12.05, 11.07, 12.06 |
-| Settled alongside: the review path for product AI features, and General Counsel's approval of the holding statements and notification path | 16.07, 08.08 |
+| KPI targets, and treatment plans for every Critical and High risk, R-08 included, at the first Quarterly Risk Review | 12.05, 11.07, 12.06 |
+| Settled alongside: General Counsel's approval of the holding statements and notification path | 08.08 |
 
 ### Day 120 readout
 
@@ -216,7 +213,7 @@ Actions by period, in the order of the sections above. Each ID points to the pha
 | Finance single sign-on, after finance and payroll's identity and endpoint changes, and the first consolidation waves | 15.14, 15.16 |
 | Class C backup | 14.10 |
 | Simulation setup, the executive briefing, and the first tabletop, scoped by the Director | 09.09, 09.10, 08.09, 17.03 |
-| Next-period SOC 2 planning, the compliance platform, and acquired product line readiness | 10.18, 10.20, 10.19, 05.14 |
+| Next-period SOC 2 planning and the compliance platform | 10.18, 10.20 |
 | Monthly risk status at the IT and Security Steering Group, with R-01 and R-06 re-rated for the readout | 11.08 |
 | The readout itself, on Friday 2027-02-26 | 12.07 |
 

@@ -48,7 +48,7 @@ Everything else waits for the next business day. The on-call calls back within 3
 
 ### Who the service desk serves
 
-Fabrikam employees and contractors, including the managers and sponsors who act for them. Customers' administrators and hourly workers are supported by Customer Support under the Chief Customer Officer. Support verifies them through CRM contacts already on file (document 09), and their account security is a product matter shared with Engineering (R-02). Product incidents go to Engineering's incident process, with the Director joining as security lead when security is involved (document 08).
+Fabrikam employees and contractors, including the managers and sponsors who act for them. Customers' administrators and hourly workers are supported by Customer Support under the Chief Customer Officer. Support verifies them through CRM contacts already on file (document 09), and their account security is a product matter owned by Engineering. Product incidents go to Engineering's incident process, with the Director joining as security lead when security is involved (document 08).
 
 ## Priorities and service levels (proposals)
 
@@ -59,7 +59,7 @@ Fabrikam employees and contractors, including the managers and sponsors who act 
 | P3 Normal | One person degraded, or blocked with a workaround | Printing fails; an app crashes intermittently | 4 business hours | 3 business days | When status changes |
 | P4 Request | A catalog request | Software, access, hardware | 1 business day | The catalog item's target | When status changes |
 
-- **Calendar urgency.** An issue affecting Support, Finance, or People during a payroll processing window, or from mid-December through January, moves up one priority. A payroll processing window means Fabrikam's own payroll or a peak customer processing day the Support leader flags. Document 08 uses this definition for a narrower severity rule: any incident that touches the payroll path during a processing window rises one severity level.
+- **Calendar urgency.** An issue affecting Support, Finance, or People during a payroll processing window, or from mid-December through January, moves up one priority. A payroll processing window means a Fabrikam payroll run. Document 08 uses this definition for a narrower severity rule: any incident that touches the payroll path during a processing window rises one severity level.
 - **Security events.** A ticket that looks like a security event moves to document 08's path, which sets its severity. SEV-1 and SEV-2 tickets run as P1, and SEV-4 items stay with the service desk.
 - **Clock rules.** P2 to P4 clocks pause outside business hours and while waiting on the requester. Every P1 gets a short review afterward, and its cause feeds problem management.
 
@@ -144,7 +144,7 @@ NIST SP 800-40 Rev. 4 separates routine patching, emergency patching, emergency 
 
 The Change Advisory Board meets weekly for 30 minutes (proposal), chaired by the IT Operations Manager, from week 2. Phase 1's urgent changes (emergency access, MFA on every administrator, discovery roles, alert routing) are prepared and disclosed in week 1 and applied at the first meeting. A change that fixes or prevents an active incident takes the emergency path above. The week-1 sample restore (14.01), which changes no control, is the one exception and runs in week 1.
 
-- **Members:** the Systems Engineer (Identity and Endpoint), the Service Desk Analyst (user impact and notices), and the Security Engineer and the GRC Analyst (evidence), who join when they start. Offers go out after the executive team approves the budget at M3 (Thursday 2027-01-28), so in the base case both start in March 2027 (document 04); until then, the Director and the outside audit-readiness consultant cover the GRC Analyst's evidence duties.
+- **Members:** the Systems Engineer (Identity and Endpoint), the Service Desk Analyst (user impact and notices), and the Director of IT and Security, with the outside audit-readiness consultant for SOC 2 change evidence (document 04).
 - **Joining when needed:** the Director of IT and Security; the Engineering Manager or SRE lead for shared changes; business system owners when their system changes.
 
 Each normal change record holds:
@@ -254,7 +254,7 @@ The practices in this document carry ITIL® names: service desk, incident manage
 
 ## Staffing, coverage, and when to hire
 
-- **Assumed staffing.** This document assumes the three IT generalists take the Service Desk Analyst and Systems Engineer (Identity and Endpoint) roles, with at least two sharing the two shifts. The Systems Engineer is backup on the queue at peaks, and the IT Operations Manager handles escalations. Document [04](04-operating-model-team-and-budget.md) confirms the mapping and the hiring sequence.
+- **Assumed staffing.** This document assumes the three IT generalists take the Service Desk Analyst and Systems Engineer (Identity and Endpoint) roles, with at least two sharing the two shifts. The Systems Engineer is backup on the queue at peaks, and the IT Operations Manager handles escalations. Document [04](04-operating-model-team-and-budget.md) confirms the mapping.
 - **Two known peaks.** The 2027-02-01 retirement of Microsoft-provided SMS and voice MFA brings a blocking registration prompt for anyone left on those methods. The acquired-device waves and Windows 10 replacements land in Phases 4 and 5. Both are covered by contracted surge support before any permanent hire.
 - **On-call.** The same few people staff long shifts and the on-call rotation, so after-hours calls are tracked. On-call pay or time off is the VP of People's decision (document 08).
 
@@ -316,7 +316,7 @@ Supporting measures, without targets: first-contact resolution, self-service sha
 | Phase 4 | 13.16 | February to March: confirm Company Portal self-install in the tenant on Windows and macOS, then package standard apps into the Company Portal; route other software to intake (documents 15 and 16) | Most software requests need no ticket | KPI-20 | Systems Engineer (Identity and Endpoint) | WS-6 |
 | Phase 4 | 13.17 | With 07.12 to 07.14, move access requests to My Access; retire the manual form for packaged apps | Access fulfilled on approval | KPI-23 | Systems Engineer (Identity and Endpoint) | WS-1 |
 | Phase 4 | 13.18 | Start monthly problem reviews and known-error articles; evaluate Intune Advanced Analytics; send the first pulse survey in March | Repeat incidents fixed at the cause | KPI-20, KPI-21 | IT Operations Manager | WS-6 |
-| Phase 4 | 13.19 | April: the full change process becomes the control of record for the new SOC 2 period; monthly sampling and audit log comparison | Change evidence from the system | KPI-24 | GRC Analyst | WS-5 |
+| Phase 4 | 13.19 | April: the full change process becomes the control of record for the new SOC 2 period; monthly sampling and audit log comparison | Change evidence from the system | KPI-24 | Director of IT and Security | WS-5 |
 | Phase 4 | 13.20 | Logistics for 06.30's Windows 10 removal and the acquired-device waves (ADR-008, document 15), each wave sized to KPI-20 | No Windows 10; consolidation without a service collapse | KPI-06 | Service Desk Analyst | WS-2 |
 | Phase 5 | 13.21 | A tested runbook and a second trained person for every critical administrative task by M6 | No single person holds a critical task (R-14) | KPI-20 | IT Operations Manager | WS-6 |
 | Phase 5 | 13.22 | Reconcile sanitization certificates to disposal records each quarter for Fabrikam's own devices | Disposal evidence complete | KPI-06 | IT Operations Manager | WS-2 |
@@ -327,7 +327,7 @@ Supporting measures, without targets: first-contact resolution, self-service sha
 
 - **Roles.**
   - Phases 1 to 3: the IT Operations Manager (owner of the desk, the Change Advisory Board, and lifecycle), the Service Desk Analyst (queue, verification, returns), the Systems Engineer (Identity and Endpoint) (elevation, packaging, self-service), and the Director of IT and Security (policy and budget proposals).
-  - When they start (March 2027 in the base case, because offers go out after the executive team approves the budget at M3): the GRC Analyst (change evidence) and the Security Engineer (board member). Until the GRC Analyst starts, the Director and the outside audit-readiness consultant cover change evidence (document 04).
+  - The Director of IT and Security, with the outside audit-readiness consultant, covers SOC 2 change evidence on the Change Advisory Board (document 04).
   - Business partners: the VP of People (HR data, on-call compensation, device return follow-up), the CFO (finance system changes, any ESU spend), the Chief Customer Officer (Support's boundary, freeze exceptions), the CTO and Engineering Manager (shared changes, Mac exceptions), and General Counsel (disposal record retention, unreturned devices).
 - **Partners.**
   - The IT hardware partner: registration, shipping, spare pool, returns, sanitization certificates.
@@ -345,7 +345,7 @@ Supporting measures, without targets: first-contact resolution, self-service sha
   - Partner fees for logistics and sanitization.
   - Any ITSM tool change.
 - **Depends on.**
-  - Documents 01, 04 (staffing and hiring sequence), 05 (baselines), 06 (controls, Windows 10 decision, CA policies), 07 (lifecycle and the HR feed), 08 (on-call, severity, alerts), 09 (training and drills), 10 (POL-04, POL-11, the SOC 2 period), 11 (exceptions), 12 (KPI definitions), 14 (restores), 15 (ITSM tool review, intake, consolidation), 16 (AI tool intake), and 17 (S-01, S-03, S-06, S-10).
+  - Documents 01, 04 (staffing), 05 (baselines), 06 (controls, Windows 10 decision, CA policies), 07 (lifecycle and the HR feed), 08 (on-call, severity, alerts), 09 (training and drills), 10 (POL-04, POL-11, the SOC 2 period), 11 (exceptions), 12 (KPI definitions), 14 (restores), 15 (ITSM tool review, intake, consolidation), 16 (AI tool intake), and 17 (S-01, S-03, S-06, S-10).
   - ADR-001, [ADR-002](adr/ADR-002-hr-system-of-record-drives-identity.md), ADR-004, [ADR-005](adr/ADR-005-acquired-company-consolidation.md), and ADR-008.
   - Feeds documents [02](02-first-90-days.md) and [03](03-twelve-month-roadmap.md).
 

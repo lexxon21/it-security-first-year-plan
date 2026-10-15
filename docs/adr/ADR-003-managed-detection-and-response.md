@@ -10,7 +10,7 @@ The Director of IT and Security proposes this decision; the executive team appro
 
 ## Context
 
-At day 1, Defender for Endpoint alerts go to a shared mailbox and nobody covers nights or weekends (assumption A-07). Fabrikam (fictional) has an IT Operations Manager and three IT generalists and no dedicated security staff; document [04](../04-operating-model-team-and-budget.md) adds a Security Engineer, but no realistic hiring plan for a company of about 450 people staffs every hour of the week. The threats that matter most (document [17](../17-threat-profile.md)) move fast: a stolen session token can become mailbox rules and a fraudulent payment request within hours, and attacks do not wait for business hours. Customer contracts set notification clocks (document [08](../08-detection-and-incident-response.md)), and a thin, slow investigation makes them hard to meet. That is risk R-10.
+At day 1, Defender for Endpoint alerts go to a shared mailbox and nobody covers nights or weekends (assumption A-07). Fabrikam (fictional) has an IT Operations Manager and three IT generalists and no dedicated security staff, and no realistic hiring plan for a company of about 450 people staffs every hour of the week. The threats that matter most (document [17](../17-threat-profile.md)) move fast: a stolen session token can become mailbox rules and a fraudulent payment request within hours, and attacks do not wait for business hours. Customer contracts set notification clocks (document [08](../08-detection-and-incident-response.md)), and a thin, slow investigation makes them hard to meet. That is risk R-10.
 
 Microsoft offers "Microsoft Defender Experts MDR", "a managed detection and response service", in two plans. Plan 1, the service previously called Defender Experts for XDR, covers Microsoft Defender workloads. Plan 2 adds selected non-Microsoft telemetry collected in Microsoft Sentinel; it requires Microsoft Sentinel and "a minimum of 1,500 licensed seats", well above Fabrikam's size, so it is not an option. Independent MDR providers also operate on top of Microsoft Defender XDR.
 
@@ -66,7 +66,7 @@ Cons:
 
 Pros: full control and deep knowledge of Fabrikam's business.
 
-Cons: covering 168 hours a week, with leave, sickness, and turnover, takes roughly five or more analysts for a single seat, plus a lead. Fabrikam has no security staff today and plans one Security Engineer. Hiring, training, tooling, and retention would take longer than the plan year and cost far more than a managed service, and the knowledge would sit with a few people (R-14).
+Cons: covering 168 hours a week, with leave, sickness, and turnover, takes roughly five or more analysts for a single seat, plus a lead. Fabrikam has no dedicated security staff today and does not plan a security hire. Hiring, training, tooling, and retention would take longer than the plan year and cost far more than a managed service, and the knowledge would sit with a few people (R-14).
 
 Rejected because it is out of proportion to a company of about 450 people.
 

@@ -12,7 +12,7 @@ The Director of IT and Security proposes this decision. The executive team appro
 
 - **What Fabrikam already pays for.** Fabrikam (fictional) licenses Microsoft 365 E3 for about 450 employees on cloud-only Microsoft Entra ID. Microsoft's 2026 packaging update, effective July 1, 2026 and rolled out by August 1, 2026, added Defender for Office 365 Plan 1, Intune Plan 2, Remote Help, and Intune Advanced Analytics to E3. At Fabrikam these run at their defaults, so the first gain is configuration, not purchase.
 - **What E3 cannot do.** The threat profile ([17](../17-threat-profile.md)) lists the gaps. Privileged Identity Management needs Microsoft Entra ID P2 or Microsoft Entra ID Governance, and risk-based Conditional Access needs P2. Endpoint detection and response, automatic attack disruption, and vulnerability management need Defender for Endpoint Plan 2. Attack simulation training and detection of prompt injection in inbound email need Defender for Office 365 Plan 2; E3 gets a limited trial of attack simulation. Endpoint-based SaaS discovery and OAuth app governance need Defender for Cloud Apps. Automatic labeling, insider risk management, endpoint and Teams DLP, DLP that restricts Copilot, and one-year audit retention need E5-level Purview licensing.
-- **A lean team with an MDR provider.** IT is an IT Operations Manager and three generalists, with no dedicated security staff. The plan adds a Security Engineer and a managed detection and response (MDR) provider for after-hours coverage ([ADR-003](ADR-003-managed-detection-and-response.md)). An MDR provider can act only on the telemetry it receives. Microsoft's own MDR service requires at least one of Defender for Endpoint Plan 2, Defender for Office 365 Plan 2, Defender for Identity, Defender for Cloud Apps, or Entra ID P2 in active mode, so E3 alone does not qualify.
+- **A lean team with an MDR provider.** IT is an IT Operations Manager and three generalists, with no dedicated security staff. The plan adds no security hire; the Director of IT and Security takes on the security-engineering work, and a managed detection and response (MDR) provider gives after-hours coverage ([ADR-003](ADR-003-managed-detection-and-response.md)). An MDR provider can act only on the telemetry it receives. Microsoft's own MDR service requires at least one of Defender for Endpoint Plan 2, Defender for Office 365 Plan 2, Defender for Identity, Defender for Cloud Apps, or Entra ID P2 in active mode, so E3 alone does not qualify.
 - **Paths that are closed.** Microsoft's business plans, including Business Premium with Defender for Business, are capped at 300 users.
 - **Current names.** Microsoft Defender Suite (formerly Microsoft 365 E5 Security) and Microsoft Purview Suite (formerly Microsoft 365 E5 Compliance) are add-ons to Microsoft 365 E3. Microsoft 365 E7 became generally available on May 1, 2026 and combines E5, Microsoft Copilot, Agent 365, and Microsoft Entra Suite.
 - **Licensing mechanics.** Defender for Office 365 protections are on tenant-wide by default, and every user who benefits needs a license; Defender for Identity is enabled at the tenant level; Privileged Identity Management needs licenses for users with eligible assignments, approvers, and reviewers. Buying Defender capabilities for only some users therefore creates compliance gaps.
@@ -20,7 +20,7 @@ The Director of IT and Security proposes this decision. The executive team appro
 
 ## Decision drivers
 
-1. **R-01, payroll diversion through business email compromise:** identity risk signals for every user, email investigation, phishing simulation.
+1. **R-01, business email compromise against Fabrikam's own finance and HR:** identity risk signals for every user, email investigation, phishing simulation.
 2. **R-03, ransomware:** endpoint detection and response, automatic attack disruption, and telemetry an MDR provider can act on.
 3. **R-06, standing privileged access:** just-in-time administration.
 4. **R-07, oversharing made worse by AI assistants:** labels, DLP, and oversharing tools before Copilot.
@@ -122,7 +122,7 @@ flowchart LR
 - The MDR provider receives endpoint, email, and identity telemetry it can act on.
 - Document [09](../09-security-awareness-and-training.md) gets phishing simulation (KPI-15) and document [15](../15-enterprise-systems-and-saas.md) gets SaaS and OAuth app discovery (KPI-07) without new vendors; document 16 gets discovery of generative AI apps on laptops, app governance (16.10), and prompt injection detection on inbound email.
 - Lifecycle automation for M6 (document 07) is funded in the same decision, so KPI-12 and KPI-23 do not wait for a second budget cycle.
-- Budget remains for people (the Security Engineer) and the MDR service, which matter more to a lean team than more tooling.
+- Budget remains for the MDR service and contracted specialist help, which matter more to a lean team than more tooling.
 
 **Negative**
 

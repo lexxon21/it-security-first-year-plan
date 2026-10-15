@@ -35,13 +35,11 @@ The publication sorts learners into three overlapping segments: all users, privi
 
 | Who | Part in the program |
 |---|---|
-| Director of IT and Security | Owns the program (the learning program manager role in NIST's guide): plan, content standards, measures, simulation design |
+| Director of IT and Security | Owns the program (the learning program manager role in NIST's guide): plan, content standards, measures (KPI-14 and KPI-15), simulation design and delivery, report triage, the champions network, the quarterly assessment report, and training evidence for the SOC 2 audit firm |
 | VP of People (co-owner) | Onboarding, training records and reminders, the job-family data in the HR system of record that assigns tracks, the POL-14 clauses |
 | General Counsel | Reviews simulation lures and rules before launch, as NIST advises for the legal team; privacy of results; the legal questions below |
 | CFO, Chief Customer Officer, CTO with the Engineering Manager | Co-own the finance and payroll, Customer Support, and Engineering tracks |
 | IT Operations Manager | Delivers the service desk and administrator track with document [13](13-it-service-management.md) |
-| Security Engineer (from March 2027 in the base case, after the M3 budget approval) | Simulations and KPI-15 (owner), report triage, champions network |
-| GRC Analyst (from March 2027 in the base case, after the M3 budget approval; until then the Director compiles the measures, as document 12 describes) | KPI-14 (owner); compiles KPI-15 for the Security Engineer; the quarterly assessment report; training evidence for the SOC 2 audit firm |
 | IT and Security Steering Group | The senior leadership committee NIST recommends: monthly program report and content priorities |
 | Executive team and managers | The executive team approves POL-02, POL-14, and the budget at M3; managers make time for learning and never use simulation results for discipline |
 
@@ -55,7 +53,7 @@ The publication sorts learners into three overlapping segments: all users, privi
   4. Customer and employee data: where it may be stored and shared, and never in personal tools or loose attachments.
   5. AI use: approved tools and what never goes into them (POL-02 and document [16](16-ai-adoption-guardrails.md)).
   6. Devices: report a lost or stolen device the same day.
-- **Within 30 days (proposal).** The role track for the person's job family, assigned from the HR system of record. For admin roles and customer payroll data, the track comes before access, following NIST's example policy of role-based training before access to systems that process sensitive information. A move to a new job family assigns the new track (document 07).
+- **Within 30 days (proposal).** The role track for the person's job family, assigned from the HR system of record. For admin roles and for roles that reach customer data, the track comes before access, following NIST's example policy of role-based training before access to systems that process sensitive information. A move to a new job family assigns the new track (document 07).
 
 ## Recurring modules
 
@@ -84,7 +82,7 @@ Technique IDs follow MITRE ATT&CK v20 (Enterprise), as in document 17. Cadences 
 |---|---|---|---|---|
 | Finance and payroll | Accounts payable, payroll, payment approvers | S-01, S-09; T1684.001 (Social Engineering: Impersonation), T1657 (Financial Theft) | Before mid-December 2026, then each May and October | CFO |
 | People | People team | S-01, S-07 | Before mid-December 2026, then every six months | VP of People |
-| Customer Support | Agents and leads with access to customer payroll data | S-02, S-07, S-09; T1598.003 (Phishing for Information: Spearphishing Link) | Before access, then every six months | Chief Customer Officer |
+| Customer Support | Agents and leads with access to customer data | S-02, S-07, S-09; T1598.003 (Phishing for Information: Spearphishing Link) | Before access, then every six months | Chief Customer Officer |
 | Engineering | Engineers, with more for production access | S-08; T1552.001 (Unsecured Credentials: Credentials In Files), T1213.003 (Data from Information Repositories: Code Repositories) | Within 30 days of joining, then yearly and after significant findings | CTO with the Engineering Manager |
 | IT administrators and service desk | IT staff with admin roles; Service Desk Analyst | S-03, S-06; T1556.006 (Modify Authentication Process: Multi-Factor Authentication), T1098.003 (Account Manipulation: Additional Cloud Roles) | Before admin access; script briefing before early December 2026; then every six months | IT Operations Manager |
 | Executives | Executive team and their assistants | S-01, S-04; T1566.004 (Phishing: Spearphishing Voice) | Briefing in February 2027, then twice a year | CEO |
@@ -94,7 +92,7 @@ Technique IDs follow MITRE ATT&CK v20 (Enterprise), as in document 17. Cadences 
 
 **People.** People staff hold Social Security numbers, bank details, benefits and dependent data, and the Form I-9 records of Fabrikam's own employees. Employees change their own direct deposit in the HR system of record, and People staff never key a change from email. The federal rule for electronically stored Forms I-9 (8 CFR 274a.2(g)) expects a records security program that limits access, trains staff, and keeps a record of who accessed what (paraphrase), so the track covers who may open I-9 records. If General Counsel finds that Fabrikam acts as an E-Verify employer agent, the E-Verify memorandum's user training duties join the track. CISA's phishing-resistant MFA fact sheet names "HR staff, who may have access to personnel records" among high-value targets, and People is in ADR-004's second wave.
 
-**Customer Support.** Payroll exports sometimes travel by email or sit in OneDrive during cases (assumption A-06). The track teaches the secure exchange path that document [06](06-microsoft-365-security-baseline.md) brings live in Phase 4 (action 06.28), and how to verify a customer administrator before changing access: call back through contacts already in the CRM, never through details in the request. Agents learn the pattern in the FBI's 2025 alert, criminals using search-engine ads to impersonate employee self-service websites, and its warning that "Multi-factor authentication will not protect you if you land on a fraudulent login page." A suspected takeover of a customer administrator account goes straight to the incident path in document 08 (R-02, shared with Engineering). A caller's familiar voice is never verification on its own.
+**Customer Support.** Customer data sometimes travels by email or sits in OneDrive during cases (assumption A-06). The track teaches the secure exchange path that document [06](06-microsoft-365-security-baseline.md) brings live in Phase 4 (action 06.28), and how to verify a requester before acting on a sensitive support request: call back through contacts already in the CRM, never through details in the request. Agents learn the pattern in the FBI's 2025 alert, criminals using search-engine ads to impersonate employee self-service websites, and its warning that "Multi-factor authentication will not protect you if you land on a fraudulent login page." A suspected compromise noticed during a support case goes straight to the incident path in document 08, with Engineering owning any product-side response. A caller's familiar voice is never verification on its own.
 
 **Engineering.** SSDF 1.1 task PO.2.2 says to "Provide role-based training for all personnel with responsibilities that contribute to secure development." The Engineering Manager owns that content under POL-12 (Secure Development Policy); the Director adds code hosting accounts, secrets kept out of code and files, AI coding assistants under POL-02, AI provider keys treated as secrets, the product AI security requirements in document 16's AI security standard, and the product incident roles in document 08. The SSDF lists security champions among development roles, so Engineering's champions double as the program's champions. SSDF 1.2 (SP 800-218 Rev. 1) is still an initial public draft, so the track cites 1.1.
 
@@ -120,7 +118,7 @@ Technique IDs follow MITRE ATT&CK v20 (Enterprise), as in document 17. Cadences 
 
 **Cadence (proposal).** A baseline round in March 2027, then a round every two months for all staff, rotating techniques the tool supports (Credential Harvest, Link in Attachment, Malware Attachment, OAuth Consent Grant, and QR code payloads), with targeted rounds for finance, payroll, People, and executives in between. Calls and texts are practiced through the verification drills.
 
-**Repeat clicks.** Microsoft's tool flags a "repeat offender" after consecutive compromises, two by default. Fabrikam treats the flag as a request for help: a 15-minute conversation with a champion or the Security Engineer, and a check that the person's sign-in method and mail settings protect them. A manager hears about it only after a third consecutive miss, and only to make time for coaching (proposal).
+**Repeat clicks.** Microsoft's tool flags a "repeat offender" after consecutive compromises, two by default. Fabrikam treats the flag as a request for help: a 15-minute conversation with a champion or the Director of IT and Security, and a check that the person's sign-in method and mail settings protect them. A manager hears about it only after a third consecutive miss, and only to make time for coaching (proposal).
 
 ## The Report button and the reporting loop
 
@@ -143,7 +141,7 @@ The Service Desk Analyst triages reports on the Submissions page in business hou
 
 ## Security champions
 
-Champions are volunteers, about one per department or team of 30 to 50 people, with 1 to 2 hours a month agreed by their managers (both proposals). They share the monthly module, answer first questions, test new content before release (NIST recommends learner testing), help colleagues through passkey registration, and report what confuses people. They are not enforcers and never see individual results. The Director runs the network until the Security Engineer arrives, and the VP of People decides how champions are recognized, in line with NIST's advice to celebrate the people and teams who build the culture rather than penalize those who struggle.
+Champions are volunteers, about one per department or team of 30 to 50 people, with 1 to 2 hours a month agreed by their managers (both proposals). They share the monthly module, answer first questions, test new content before release (NIST recommends learner testing), help colleagues through passkey registration, and report what confuses people. They are not enforcers and never see individual results. The Director runs the network, and the VP of People decides how champions are recognized, in line with NIST's advice to celebrate the people and teams who build the culture rather than penalize those who struggle.
 
 ## Measuring behavior
 
@@ -189,17 +187,17 @@ Document [10](10-governance-and-compliance-program.md) holds the policy set, whi
 | Phase 3 | 09.08 | Recruit security champions; onboarding module live for new hires (joiner checklist step W2) | Champions named; new hires trained in week 1 | KPI-14 | Director of IT and Security | WS-9 |
 | Phase 4 | 09.09 | February: with Defender Suite (ADR-001), configure Attack simulation training (target groups from HR data, notifications, due dates) and announce the program | Ready for the first round, staff told in advance | KPI-15 | Systems Engineer (Identity and Endpoint) | WS-9 |
 | Phase 4 | 09.10 | February: administrators complete their track before PIM eligible assignments (06.25); executive briefing before the tabletop (08.09) | Admin access tied to a current track; executives prepared | KPI-14 | Director of IT and Security | WS-9 |
-| Phase 4 | 09.11 | March: first baseline simulation, rated with the NIST Phish Scale | KPI-15 baseline | KPI-15 | Security Engineer | WS-9 |
+| Phase 4 | 09.11 | March: first baseline simulation, rated with the NIST Phish Scale | KPI-15 baseline | KPI-15 | Director of IT and Security | WS-9 |
 | Phase 4 | 09.12 | March to April: People, Customer Support (with action 06.28), and Engineering (SSDF 1.1) tracks; AI use module after POL-02 approval | Every high-risk role has its track | KPI-14 | Director of IT and Security | WS-9 |
-| Phase 4 | 09.13 | April: first quarterly assessment report to the Quarterly Risk Review | KPI-14 and KPI-15 values with actions | KPI-15 | GRC Analyst | WS-9 |
-| Phase 5 | 09.14 | Simulations every two months with targeted rounds; coaching for repeat clicks; monthly recap | Report rate rising, click rate falling | KPI-15 | Security Engineer | WS-9 |
+| Phase 4 | 09.13 | April: first quarterly assessment report to the Quarterly Risk Review | KPI-14 and KPI-15 values with actions | KPI-15 | Director of IT and Security | WS-9 |
+| Phase 5 | 09.14 | Simulations every two months with targeted rounds; coaching for repeat clicks; monthly recap | Report rate rising, click rate falling | KPI-15 | Director of IT and Security | WS-9 |
 | Phase 5 | 09.15 | Verification drills for finance and payroll and for the service desk in May and October, with actions tracked | Verification holds under pressure | KPI-18 | Director of IT and Security | WS-9 |
 | Phase 5 | 09.16 | Train Copilot pilot users before access (action 06.34, document 16) | The pilot starts with trained users | KPI-14 | Director of IT and Security | WS-9 |
 | Phase 5 | 09.17 | October 2027: Cybersecurity Awareness Month and the finance and payroll refresher; M7 review of content, cadences, and targets | A tuned program for year two | KPI-14 | Director of IT and Security | WS-9 |
 
 ## Resourcing and dependencies
 
-- **Roles.** Director of IT and Security (owner); VP of People and the People team (delivery and records); GRC Analyst from March 2027 in the base case, after the M3 budget approval (measures, reports, audit evidence); Security Engineer from March 2027 in the base case, after the M3 budget approval (simulations, triage, champions); IT Operations Manager and Service Desk Analyst (service desk track, triage); Systems Engineer (Identity and Endpoint) (Report button, and simulation setup until the Security Engineer starts); the CFO, Chief Customer Officer, CTO, Engineering Manager, and General Counsel as track co-owners and reviewers; the champions.
+- **Roles.** Director of IT and Security (owner: measures, reports, audit evidence, simulations, triage, champions); VP of People and the People team (delivery and records); IT Operations Manager and Service Desk Analyst (service desk track, triage); Systems Engineer (Identity and Endpoint) (Report button and Attack simulation training setup); the CFO, Chief Customer Officer, CTO, Engineering Manager, and General Counsel as track co-owners and reviewers; the champions.
 - **Partners.** None required. The SOC 2 audit firm receives training and simulation evidence, and the MDR provider triages after-hours reports inside its scope once live (document 08, [ADR-003](adr/ADR-003-managed-detection-and-response.md)).
 - **Licenses.** Phases 1 to 3: Exchange Online in Microsoft 365 E3 for the Report button, and the existing training records and HR job-family data for assignment and tracking. From Phase 4: Microsoft Defender for Office 365 Plan 2 through Microsoft Defender Suite (ADR-001) for Attack simulation training. No training content vendor is named.
 - **Cost drivers.** Staff time first (about 10 minutes a month per person plus role tracks), then content creation or licensing and champions' time. Defender Suite is counted in ADR-001. Document [04](04-operating-model-team-and-budget.md) sizes the rest without figures.

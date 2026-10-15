@@ -20,7 +20,7 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 ### CEO
 
 1. **Priorities.** What are Fabrikam's three most important business goals for the next 12 months, and where could an IT or security failure get in their way?
-2. **Risk tolerance.** Which event would you least want to explain to customers or the board: a payroll outage during year-end, a leak of workers' Social Security numbers, a fraudulent payment, or something else? Where would you accept more risk to move faster?
+2. **Risk tolerance.** Which event would you least want to explain to customers or the board: a leak of workers' Social Security numbers, a fraudulent payment against company funds, a ransomware outage that halts internal work, or something else? Where would you accept more risk to move faster?
 3. **Risk ownership.** Which business risks should you own personally, and which belong to other executives?
 4. **Pain points.** Where do IT or security slow the business down today, and what have customers or prospects complained about?
 5. **What good looks like.** A year from now, what would make you call this function an asset? What do you want to see each month, and in what form?
@@ -39,9 +39,9 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 
 ### CTO
 
-1. **Priorities.** What are Engineering's goals for the year, and which platform changes are planned (architecture, AI features, the acquired product line)?
+1. **Priorities.** What are Engineering's goals for the year, and which planned platform changes will touch corporate IT, identity, or security?
 2. **Shared responsibility.** Where should the line sit between corporate IT, company-wide security, and product security engineering? What do senior engineers handle informally today?
-3. **Risk tolerance.** What availability and recovery do customers expect during their payroll runs, and when was disaster recovery last tested?
+3. **Risk tolerance.** Where does responsibility for product availability and recovery sit, and which corporate IT and identity dependencies does Engineering rely on?
 4. **Pain points.** Where do corporate IT or security get in Engineering's way today, for example Mac management, access to tools, or the change process?
 5. **What good looks like.** What should the Director deliver in the first 90 days to earn Engineering's trust?
 6. **Upcoming events.** Which releases, migrations, and audits fall before and after the mid-December freeze, and when is Engineering's time scarcest?
@@ -49,19 +49,19 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 
 ### Chief Product Officer
 
-1. **Priorities.** Which roadmap themes matter most this year: AI features, the acquired product line, integrations, something else?
-2. **Data.** Which new data types or uses are planned (for example more location data, the proposed voice verification for customers' administrators who call the support line, or AI on workforce data), and who reviews privacy and security before launch?
+1. **Priorities.** Which product plans this year will draw on corporate IT, identity, or security, and where do you expect the two to intersect?
+2. **Data.** Which new data types or uses are planned that could touch corporate systems or employee data, and who reviews privacy and security before launch?
 3. **Risk tolerance.** When a security requirement and a delivery date conflict, how should the decision be made, and by whom?
 4. **Pain points.** Which customer security reviews or questionnaires slowed a launch or a deal?
-5. **What good looks like.** What would customers need to see to treat security as a reason to buy, for example SOC 2 coverage of the acquired product line or phishing-resistant sign-in for customer administrators?
+5. **What good looks like.** What would customers need to see to treat security as a reason to buy, for example the company's SOC 2 coverage or evidence of strong internal controls?
 6. **Upcoming events.** Which launches, customer advisory meetings, or product changes could alter the SOC 2 system description?
 7. **AI at work.** How do product teams use AI tools today, and what guidance would help them rather than block them?
 
 ### Chief Customer Officer
 
 1. **Priorities.** What do customers value most, and what would make them leave?
-2. **Risk tolerance.** What happens today when a customer reports that an administrator account was taken over or a worker's bank details were changed? The FBI warned in 2025 that criminals use search ads to impersonate employee self-service and payroll sites; has Fabrikam seen this?
-3. **Pain points.** How do support staff handle payroll exports and other customer files during a case, and how do they confirm who is calling?
+2. **Risk tolerance.** What happens today when a customer reports a security concern or a suspected account compromise, and how does it reach the company's security process? The FBI warned in 2025 that criminals use search ads to impersonate employee self-service and payroll sites; has Fabrikam seen this?
+3. **Pain points.** How do support staff handle sensitive files during a case, and how do they confirm who is calling?
 4. **What good looks like.** If Fabrikam had a security incident, how should customers hear about it, and who should speak to them?
 5. **Customer requirements.** Which customers ask for audits, questionnaires, or specific controls, and what does Fabrikam's SOC 2 report expect customers to do themselves?
 6. **Upcoming events.** When do year-end, tax form season, open enrollment peaks, and major renewals stretch the team?
@@ -83,7 +83,7 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 3. **Risk tolerance.** Which security commitments in contracts, or in the SOC 2 system description, go beyond what the controls deliver today?
 4. **Privacy roles.** For the customer employee data it processes, which role does Fabrikam hold under California's privacy law and other state laws, and what follows from it? California's 2026 regulations, for example, require service providers to cooperate with the businesses they serve on cybersecurity audits and risk assessments.
 5. **Regulatory questions.** Is Fabrikam an E-Verify employer agent for its customers? Could any customer contract, partner contract, or Fabrikam's own payroll activity bring the FTC Safeguards Rule into play?
-6. **Biometrics and location.** How is the proposed voice verification for customers' administrators who call Fabrikam's support line reviewed before any decision, and by whom? Which location notices do customers rely on Fabrikam to support?
+6. **Employee monitoring and biometrics.** Which notices and consents apply to any monitoring or biometric data in Fabrikam's own employee technology, and who reviews them before a change?
 7. **Offices and staff.** In which states are the two offices, and which employee monitoring notice laws apply to Fabrikam's own staff there?
 8. **Pain points and upcoming events.** Where do security questions slow contracts down, and which regulatory dates or customer audits fall in the next 12 months?
 
@@ -110,9 +110,9 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 
 ### Site Reliability Engineering (SRE) lead
 
-1. **Priorities.** What are the reliability goals, and what do customers' payroll windows mean for operations?
-2. **Recovery.** What are the recovery targets, when was disaster recovery last tested, and who can delete or alter backups?
-3. **Logging.** Which product logs exist, how long are they kept, and could they show which customer data was accessed during an incident?
+1. **Priorities.** What are the reliability goals, and which corporate IT or identity dependencies matter most to operations?
+2. **Recovery.** Where does responsibility for product recovery sit, and how is access to delete or alter backups controlled?
+3. **Logging.** Which logs exist for a shared incident, how long are they kept, and how would corporate and product investigations work together?
 4. **Pain points.** Where do on-call load, alert noise, or dependencies on corporate IT hurt most?
 5. **Risk tolerance.** Which single points of failure worry you most?
 6. **What good looks like.** What would a shared incident process and joint exercises with corporate IT look like?
@@ -121,18 +121,18 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 ### Support leader
 
 1. **Priorities.** What are Support's goals and peak periods?
-2. **Caller verification.** How do agents confirm that a caller is an authorized customer administrator before changing access or bank details?
-3. **Customer data in cases.** How are payroll exports and other files requested, shared, stored, and deleted?
+2. **Caller verification.** How do agents confirm who is calling before changing access or sharing sensitive data?
+3. **Sensitive data in cases.** How are sensitive files requested, shared, stored, and deleted during a case?
 4. **Pain points.** Which tools, access steps, or security steps slow agents down?
 5. **Risk tolerance.** Which shortcuts happen under time pressure? The answer is used to fix processes, not to assign blame.
-6. **What good looks like.** What would a safe and fast way to handle customer files look like?
+6. **What good looks like.** What would a safe and fast way to handle sensitive files look like?
 7. **Upcoming events.** How do year-end, tax form season, and open enrollment change volumes and staffing?
 
 ### Sales leader
 
 1. **Priorities.** What are the revenue goals, and which customer segments matter most?
 2. **Security reviews.** How are security questionnaires and SOC 2 report requests handled, how long do they take, and where do deals stall?
-3. **The acquired product line.** What do enterprise buyers ask about its SOC 2 coverage, and which deals depend on it?
+3. **The SOC 2 report.** What do enterprise buyers ask about the company's SOC 2 coverage, and which deals depend on it?
 4. **Risk tolerance.** Which security commitments has Sales made, or been asked to make?
 5. **Pain points.** Where do CRM access, marketing email delivery, or security reviews cost time?
 6. **What good looks like.** What security story could Sales tell honestly and with confidence?
@@ -144,7 +144,7 @@ This template supports the Phase 1 listening work in document [05](../05-environ
 |---|---|
 | Who and when | Role and date |
 | Priorities | In the speaker's own words |
-| Risks named | Matched to R-01 to R-15 where possible, or marked as new |
+| Risks named | Matched to R-01, R-03, and R-05 to R-15 where possible, or marked as new |
 | Risk tolerance | What the speaker would accept, and what they would not |
 | Pain points | With concrete examples |
 | What good looks like | Measurable where possible |
